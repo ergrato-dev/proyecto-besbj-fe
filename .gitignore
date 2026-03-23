@@ -1,0 +1,61 @@
+# ── Java / Maven ───────────────────────────────────────────────────────────────
+be/target/
+be/*.jar
+be/*.war
+be/*.class
+be/.mvn/wrapper/maven-wrapper.jar
+!be/.mvn/wrapper/maven-wrapper.properties
+
+# ── Spring Boot ─────────────────────────────────────────────────────────────────
+be/.env
+be/application-local.yml
+
+# ── Node.js / Frontend ─────────────────────────────────────────────────────────
+fe/node_modules/
+fe/dist/
+fe/.env
+fe/.env.local
+fe/.env.*.local
+
+# ── Entornos de desarrollo ─────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── IDE — IntelliJ IDEA ────────────────────────────────────────────────────────
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ── IDE — VS Code ──────────────────────────────────────────────────────────────
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+# Mantener extensiones recomendadas:
+!.vscode/extensions.json
+
+# ── IDE — Eclipse ──────────────────────────────────────────────────────────────
+.classpath
+.project
+.settings/
+.factorypath
+
+# ── Sistema operativo ──────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Logs ───────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Cobertura y reportes ───────────────────────────────────────────────────────
+be/target/site/
+be/target/jacoco.exec
+
+# ── Docker ─────────────────────────────────────────────────────────────────────
+# No ignorar docker-compose.yml — es parte del proyecto
+# Solo ignorar overrides locales opcionales:
+docker-compose.override.yml

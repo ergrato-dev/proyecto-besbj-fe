@@ -1,0 +1,62 @@
+# Docker Compose — NN Auth System
+# Servicios para entorno de desarrollo: PostgreSQL 17 + Mailpit
+#
+# ¿Qué? Orquesta los servicios de infraestructura necesarios para el desarrollo local.
+# ¿Para qué? Proveer una BD PostgreSQL y un servidor SMTP de prueba sin configuración manual.
+# ¿Impacto? Sin este archivo, cada desarrollador tendría que instalar y configurar
+#           PostgreSQL y un servidor de email manualmente en su máquina.
+#
+# Uso:
+#   docker compose up -d          → Levantar servicios en background
+#   docker compose down           → Detener y eliminar contenedores
+#   docker compose down -v        → Detener y eliminar contenedores + volúmenes (¡borra datos BD!)
+#   docker compose logs -f db     → Ver logs de la base de datos
+#   docker compose ps             → Ver estado de los servicios
+
+services:
+
+  # ─── Base de Datos PostgreSQL 17 ────────────────────────────────────────────
+  db:
+    image: postgres:17-alpine
+    container_name: nn_auth_db
+    environment:
+      POSTGRES_USER: nn_user
+      POSTGRES_PASSWORD: nn_password
+      POSTGRES_DB: nn_auth_db
+    ports:
+      - "5432:5432"     # Puerto local:puerto del contenedor
+    volumes:
+      # Volumen nombrado para persistir datos entre reinicios del contenedor
+      - nn_auth_data:/var/lib/postgresql/data
+    healthcheck:
+      # Verificar que PostgreSQL está listo para aceptar conexiones
+      test: ["CMD-SHELL", "pg_isready -U nn_user -d nn_auth_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  # ─── Mailpit — Servidor SMTP de desarrollo ──────────────────────────────────
+  # ¿Qué? Captura todos los emails enviados por el backend sin enviarlos realmente.
+  # ¿Para qué? Ver los emails de verificación y recuperación de contraseña durante el desarrollo.
+  # ¿Impacto? Sin Mailpit, los emails de prueba llegarían a cuentas reales o fallaran
+  #           si no hay un servidor SMTP configurado.
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: nn_auth_mailpit
+    ports:
+      - "1025:1025"     # Puerto SMTP — Spring Boot Mail apunta aquí
+      - "8025:8025"     # Puerto Web UI — ver emails capturados en el navegador
+    environment:
+      # Deshabilitar autenticación SMTP en desarrollo (más cómodo)
+      MP_SMTP_AUTH_ACCEPT_ANY: "true"
+      MP_SMTP_AUTH_ALLOW_INSECURE: "true"
+    restart: unless-stopped
+
+# ─── Volúmenes nombrados ────────────────────────────────────────────────────
+volumes:
+  # Volumen persistente para los datos de PostgreSQL
+  # Los datos sobreviven a: docker compose down, reinicios del sistema
+  # Para borrar los datos: docker compose down -v
+  nn_auth_data:
