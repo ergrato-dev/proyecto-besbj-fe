@@ -1,0 +1,15 @@
+# Perfil sin Docker — activo con: -Dspring.profiles.active=noDocker
+# ¿Para qué? Permite correr la app en desarrollo local sin tener Docker levantado.
+# ¿Impacto? Los emails no se envían realmente — se imprimen en la consola gracias al
+#            mock de JavaMailSender (útil para probar flujos sin necesitar Mailpit).
+
+spring:
+  mail:
+    host: localhost
+    port: 1025
+    # En este perfil, si no hay servidor SMTP disponible, el EmailService
+    # loggea el email en consola en lugar de fallar la petición.
+
+logging:
+  level:
+    com.nn.auth: DEBUG

@@ -1,0 +1,17 @@
+# Perfil Docker — activo con: -Dspring.profiles.active=docker
+# ¿Para qué? Apunta al servicio de BD y Mailpit definidos en docker-compose.yml.
+# ¿Impacto? Usar este perfil sin Docker levantado causará un error de conexión al arrancar.
+
+spring:
+  datasource:
+    url: jdbc:postgresql://db:5432/${DB_NAME:nn_auth_db}
+
+  mail:
+    host: mailpit
+    port: 1025
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false

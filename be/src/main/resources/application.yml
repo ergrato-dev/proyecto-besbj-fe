@@ -1,0 +1,85 @@
+# Configuración base de NN Auth System
+# ¿Para qué? Define todos los parámetros de la aplicación usando variables de entorno.
+# ¿Impacto? Si las variables de entorno no están definidas, usa los valores por defecto
+#            indicados después de los dos puntos (solo válidos en desarrollo local).
+
+spring:
+  application:
+    name: nn-auth-system
+
+  # Fuente de datos — PostgreSQL 17
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:nn_auth_db}
+    username: ${DB_USERNAME:nn_user}
+    password: ${DB_PASSWORD:nn_password}
+    hikari:
+      # Pool de conexiones HikariCP — incluido en Spring Boot
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 20000
+
+  # JPA / Hibernate
+  jpa:
+    hibernate:
+      # validate: verifica el esquema pero NO lo modifica — Flyway es el responsable
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  # Flyway — migraciones de base de datos versionadas
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: false
+
+  # Envío de emails transaccionales
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+# Configuración del servidor
+server:
+  port: 8080
+  error:
+    # Nunca exponer stack traces al cliente
+    include-stacktrace: never
+    include-message: always
+
+# Variables de la aplicación (personalizadas)
+app:
+  jwt:
+    secret: ${JWT_SECRET:dev-secret-key-min-32-chars-change-in-production}
+    access-token-expiration-minutes: ${JWT_ACCESS_TOKEN_EXPIRATION_MINUTES:15}
+    refresh-token-expiration-days: ${JWT_REFRESH_TOKEN_EXPIRATION_DAYS:7}
+  frontend-url: ${FRONTEND_URL:http://localhost:5173}
+  environment: ${ENVIRONMENT:development}
+
+# SpringDoc / Swagger UI
+# ¿Para qué? Documentación interactiva de la API solo en desarrollo.
+# ¿Impacto? Si se deja habilitado en producción, expone la API públicamente.
+springdoc:
+  swagger-ui:
+    enabled: ${SWAGGER_UI_ENABLED:true}
+    path: /swagger-ui.html
+  api-docs:
+    enabled: ${SWAGGER_UI_ENABLED:true}
+    path: /v3/api-docs
+
+# Logging estructurado
+logging:
+  level:
+    com.nn.auth: INFO
+    org.springframework.security: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
