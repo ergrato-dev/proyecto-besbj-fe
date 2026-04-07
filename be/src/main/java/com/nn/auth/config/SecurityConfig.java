@@ -28,7 +28,13 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+// Marca esta clase como fuente de beans de configuración para el contexto de Spring.
 @Configuration
+
+// Activa la personalización de Spring Security en esta clase.
+// Sin @EnableWebSecurity, Spring Boot usaría su configuración de seguridad
+// por defecto (formulario de login, todas las rutas protegidas) — no sirve para
+// una API REST.
 @EnableWebSecurity
 public class SecurityConfig {
 
@@ -43,6 +49,9 @@ public class SecurityConfig {
    * @param userRepository Repositorio que consulta la tabla users en PostgreSQL
    * @return UserDetailsService configurado a buscar usuarios por email
    */
+  // Registra el UserDetailsService como bean para que Spring Security lo detecte.
+  // Spring Security lo usa internamente para cargar usuarios al validar tokens
+  // JWT.
   @Bean
   public UserDetailsService userDetailsService(UserRepository userRepository) {
     return email -> userRepository
@@ -64,6 +73,8 @@ public class SecurityConfig {
    * @return SecurityFilterChain configurado
    * @throws Exception Si hay error en la configuración de seguridad
    */
+  // Registra la cadena de filtros de seguridad como bean principal.
+  // Spring Security la aplica a cada petición HTTP entrante, en orden.
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http,
       JwtAuthenticationFilter jwtFilter) throws Exception {
@@ -100,13 +111,14 @@ public class SecurityConfig {
             .anyRequest().authenticated())
 
         // Manejo correcto de errores de autenticación y autorización (OWASP A07)
-        // Sin esto, Spring Security devuelve 403 para peticiones sin token (incorrecto).
+        // Sin esto, Spring Security devuelve 403 para peticiones sin token
+        // (incorrecto).
         // HTTP spec: 401 = no autenticado, 403 = autenticado pero sin permiso.
         .exceptionHandling(handling -> handling
-            .authenticationEntryPoint((request, response, ex) ->
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "No autenticado"))
-            .accessDeniedHandler((request, response, ex) ->
-                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Acceso denegado")))
+            .authenticationEntryPoint(
+                (request, response, ex) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "No autenticado"))
+            .accessDeniedHandler(
+                (request, response, ex) -> response.sendError(HttpServletResponse.SC_FORBIDDEN, "Acceso denegado")))
 
         // Insertar el filtro JWT ANTES del filtro de autenticación estándar de Spring
         // para que el SecurityContext esté poblado cuando los controllers se ejecuten
@@ -126,6 +138,8 @@ public class SecurityConfig {
    *
    * @return CorsConfigurationSource con los orígenes permitidos
    */
+  // Registra la configuración CORS como bean — Spring Security lo detecta
+  // automáticamente por el nombre del bean (corsConfigurationSource).
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration config = new CorsConfiguration();

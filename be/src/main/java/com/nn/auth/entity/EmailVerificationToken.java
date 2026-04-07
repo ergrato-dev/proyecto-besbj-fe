@@ -26,11 +26,17 @@ import lombok.NoArgsConstructor;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+// Entidad JPA — Hibernate la mapeará a la tabla configurada en @Table.
 @Entity
+// Nombre exacto de la tabla en PostgreSQL.
 @Table(name = "email_verification_tokens")
+// Lombok: genera getters públicos para todos los campos.
 @Getter
+// Lombok: habilita el patrón Builder para crear instancias con sintaxis fluida.
 @Builder
+// Lombok: constructor sin parámetros requerido por JPA para reconstruir objetos desde la BD.
 @NoArgsConstructor
+// Lombok: constructor con todos los campos, requerido internamente por @Builder.
 @AllArgsConstructor
 public class EmailVerificationToken {
 
@@ -75,6 +81,7 @@ public class EmailVerificationToken {
    * ¿Qué? Bandera de uso único — previene doble verificación con el mismo token.
    * ¿Para qué? Invalidar el token tras el primer uso exitoso.
    */
+  // @Builder.Default preserva el valor por defecto `= false` al usar el builder.
   @Builder.Default
   @Column(nullable = false)
   private boolean used = false;
@@ -82,6 +89,7 @@ public class EmailVerificationToken {
   @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMPTZ")
   private OffsetDateTime createdAt;
 
+  // JPA llama a este método automáticamente antes del INSERT — inicializa createdAt.
   @PrePersist
   protected void onCreate() {
     this.createdAt = OffsetDateTime.now();

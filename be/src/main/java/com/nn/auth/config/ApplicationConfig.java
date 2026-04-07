@@ -13,6 +13,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+// Marca esta clase como fuente de configuración de Spring.
+// Equivale al antiguo XML de configuración de Spring — en Spring moderno
+// se usa @Configuration con métodos @Bean para definir y registrar objetos.
 @Configuration
 public class ApplicationConfig {
 
@@ -25,6 +28,10 @@ public class ApplicationConfig {
    *
    * @return PasswordEncoder configurado con BCrypt
    */
+  // Le dice a Spring: "el objeto que retorna este método es un bean gestionado
+  // por el ApplicationContext". Otros componentes pueden inyectarlo vía
+  // constructor.
+  // Sin @Bean, Spring no registra el PasswordEncoder y la inyección fallaría.
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();

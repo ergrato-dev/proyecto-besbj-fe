@@ -25,9 +25,16 @@ import org.springframework.web.bind.annotation.RestController;
  * ¿Para qué? Separar los endpoints de usuario de los de autenticación —
  * mantiene AuthController enfocado solo en auth.
  */
+// Combina @Controller + @ResponseBody: respuestas directamente como JSON.
 @RestController
+
+// Prefijo de URL para todos los métodos de esta clase.
 @RequestMapping("/api/v1/users")
+
+// Lombok: genera el constructor con AuthService como parámetro.
 @RequiredArgsConstructor
+
+// Swagger: agrupa este endpoint bajo la sección "Usuarios" en Swagger UI.
 @Tag(name = "Usuarios", description = "Endpoints para gestión del perfil del usuario autenticado")
 public class UserController {
 
@@ -45,10 +52,18 @@ public class UserController {
    *             Security
    * @return UserResponse con datos públicos del usuario (sin hashedPassword)
    */
+  // Mapea peticiones HTTP GET en /api/v1/users/me a este método.
   @GetMapping("/me")
+  // Swagger: muestra el candado y exige el Bearer token para poder probar el
+  // endpoint.
   @SecurityRequirement(name = "bearerAuth")
+  // Documenta que este endpoint requiere autenticación y retorna el perfil del
+  // usuario.
   @Operation(summary = "Obtener perfil del usuario autenticado", description = "Requiere autenticación. Retorna los datos públicos del usuario actual.")
-  public UserResponse getProfile(@AuthenticationPrincipal User user) {
+  public UserResponse getProfile(
+      @AuthenticationPrincipal // Inyecta el User del SecurityContext — garantizado por
+                               // JwtAuthenticationFilter.
+      User user) {
     // ¿Qué? Obtiene el perfil desde el servicio usando el email del usuario
     // autenticado.
     // ¿Para qué? Mantener la lógica en el servicio — el controller solo coordina.

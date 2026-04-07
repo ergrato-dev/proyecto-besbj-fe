@@ -27,11 +27,17 @@ import lombok.NoArgsConstructor;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+// Entidad JPA — Hibernate la mapeará a la tabla configurada en @Table.
 @Entity
+// Nombre exacto de la tabla en PostgreSQL.
 @Table(name = "password_reset_tokens")
+// Lombok: genera getters públicos para todos los campos.
 @Getter
+// Lombok: habilita el patrón Builder para crear instancias con sintaxis fluida.
 @Builder
+// Lombok: constructor sin parámetros requerido por JPA para reconstruir objetos desde la BD.
 @NoArgsConstructor
+// Lombok: constructor con todos los campos, requerido internamente por @Builder.
 @AllArgsConstructor
 public class PasswordResetToken {
 
@@ -77,6 +83,8 @@ public class PasswordResetToken {
    * ¿Impacto? Sin este check, si el email fue interceptado, el atacante podría
    * resetear la contraseña incluso después de que el usuario lo hiciera.
    */
+  // @Builder.Default preserva el valor por defecto `= false` al usar el builder.
+  // Sin esto, Lombok @Builder ignoraría el inicializador y el campo sería null.
   @Builder.Default
   @Column(nullable = false)
   private boolean used = false;
@@ -84,6 +92,7 @@ public class PasswordResetToken {
   @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMPTZ")
   private OffsetDateTime createdAt;
 
+  // JPA llama a este método automáticamente antes del INSERT — inicializa createdAt.
   @PrePersist
   protected void onCreate() {
     this.createdAt = OffsetDateTime.now();

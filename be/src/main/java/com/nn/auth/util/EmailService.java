@@ -26,10 +26,15 @@ import org.springframework.stereotype.Service;
  * ¿Para qué? Abstraer el envío de correos y permitir cambiarlo en el futuro
  * (ej: usar un template engine como Thymeleaf) sin tocar AuthService.
  * ¿Impacto? El @Async hace el envío en un hilo separado — el endpoint de
- * registro
- * no espera a que el email se envíe para responder al cliente.
+ * registro no espera a que el email se envíe para responder al cliente.
  */
+// Registra esta clase como bean de servicio — sus métodos públícos son usados
+// por AuthService para enviar emails sin conocer los detalles de
+// JavaMailSender.
 @Service
+
+// Lombok: genera el constructor con JavaMailSender y AppProperties como
+// parámetros.
 @RequiredArgsConstructor
 public class EmailService {
 
@@ -56,6 +61,10 @@ public class EmailService {
    * @param fullName Nombre del usuario para personalizar el email
    * @param token    UUID del token de verificación (expira en 24h)
    */
+  // Ejecuta este método en un hilo separado del thread pool de Spring.
+  // El llamador (AuthService.register) retorna inmediatamente sin esperar el
+  // email.
+  // Requiere @EnableAsync en NnAuthSystemApplication para funcionar.
   @Async
   public void sendVerificationEmail(String toEmail, String fullName, String token) {
     String verificationUrl = appProperties.frontendUrl() + "/verify-email?token=" + token;
@@ -80,6 +89,8 @@ public class EmailService {
    * @param fullName Nombre para personalizar el email
    * @param token    UUID del token de recuperación (expira en 1 hora)
    */
+  // Mismo patrón async: AuthService.forgotPassword retorna la respuesta genérica
+  // sin bloquear el hilo HTTP — el email viaja en paralelo.
   @Async
   public void sendPasswordResetEmail(String toEmail, String fullName, String token) {
     String resetUrl = appProperties.frontendUrl() + "/reset-password?token=" + token;

@@ -45,11 +45,16 @@ import java.util.UUID;
  * ¿Qué? Servicio Spring con toda la lógica de los 7 flujos de autenticación.
  * ¿Para qué? Centralizar las reglas de negocio en un solo lugar probable y
  * mantenible — los controllers son solo fachadas HTTP.
- * ¿Impacto? @Transactional en métodos de escritura garantiza que todas las
- * operaciones a la BD (crear user + crear token) sean atómicas —
- * si falla cualquiera, se hace rollback.
  */
+// Registra esta clase como bean de la capa de servicio.
+// @Service comunica la intención: aquí vive la lógica de negocio, no HTTP ni
+// BD.
 @Service
+
+// Lombok: genera el constructor con todos los campos `final` — inyección por
+// constructor.
+// Cada dependencia (repositorios, encoder, jwtService, emailService) se inyecta
+// sin necesidad de escribir el constructor manualmente.
 @RequiredArgsConstructor
 public class AuthService {
 
@@ -79,6 +84,9 @@ public class AuthService {
    * @return UserResponse con los datos públicos del nuevo usuario
    * @throws IllegalArgumentException Si el email ya está registrado
    */
+  // Envuelve todo el método en una transacción de BD.
+  // Si cualquier operación falla (ej: save del token lanza excepción), se hace
+  // rollback automático: ni el usuario ni el token quedan a medias en la BD.
   @Transactional
   public UserResponse register(RegisterRequest request) {
 
@@ -224,6 +232,7 @@ public class AuthService {
    * @return MessageResponse confirmando el cambio
    * @throws BadCredentialsException Si la contraseña actual es incorrecta
    */
+  // Transacción para garantizar que el save() del usuario sea atómico.
   @Transactional
   public MessageResponse changePassword(User user, ChangePasswordRequest request) {
 
@@ -257,6 +266,9 @@ public class AuthService {
    * @return MessageResponse genérico (siempre el mismo, sin importar si el email
    *         existe)
    */
+  // Transacción: deleteByUser + save del nuevo token deben ser atómicos.
+  // Si el save falla, el deleteByUser también se revierte — no se pierden tokens
+  // viejos.
   @Transactional
   public MessageResponse forgotPassword(ForgotPasswordRequest request) {
 
@@ -302,6 +314,10 @@ public class AuthService {
    * @return MessageResponse confirmando el cambio
    * @throws IllegalArgumentException Si el token es inválido, expirado o ya usado
    */
+  // Transacción: actualizar la contraseña y marcar el token como usado deben
+  // ocurrir
+  // juntos. Si uno falla, el otro se revierte — evita estados inconsistentes en
+  // la BD.
   @Transactional
   public MessageResponse resetPassword(ResetPasswordRequest request) {
 
@@ -350,6 +366,10 @@ public class AuthService {
    * @return MessageResponse confirmando la activación
    * @throws IllegalArgumentException Si el token es inválido, expirado o ya usado
    */
+  // Transacción: marcar emailVerified=true en el user y used=true en el token
+  // deben
+  // ser atómicos. Si uno falla, el otro se revierte — la cuenta no queda a
+  // medias.
   @Transactional
   public MessageResponse verifyEmail(VerifyEmailRequest request) {
 

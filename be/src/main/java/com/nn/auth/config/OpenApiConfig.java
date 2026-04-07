@@ -15,6 +15,8 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+// Marca esta clase como configuración de Spring — aquí se definen beans
+// que SpringDoc necesita para construir la documentación de la API.
 @Configuration
 public class OpenApiConfig {
 
@@ -28,6 +30,8 @@ public class OpenApiConfig {
    *
    * @return OpenAPI con metadatos y esquema de seguridad JWT
    */
+  // Registra el objeto OpenAPI como bean. SpringDoc lo detecta al arrancar
+  // y lo usa para construir /v3/api-docs y el Swagger UI en /swagger-ui.html.
   @Bean
   public OpenAPI openAPI() {
     final String securitySchemeName = "bearerAuth";

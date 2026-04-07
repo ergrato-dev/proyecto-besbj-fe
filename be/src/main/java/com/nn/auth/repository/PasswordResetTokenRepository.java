@@ -16,6 +16,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 import java.util.UUID;
 
+// Marca esta interfaz como bean de acceso a datos.
+// Spring Data JPA genera automáticamente las implementaciones de los métodos
+// declarados: findByToken(), deleteByUser(), etc. — sin escribir una línea de SQL.
 @Repository
 public interface PasswordResetTokenRepository extends JpaRepository<PasswordResetToken, UUID> {
 

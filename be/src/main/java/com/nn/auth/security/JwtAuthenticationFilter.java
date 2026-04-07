@@ -38,7 +38,14 @@ import java.io.IOException;
  * ¿Impacto? Se ejecuta en TODAS las peticiones — debe ser eficiente y nunca
  * lanzar excepciones sin capturar (romperían la cadena de filtros).
  */
+// Registra este filtro como un bean genérico de Spring.
+// @Component (no @Service ni @Repository) porque es un componente de
+// infraestructura,
+// no contiene lógica de negocio ni acceso a datos.
 @Component
+
+// Lombok: genera el constructor con JwtService y UserDetailsService como
+// parámetros.
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 

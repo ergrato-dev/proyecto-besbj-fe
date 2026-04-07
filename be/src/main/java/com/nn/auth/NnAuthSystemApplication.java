@@ -13,8 +13,21 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.scheduling.annotation.EnableAsync;
 
+// Combina tres anotaciones en una:
+//   @Configuration      → esta clase puede definir beans
+//   @EnableAutoConfiguration → Spring Boot configura automáticamente todo lo que detecta en el classpath
+//   @ComponentScan      → escanea este paquete (y sub-paquetes) para registrar @Component, @Service, @Repository, @Controller
+// Sin @SpringBootApplication no arranca nada — es el punto de entrada de todo.
 @SpringBootApplication
+
+// Activa el mapeo de properties del application.yml a la clase AppProperties.
+// Sin esta línea, Spring Boot ignora @ConfigurationProperties y ningún valor
+// del .yml se inyectaría en AppProperties — la app fallaría al arrancar.
 @EnableConfigurationProperties(AppProperties.class)
+
+// Activa el soporte de métodos asíncronos (@Async) en toda la aplicación.
+// Sin esta anotación, los métodos marcados con @Async (ej: EmailService)
+// se ejecutarían de forma SÍNCRONA en el mismo hilo — sin hilo separado.
 @EnableAsync
 public class NnAuthSystemApplication {
 

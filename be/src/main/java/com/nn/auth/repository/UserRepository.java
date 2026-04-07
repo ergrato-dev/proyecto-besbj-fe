@@ -15,6 +15,11 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 import java.util.UUID;
 
+// Marca esta interfaz como bean de la capa de acceso a datos.
+// @Repository, además de registrar el bean, hace que Spring traduzca
+// excepciones JDBC/JPA a DataAccessException — jerarquía unificada de errores.
+// Spring Data JPA genera la implementación en tiempo de ejecución —
+// no necesitamos escribir el SQL de findById, save, delete, etc.
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
 

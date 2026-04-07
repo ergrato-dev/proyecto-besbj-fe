@@ -22,6 +22,10 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
+// Extiende @ControllerAdvice (captura excepciones de todos los controllers)
+// + @ResponseBody (retorna directamente JSON, sin buscar vistas).
+// Es el punto único donde se manejan TODOS los errores de la API — sin esto,
+// Spring devolvería stack traces del servidor al cliente en caso de error (OWASP A05).
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -35,7 +39,10 @@ public class GlobalExceptionHandler {
    * @param ex Excepción con los errores de validación por campo
    * @return ProblemDetail 400 con mapa de campo → mensaje de error
    */
+  // Le dice a Spring: «cuando cualquier controller lance MethodArgumentNotValidException,
+  // ejecuta ESTE método en lugar de la respuesta de error genérica por defecto».
   @ExceptionHandler(MethodArgumentNotValidException.class)
+  // Establece el código HTTP de respuesta como 400 Bad Request.
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ProblemDetail handleValidationErrors(MethodArgumentNotValidException ex) {
     Map<String, String> errors = new HashMap<>();
@@ -60,7 +67,9 @@ public class GlobalExceptionHandler {
    * @param ex Excepción de autenticación de Spring Security
    * @return ProblemDetail 401 con mensaje genérico
    */
+  // Intercepta cualquier AuthenticationException lanzada en los controllers o filtros.
   @ExceptionHandler(AuthenticationException.class)
+  // 401 Unauthorized = el cliente no ha demostrado su identidad (falta o mal token).
   @ResponseStatus(HttpStatus.UNAUTHORIZED)
   public ProblemDetail handleAuthenticationException(AuthenticationException ex) {
     ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED);
@@ -80,7 +89,9 @@ public class GlobalExceptionHandler {
    * @param ex Excepción de argumento/estado inválido lanzada por AuthService
    * @return ProblemDetail 400 con el mensaje del error
    */
+  // Acepta una lista de tipos de excepción — ambos mapean al mismo handler.
   @ExceptionHandler({ IllegalArgumentException.class, IllegalStateException.class })
+  // 400 Bad Request = el cliente envió datos o solicitó una operación inválida.
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ProblemDetail handleBusinessException(RuntimeException ex) {
     ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
@@ -100,7 +111,9 @@ public class GlobalExceptionHandler {
    * @param ex Excepción de acceso denegado
    * @return ProblemDetail 403
    */
+  // Intercepta AccessDeniedException: usuario autenticado pero sin permisos.
   @ExceptionHandler(AccessDeniedException.class)
+  // 403 Forbidden = la identidad es conocida pero no tiene permiso para este recurso.
   @ResponseStatus(HttpStatus.FORBIDDEN)
   public ProblemDetail handleAccessDeniedException(AccessDeniedException ex) {
     ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.FORBIDDEN);
@@ -118,7 +131,10 @@ public class GlobalExceptionHandler {
    * @param ex Excepción inesperada
    * @return ProblemDetail 500 genérico
    */
+  // Captura de último recurso: cualquier excepción no manejada por los handlers anteriores.
+  // Spring busca el handler más específico primero — este es el menos específico (Exception).
   @ExceptionHandler(Exception.class)
+  // 500 Internal Server Error = algo falló en el servidor (no en el cliente).
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   public ProblemDetail handleGenericException(Exception ex) {
     ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);

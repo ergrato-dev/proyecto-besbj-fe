@@ -16,6 +16,10 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 import java.util.UUID;
 
+// Marca esta interfaz como bean de acceso a datos.
+// Spring Data JPA deriva las consultas SQL a partir de los nombres de los métodos:
+// findByToken() → SELECT * FROM email_verification_tokens WHERE token = ?
+// deleteByUser() → DELETE FROM email_verification_tokens WHERE user_id = ?
 @Repository
 public interface EmailVerificationTokenRepository extends JpaRepository<EmailVerificationToken, UUID> {
 

@@ -30,14 +30,22 @@ import java.util.UUID;
 import java.util.function.Function;
 
 /**
- * ¿Qué? Servicio Spring (@Service) que provee operaciones sobre JWT.
+ * ¿Qué? Servicio Spring que provee operaciones sobre JWT.
  * ¿Para qué? Ser inyectado en JwtAuthenticationFilter (verificar tokens
- * entrantes)
- * y en AuthService (generar tokens al hacer login).
+ * entrantes) y en AuthService (generar tokens al hacer login).
  * ¿Impacto? Al ser un @Service singleton, la clave secreta se lee una sola vez
  * de AppProperties — seguro y eficiente.
  */
+// Registra esta clase como bean de la capa de servicio en el contexto de
+// Spring.
+// @Service es semánticamente equivalente a @Component, pero comunica la
+// intención:
+// este objeto contiene lógica de negocio, no es un controller ni un
+// repositorio.
 @Service
+
+// Lombok: genera el constructor con JwtProperties como parámetro — inyección
+// por constructor.
 @RequiredArgsConstructor
 public class JwtService {
 
