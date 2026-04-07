@@ -10,6 +10,7 @@ package com.nn.auth.config;
 
 import com.nn.auth.repository.UserRepository;
 import com.nn.auth.security.JwtAuthenticationFilter;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -97,6 +98,15 @@ public class SecurityConfig {
 
             // Cualquier otra ruta requiere autenticación
             .anyRequest().authenticated())
+
+        // Manejo correcto de errores de autenticación y autorización (OWASP A07)
+        // Sin esto, Spring Security devuelve 403 para peticiones sin token (incorrecto).
+        // HTTP spec: 401 = no autenticado, 403 = autenticado pero sin permiso.
+        .exceptionHandling(handling -> handling
+            .authenticationEntryPoint((request, response, ex) ->
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "No autenticado"))
+            .accessDeniedHandler((request, response, ex) ->
+                response.sendError(HttpServletResponse.SC_FORBIDDEN, "Acceso denegado")))
 
         // Insertar el filtro JWT ANTES del filtro de autenticación estándar de Spring
         // para que el SecurityContext esté poblado cuando los controllers se ejecuten

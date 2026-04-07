@@ -1,0 +1,65 @@
+# Configuración de tests de integración
+# ¿Para qué? Sobreescribir la configuración base para tests — apunta a una BD
+#            de test separada (nn_auth_test_db) en el servidor de desarrollo.
+# ¿Impacto? Los tests usan una BD aislada (no la de desarrollo nn_auth_db)
+#           y @Transactional garantiza rollback automático entre tests para
+#           evitar contaminación de datos. Requiere: docker compose up -d.
+
+spring:
+  # BD de test separada en el mismo servidor PostgreSQL de desarrollo
+  # ¿Por qué no Testcontainers? Docker Desktop en Linux no expone el daemon
+  # con la API completa que Testcontainers requiere para iniciar contenedores.
+  # La BD nn_auth_test_db se crea con: docker exec nn_auth_db psql -U nn_user
+  # -d nn_auth_db -c "CREATE DATABASE nn_auth_test_db;"
+  datasource:
+    url: jdbc:postgresql://localhost:5432/nn_auth_test_db
+    driver-class-name: org.postgresql.Driver
+    username: nn_user
+    password: nn_password
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+  # Email apunta a un host falso — los tests mockean EmailService
+  mail:
+    host: localhost
+    port: 1025
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+# Variables de la app para tests
+app:
+  jwt:
+    secret: test-secret-key-minimum-32-chars-for-hmac-sha256
+    access-token-expiration-minutes: 15
+    refresh-token-expiration-days: 7
+  frontend-url: http://localhost:5173
+  environment: test
+
+# Swagger deshabilitado en tests
+springdoc:
+  swagger-ui:
+    enabled: false
+  api-docs:
+    enabled: false
+
+# Logging mínimo en tests — reducir ruido
+logging:
+  level:
+    com.nn.auth: DEBUG
+    org.springframework.security: WARN
+    org.testcontainers: WARN
+    com.zaxxer.hikari: WARN
+    org.flywaydb: INFO
