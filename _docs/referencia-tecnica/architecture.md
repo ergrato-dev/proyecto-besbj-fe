@@ -516,3 +516,66 @@ los imprime en la consola con el formato:
 [MOCK EMAIL] Body:
   Enlace de verificación: http://localhost:5173/verify-email?token=abc123...
 ```
+
+---
+
+## Sistema de Temas Diferenciales — Amber (Spring Boot Java)
+
+Este proyecto forma parte de una **serie educativa** donde cada variante de backend tiene
+una identidad visual única definida por su color de acento. Esto permite distinguir visualmente
+qué stack está corriendo al mayor de un vistazo.
+
+### Tabla de identidades por stack
+
+| Stack                  | Proyecto               | Acento Tailwind | Hex referencia |
+|------------------------|------------------------|-----------------|----------------|
+| FastAPI (Python)       | `proyecto-be-fe`       | `emerald`       | `#059669`      |
+| Express.js (Node)      | `proyecto-beex-fe`     | `blue`          | `#2563eb`      |
+| Next.js (fullstack)    | `proyecto-be-fe-next`  | `violet`        | `#7c3aed`      |
+| **Spring Boot (Java)** | **`proyecto-besb-fe`** | **`amber`**     | **`#d97706`**  |
+| Spring Boot (Kotlin)   | `proyecto-besbk-fe`    | `fuchsia`       | `#c026d3`      |
+| Go REST API            | `proyecto-bego-fe`     | `cyan`          | `#0891b2`      |
+
+### Implementación del token `accent-*`
+
+El color de acento se define en **11 líneas** dentro de `fe/src/index.css` usando
+el sistema `@theme inline` de TailwindCSS v4. Los componentes **nunca** usan colores
+hardcodeados (`amber-600`) — siempre usan el token neutro (`accent-600`):
+
+```css
+/* fe/src/index.css — Spring Boot Java → amber */
+@theme inline {
+  --color-accent-50:  var(--color-amber-50);
+  --color-accent-100: var(--color-amber-100);
+  --color-accent-200: var(--color-amber-200);
+  --color-accent-300: var(--color-amber-300);
+  --color-accent-400: var(--color-amber-400);
+  --color-accent-500: var(--color-amber-500);
+  --color-accent-600: var(--color-amber-600);  /* botones primarios */
+  --color-accent-700: var(--color-amber-700);  /* hover de botones */
+  --color-accent-800: var(--color-amber-800);
+  --color-accent-900: var(--color-amber-900);
+  --color-accent-950: var(--color-amber-950);
+}
+```
+
+### Colores semánticos (NO cambian entre proyectos)
+
+| Semántica | Color Tailwind | Cuándo usar                    |
+|-----------|---------------|--------------------------------|
+| Éxito     | `green-*`     | Operación completada           |
+| Error     | `red-*`       | Validación fallida, API error  |
+| Advertencia | `yellow-*`  | Avisos, tokens próximos a expirar |
+| Info      | `blue-*`      | Mensajes informativos neutros  |
+
+### Colores del logo SVG — Amber
+
+El componente `Logo.tsx` usa colores SVG hardcodeados que deben coincidir con el acento:
+
+| Elemento           | Atributo SVG           | Color           |
+|--------------------|------------------------|-----------------|
+| Borde del badge    | `stroke="#d97706"`     | amber-600       |
+| Trazos de la letra | `stroke="#fbbf24"`     | amber-400       |
+
+> Ver `_docs/referencia-tecnica/design-system.md` para instrucciones completas de clonación,
+> verificación visual y convenciones de uso del sistema de tokens.

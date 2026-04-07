@@ -888,6 +888,66 @@ volumes:
 | Responsividad  | Mobile-first — formularios de auth visibles en móvil               |
 | Accesibilidad  | Labels en inputs, `aria-*` básicos, contraste suficiente (WCAG AA) |
 
+### 15.5 Sistema de Temas Diferenciales por Stack — OBLIGATORIO
+
+Este proyecto pertenece a una **serie educativa** donde cada variante del sistema
+tiene un color de acento único que identifica su stack. Los componentes React
+**NUNCA** usan colores hardcodeados — siempre el token `accent-*`.
+
+#### Identidad visual — Spring Boot Java → **amber**
+
+| Stack                  | Proyecto               | Acento Tailwind | Hex           |
+| ---------------------- | ---------------------- | --------------- | ------------- |
+| FastAPI (Python)       | `proyecto-be-fe`       | `emerald`       | `#059669`     |
+| Express.js (Node)      | `proyecto-beex-fe`     | `blue`          | `#2563eb`     |
+| Next.js (fullstack)    | `proyecto-be-fe-next`  | `violet`        | `#7c3aed`     |
+| **Spring Boot (Java)** | **`proyecto-besb-fe`** | **`amber`**     | **`#d97706`** |
+| Spring Boot (Kotlin)   | `proyecto-besbk-fe`    | `fuchsia`       | `#c026d3`     |
+| Go REST API            | `proyecto-bego-fe`     | `cyan`          | `#0891b2`     |
+
+#### Reglas del token `accent-*`
+
+```tsx
+// ✅ CORRECTO — usar siempre el token accent-*
+<button className="bg-accent-600 hover:bg-accent-700 text-white">
+  Iniciar sesión
+</button>
+
+// ❌ NUNCA hardcodear el color del stack en los componentes
+<button className="bg-amber-600 hover:bg-amber-700 text-white">
+  Iniciar sesión
+</button>
+```
+
+#### Configuración en `fe/src/index.css`
+
+```css
+/* Spring Boot Java → amber */
+@theme inline {
+  --color-accent-50: var(--color-amber-50);
+  --color-accent-100: var(--color-amber-100);
+  --color-accent-200: var(--color-amber-200);
+  --color-accent-300: var(--color-amber-300);
+  --color-accent-400: var(--color-amber-400);
+  --color-accent-500: var(--color-amber-500);
+  --color-accent-600: var(--color-amber-600); /* botones primarios */
+  --color-accent-700: var(--color-amber-700); /* hover */
+  --color-accent-800: var(--color-amber-800);
+  --color-accent-900: var(--color-amber-900);
+  --color-accent-950: var(--color-amber-950);
+}
+```
+
+#### Colores del logo SVG — Amber
+
+| Elemento           | Atributo SVG       | Color     |
+| ------------------ | ------------------ | --------- |
+| Borde del badge    | `stroke="#d97706"` | amber-600 |
+| Trazos de la letra | `stroke="#fbbf24"` | amber-400 |
+
+> Ver `_docs/referencia-tecnica/design-system.md` para el sistema completo de tokens,
+> instrucciones de clonación y verificación visual.
+
 ---
 
 ## 16. Reglas para Copilot / IA — Al Generar Código
