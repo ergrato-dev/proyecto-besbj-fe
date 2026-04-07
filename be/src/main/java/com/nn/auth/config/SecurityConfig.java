@@ -9,6 +9,7 @@
 package com.nn.auth.config;
 
 import com.nn.auth.repository.UserRepository;
+import com.nn.auth.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -19,6 +20,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -56,12 +58,14 @@ public class SecurityConfig {
    * abrir los endpoints de auth y Swagger sin requerir token.
    * ¿Impacto? Sin esta configuración, ninguna petición del frontend funcionaría.
    *
-   * @param http Objeto de configuración HTTP de Spring Security
+   * @param http      Objeto de configuración HTTP de Spring Security
+   * @param jwtFilter Filtro que intercepta y valida tokens JWT en cada petición
    * @return SecurityFilterChain configurado
    * @throws Exception Si hay error en la configuración de seguridad
    */
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  public SecurityFilterChain securityFilterChain(HttpSecurity http,
+      JwtAuthenticationFilter jwtFilter) throws Exception {
     http
         // CSRF no es necesario en APIs REST stateless con JWT
         .csrf(AbstractHttpConfigurer::disable)
@@ -92,9 +96,11 @@ public class SecurityConfig {
             .permitAll()
 
             // Cualquier otra ruta requiere autenticación
-            .anyRequest().authenticated());
+            .anyRequest().authenticated())
 
-    // TODO (Fase 3): agregar JwtAuthenticationFilter aquí con addFilterBefore()
+        // Insertar el filtro JWT ANTES del filtro de autenticación estándar de Spring
+        // para que el SecurityContext esté poblado cuando los controllers se ejecuten
+        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }

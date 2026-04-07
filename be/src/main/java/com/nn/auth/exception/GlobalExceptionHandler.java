@@ -15,6 +15,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.Instant;
@@ -35,6 +36,7 @@ public class GlobalExceptionHandler {
    * @return ProblemDetail 400 con mapa de campo → mensaje de error
    */
   @ExceptionHandler(MethodArgumentNotValidException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ProblemDetail handleValidationErrors(MethodArgumentNotValidException ex) {
     Map<String, String> errors = new HashMap<>();
     for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
@@ -59,10 +61,31 @@ public class GlobalExceptionHandler {
    * @return ProblemDetail 401 con mensaje genérico
    */
   @ExceptionHandler(AuthenticationException.class)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
   public ProblemDetail handleAuthenticationException(AuthenticationException ex) {
     ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED);
     detail.setTitle("No autorizado");
-    detail.setDetail("Credenciales inválidas o token expirado");
+    detail.setDetail(ex.getMessage() != null ? ex.getMessage() : "Credenciales inválidas o token expirado");
+    detail.setProperty("timestamp", Instant.now());
+    return detail;
+  }
+
+  /**
+   * ¿Qué? Maneja errores de lógica de negocio — token inválido, email ya usado,
+   * etc.
+   * ¿Para qué? Devolver 400 con el mensaje descriptivo del error de negocio.
+   * ¿Impacto? Permite al frontend mostrar mensajes de error específicos al
+   * usuario.
+   *
+   * @param ex Excepción de argumento/estado inválido lanzada por AuthService
+   * @return ProblemDetail 400 con el mensaje del error
+   */
+  @ExceptionHandler({ IllegalArgumentException.class, IllegalStateException.class })
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ProblemDetail handleBusinessException(RuntimeException ex) {
+    ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+    detail.setTitle("Solicitud inválida");
+    detail.setDetail(ex.getMessage());
     detail.setProperty("timestamp", Instant.now());
     return detail;
   }
@@ -78,6 +101,7 @@ public class GlobalExceptionHandler {
    * @return ProblemDetail 403
    */
   @ExceptionHandler(AccessDeniedException.class)
+  @ResponseStatus(HttpStatus.FORBIDDEN)
   public ProblemDetail handleAccessDeniedException(AccessDeniedException ex) {
     ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.FORBIDDEN);
     detail.setTitle("Acceso denegado");
@@ -95,6 +119,7 @@ public class GlobalExceptionHandler {
    * @return ProblemDetail 500 genérico
    */
   @ExceptionHandler(Exception.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   public ProblemDetail handleGenericException(Exception ex) {
     ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
     detail.setTitle("Error interno del servidor");
