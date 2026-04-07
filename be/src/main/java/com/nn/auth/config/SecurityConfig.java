@@ -8,6 +8,7 @@
  */
 package com.nn.auth.config;
 
+import com.nn.auth.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,6 +16,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -25,6 +28,25 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+  /**
+   * ¿Qué? Provee el mecanismo para cargar un usuario por su email (username).
+   * ¿Para qué? Spring Security necesita este bean para saber cómo obtener los
+   * datos del usuario cuando valida credenciales. Sin él, genera
+   * un usuario "user" con contraseña aleatoria en consola — no sirve.
+   * ¿Impacto? El JwtAuthenticationFilter (Fase 3) llamará a este bean para
+   * cargar el User del SecurityContext a partir del email en el token.
+   *
+   * @param userRepository Repositorio que consulta la tabla users en PostgreSQL
+   * @return UserDetailsService configurado a buscar usuarios por email
+   */
+  @Bean
+  public UserDetailsService userDetailsService(UserRepository userRepository) {
+    return email -> userRepository
+        .findByEmailIgnoreCase(email)
+        .orElseThrow(() -> new UsernameNotFoundException(
+            "Usuario no encontrado con email: " + email));
+  }
 
   /**
    * ¿Qué? Define las reglas de seguridad HTTP: qué rutas son públicas, stateless
