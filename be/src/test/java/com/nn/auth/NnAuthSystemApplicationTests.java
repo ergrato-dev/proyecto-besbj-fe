@@ -15,7 +15,8 @@ import org.springframework.test.context.ActiveProfiles;
 
 /**
  * ¿Qué? Test de integración que arranca el contexto completo de Spring Boot
- * conectando a la BD de test (nn_auth_test_db) definida en application-test.yml.
+ * conectando a la BD de test (nn_auth_test_db) definida en
+ * application-test.yml.
  * ¿Para qué? Verificar que todos los beans, configuraciones y dependencias
  * se cargan correctamente sin errores al arrancar.
  * ¿Impacto? @ActiveProfiles("test") activa application-test.yml que apunta
