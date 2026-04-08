@@ -116,14 +116,6 @@ i18n
     interpolation: {
       escapeValue: false,
     },
-
-    // ¿Qué? Fuerza inicialización sincrónica cuando los recursos son estáticos.
-    // ¿Para qué? Garantiza que t() devuelve el texto correcto desde el primer render,
-    //            tanto en producción como en el entorno de tests (Vitest + jsdom).
-    // ¿Impacto? Sin esto, en tests los componentes renderizarían antes de que
-    //           i18next terminara de inicializarse, causando que t() devuelva la clave
-    //           en lugar del texto traducido.
-    initImmediate: false,
   });
 
 export default i18n;

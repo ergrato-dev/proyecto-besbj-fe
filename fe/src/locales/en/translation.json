@@ -228,22 +228,76 @@
     }
   },
   "contact": {
-    "title": "Contact",
-    "subtitle": "NN Auth System is a SENA educational project",
-    "backToHome": "← Back to home",
-    "about": {
-      "title": "About the project",
-      "text": "This authentication system was developed as a learning project, implementing security best practices with Spring Boot 3 (Java 21), React 19 and PostgreSQL 17. Every line of code is documented with the principle: What? Why? Impact?"
+    "title": "Contact Form",
+    "subtitle": "Send us your query, report or request. We respond within the deadlines established by Law 1581 of 2012.",
+    "eduNotice": {
+      "title": "Educational project — SENA",
+      "body": "This form is for demonstration purposes only. Messages are not sent to any real server and the data you enter is not stored. Contact emails are fictional. In a real implementation, the form would send data to"
     },
-    "stack": {
-      "title": "Tech stack",
-      "backend": "Backend: Spring Boot 3 · Java 21 · PostgreSQL 17 · Flyway · JJWT",
-      "frontend": "Frontend: React 19 · TypeScript 6 · Vite 8 · TailwindCSS 4",
-      "security": "Security: BCrypt · JWT stateless · Bucket4j rate limiting"
+    "form": {
+      "heading": "Send a message",
+      "name": {
+        "label": "Full name",
+        "placeholder": "e.g. Ana García",
+        "error": "Name must be at least 3 characters."
+      },
+      "email": {
+        "label": "Reply email address",
+        "placeholder": "your-email@example.com",
+        "hint": "We will only use this email to reply to you. Do not send sensitive data.",
+        "error": "Enter a valid email address."
+      },
+      "subject": {
+        "label": "Subject",
+        "error": "Select a subject for your message.",
+        "options": {
+          "placeholder": "— Select a subject —",
+          "general": "General inquiry",
+          "support": "Technical support",
+          "dataRights": "Exercise rights (Law 1581/2012 — Habeas Data)",
+          "authSystem": "Authentication system",
+          "bugs": "Bug or error report",
+          "other": "Other"
+        }
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Describe your inquiry, report or request in detail...",
+        "hint": "{{count}} / 20 minimum characters",
+        "error": "Message must be at least 20 characters."
+      },
+      "privacy": {
+        "label": "I have read and accept the",
+        "link": "Privacy and Data Protection Policy",
+        "labelSuffix": "(Law 1581 of 2012). I authorize my data to be used solely to respond to my request.",
+        "error": "You must accept the Privacy Policy to continue."
+      },
+      "submit": "Send message",
+      "submitting": "Sending...",
+      "errorBanner": "There was an error processing your message. Please try again."
     },
-    "repo": {
-      "title": "Repository",
-      "text": "The project source code is available on GitHub under the organization"
+    "success": {
+      "title": "Message sent successfully",
+      "body": "(Simulation — no real email was sent.) In production, we would respond within a maximum of 10 business days for queries or 15 business days for claims, pursuant to Law 1581 of 2012.",
+      "reset": "Send another message"
+    },
+    "info": {
+      "heading": "Contact information",
+      "antiSpam": {
+        "title": "📬 Main contact channel",
+        "body": "For anti-spam reasons we do not publish email addresses. Use the form on this page to send us your message — we will reply within the legal deadlines indicated below."
+      },
+      "phone": "Phone",
+      "address": "Address",
+      "hours": "Office hours",
+      "deadlines": {
+        "title": "Response deadlines (Law 1581/2012)",
+        "queries": "Queries: 10 business days (Art. 14, Law 1581/2012)",
+        "claims": "Claims: 15 business days (Art. 15, Law 1581/2012)"
+      }
+    },
+    "footer": {
+      "credit": "SENA educational project"
     }
   },
   "notFound": {

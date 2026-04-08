@@ -228,22 +228,76 @@
     }
   },
   "contact": {
-    "title": "Contacto",
-    "subtitle": "NN Auth System es un proyecto educativo del programa SENA",
-    "backToHome": "← Volver al inicio",
-    "about": {
-      "title": "Sobre el proyecto",
-      "text": "Este sistema de autenticación fue desarrollado como proyecto de aprendizaje, implementando las mejores prácticas de seguridad con Spring Boot 3 (Java 21), React 19 y PostgreSQL 17. Cada línea de código está documentada con el principio ¿Qué? ¿Para qué? ¿Impacto?."
+    "title": "Formulario de Contacto",
+    "subtitle": "Envíanos tu consulta, reporte o solicitud. Respondemos en los plazos establecidos por la Ley 1581 de 2012.",
+    "eduNotice": {
+      "title": "Proyecto educativo — SENA",
+      "body": "Este formulario es demostrativo. Los mensajes no se envían a ningún servidor real y los datos que ingreses no se almacenan. Los correos de contacto son ficticios. En una implementación real, el formulario enviaría los datos a"
     },
-    "stack": {
-      "title": "Stack tecnológico",
-      "backend": "Backend: Spring Boot 3 · Java 21 · PostgreSQL 17 · Flyway · JJWT",
-      "frontend": "Frontend: React 19 · TypeScript 6 · Vite 8 · TailwindCSS 4",
-      "security": "Seguridad: BCrypt · JWT stateless · Bucket4j rate limiting"
+    "form": {
+      "heading": "Enviar mensaje",
+      "name": {
+        "label": "Nombre completo",
+        "placeholder": "Ej. Ana García",
+        "error": "El nombre debe tener al menos 3 caracteres."
+      },
+      "email": {
+        "label": "Correo electrónico de respuesta",
+        "placeholder": "tu-correo@ejemplo.com",
+        "hint": "Usaremos este correo únicamente para responderte. No envíes datos sensibles.",
+        "error": "Ingresa una dirección de correo electrónico válida."
+      },
+      "subject": {
+        "label": "Asunto",
+        "error": "Selecciona un asunto para tu mensaje.",
+        "options": {
+          "placeholder": "— Selecciona un asunto —",
+          "general": "Consulta general",
+          "support": "Soporte técnico",
+          "dataRights": "Ejercer derechos (Ley 1581/2012 — Habeas Data)",
+          "authSystem": "Sistema de autenticación",
+          "bugs": "Reporte de bugs o errores",
+          "other": "Otro"
+        }
+      },
+      "message": {
+        "label": "Mensaje",
+        "placeholder": "Describe detalladamente tu consulta, reporte o solicitud...",
+        "hint": "{{count}} / 20 caracteres mínimos",
+        "error": "El mensaje debe tener al menos 20 caracteres."
+      },
+      "privacy": {
+        "label": "He leído y acepto la",
+        "link": "Política de Privacidad y Tratamiento de Datos Personales",
+        "labelSuffix": "(Ley 1581 de 2012). Autorizo que mis datos sean utilizados únicamente para responder mi solicitud.",
+        "error": "Debes aceptar la Política de Privacidad para continuar."
+      },
+      "submit": "Enviar mensaje",
+      "submitting": "Enviando...",
+      "errorBanner": "Hubo un error al procesar tu mensaje. Por favor intenta de nuevo."
     },
-    "repo": {
-      "title": "Repositorio",
-      "text": "El código fuente del proyecto está disponible en GitHub bajo la organización"
+    "success": {
+      "title": "Mensaje enviado correctamente",
+      "body": "(Simulación — no se envió ningún correo real.) En producción, responderíamos en un plazo máximo de 10 días hábiles para consultas o 15 días hábiles para reclamos, conforme a la Ley 1581 de 2012.",
+      "reset": "Enviar otro mensaje"
+    },
+    "info": {
+      "heading": "Información de contacto",
+      "antiSpam": {
+        "title": "📬 Canal principal de contacto",
+        "body": "Por política antispam no publicamos buzones de correo electrónico. Usa el formulario de esta página para enviarnos tu mensaje — te responderemos dentro de los plazos legales indicados abajo."
+      },
+      "phone": "Teléfono",
+      "address": "Domicilio",
+      "hours": "Horario de atención",
+      "deadlines": {
+        "title": "Plazos de respuesta (Ley 1581/2012)",
+        "queries": "Consultas: 10 días hábiles (Art. 14, Ley 1581/2012)",
+        "claims": "Reclamos: 15 días hábiles (Art. 15, Ley 1581/2012)"
+      }
+    },
+    "footer": {
+      "credit": "Proyecto educativo SENA"
     }
   },
   "notFound": {
