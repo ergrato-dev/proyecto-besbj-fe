@@ -1,0 +1,141 @@
+/**
+ * Archivo: pages/ChangePasswordPage.tsx
+ * Descripción: Página para cambiar la contraseña de un usuario autenticado.
+ * ¿Para qué? Permitir al usuario actualizar su contraseña desde el Dashboard,
+ *            sin necesidad de hacer logout ni de un email de recuperación.
+ *            A diferencia del reset, aquí el usuario debe saber su contraseña actual.
+ * ¿Impacto? Ruta protegida — solo accesible con JWT válido. El backend verifica
+ *           que currentPassword coincida antes de actualizar.
+ */
+
+import { useState, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../components/layout/Navbar";
+import InputField from "../components/ui/InputField";
+import Button from "../components/ui/Button";
+import Alert from "../components/ui/Alert";
+import { changePassword, extractErrorMessage } from "../api/auth";
+
+export default function ChangePasswordPage() {
+  const navigate = useNavigate();
+
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const passwordsMatch = newPassword === confirmPassword;
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
+    e.preventDefault();
+    if (!passwordsMatch) return;
+    setErrorMessage(null);
+    setSuccessMessage(null);
+    setIsLoading(true);
+
+    try {
+      const result = await changePassword({ currentPassword, newPassword });
+      setSuccessMessage(result.message);
+      // Limpiar formulario después del éxito
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (error) {
+      setErrorMessage(extractErrorMessage(error));
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <Navbar />
+
+      <main className="mx-auto max-w-lg px-4 py-12 sm:px-6">
+        <div className="mb-6">
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Volver al dashboard
+          </button>
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 bg-white p-8 dark:border-gray-700 dark:bg-gray-900">
+          <h1 className="mb-1 text-xl font-bold text-gray-900 dark:text-white">
+            Cambiar contraseña
+          </h1>
+          <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
+            Necesitas saber tu contraseña actual para establecer una nueva
+          </p>
+
+          <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+            {errorMessage && <Alert variant="error">{errorMessage}</Alert>}
+            {successMessage && <Alert variant="success">{successMessage}</Alert>}
+
+            <InputField
+              id="currentPassword"
+              label="Contraseña actual"
+              type="password"
+              autoComplete="current-password"
+              required
+              placeholder="••••••••"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+            />
+
+            <InputField
+              id="newPassword"
+              label="Nueva contraseña"
+              type="password"
+              autoComplete="new-password"
+              required
+              placeholder="••••••••"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+
+            <InputField
+              id="confirmPassword"
+              label="Confirmar nueva contraseña"
+              type="password"
+              autoComplete="new-password"
+              required
+              placeholder="••••••••"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              error={
+                confirmPassword && !passwordsMatch
+                  ? "Las contraseñas no coinciden"
+                  : undefined
+              }
+            />
+
+            {/* Botón alineado a la derecha (regla del proyecto) */}
+            <div className="flex justify-end">
+              <Button
+                type="submit"
+                variant="primary"
+                isLoading={isLoading}
+                disabled={
+                  !currentPassword ||
+                  !newPassword ||
+                  !confirmPassword ||
+                  !passwordsMatch
+                }
+                className="px-8"
+              >
+                Actualizar contraseña
+              </Button>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+  );
+}

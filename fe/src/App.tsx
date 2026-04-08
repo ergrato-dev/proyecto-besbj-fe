@@ -1,82 +1,108 @@
 /**
  * Archivo: App.tsx
- * Descripción: Componente raíz de la aplicación — define el sistema de rutas.
- * ¿Para qué? Centralizar todas las rutas de la app en un solo lugar.
- *            Cada ruta mapea una URL a un componente de página.
- * ¿Impacto? Agregar una ruta aquí la hace accesible en el navegador.
- *            Olvidar agregar una ruta significa que la URL devuelve 404.
+ * Descripción: Componente raíz — define rutas y envuelve la app con AuthProvider.
+ * ¿Para qué? Centralizar el sistema de rutas y el proveedor de autenticación.
+ *            AuthProvider envuelve todas las rutas para que cualquier componente
+ *            (Navbar, ProtectedRoute, páginas) pueda usar useAuth().
+ * ¿Impacto? Si AuthProvider no envuelve el árbol, useAuth() lanzará un error
+ *           diciendo que está fuera de AuthProvider — fácil de depurar.
  */
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-/*
-  Placeholder temporal — las páginas reales se crean en Fase 6.
-  Este componente mínimo verifica que React Router funciona correctamente.
-*/
-function PlaceholderPage({ name }: { name: string }) {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
-      <div className="text-center">
-        {/*
-          accent-600 usa el token definido en index.css (@theme inline).
-          Aquí es amber-600 porque este es el stack Spring Boot Java.
-          En otro stack (ej: FastAPI), sería emerald-600 — sin cambiar este archivo.
-        */}
-        <h1 className="text-3xl font-bold text-accent-600">{name}</h1>
-        <p className="mt-2 text-gray-500 dark:text-gray-400">
-          NN Auth System — Spring Boot + React
-        </p>
-      </div>
-    </div>
-  );
-}
+// Proveedor de autenticación — debe envolver todo el árbol de rutas
+import { AuthProvider } from "./context/AuthContext";
+
+// Componente de protección de rutas
+import ProtectedRoute from "./components/ProtectedRoute";
+
+// Páginas públicas
+import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
+import VerifyEmailPage from "./pages/VerifyEmailPage";
+import NotFoundPage from "./pages/NotFoundPage";
+
+// Páginas informativas / legales
+import TermsPage from "./pages/TermsPage";
+import PrivacyPage from "./pages/PrivacyPage";
+import CookiesPage from "./pages/CookiesPage";
+import ContactPage from "./pages/ContactPage";
+
+// Páginas protegidas (requieren autenticación)
+import DashboardPage from "./pages/DashboardPage";
+import ChangePasswordPage from "./pages/ChangePasswordPage";
 
 /**
- * ¿Qué? Componente raíz que envuelve toda la app con BrowserRouter y define las rutas.
- * ¿Para qué? BrowserRouter habilita la navegación del lado del cliente (SPA).
- *            Sin él, React Router no puede leer ni modificar la URL del navegador.
- * ¿Impacto? Cambiar BrowserRouter por HashRouter cambiaría las URLs de /login a /#/login.
- *           En producción con BrowserRouter se necesita configurar el servidor para
- *           devolver index.html en todas las rutas (actualmente Vite lo hace solo).
+ * ¿Qué? Componente raíz que define el árbol completo de la aplicación.
+ * ¿Para qué? AuthProvider envuelve BrowserRouter para que los componentes de
+ *            navegación (Navbar) y de protección (ProtectedRoute) accedan al
+ *            estado de auth sin prop drilling.
+ * ¿Impacto? El orden importa: AuthProvider → BrowserRouter → Routes.
+ *           Si BrowserRouter estuviera fuera de AuthProvider, useNavigate() en
+ *           el logout del AuthProvider no funcionaría.
  */
 export default function App() {
   return (
     /*
-      BrowserRouter — usa la History API del navegador para gestionar la URL.
-      No recarga la página al navegar entre rutas.
+      AuthProvider — provee user, login, logout, isAuthenticated a toda la app.
+      Se monta una sola vez. Al montar, intenta restaurar la sesión del localStorage.
     */
-    <BrowserRouter>
+    <AuthProvider>
       {/*
-        Routes — contenedor de todas las rutas. Solo renderiza la primera
-        ruta que coincide con la URL actual. Sin él, todas las rutas
-        coincidentes se renderizarían a la vez.
+        BrowserRouter — habilita la History API del navegador.
+        Las URLs son limpias: /login, /dashboard (no /#/login como HashRouter).
+        En producción, el servidor debe devolver index.html para todas las rutas.
       */}
-      <Routes>
-        {/* Fase 6: aquí irán todas las rutas reales */}
-        <Route
-          path="/"
-          element={<PlaceholderPage name="Landing Page — próximamente" />}
-        />
-        <Route
-          path="/login"
-          element={<PlaceholderPage name="Login Page — próximamente" />}
-        />
-        <Route
-          path="/register"
-          element={<PlaceholderPage name="Register Page — próximamente" />}
-        />
-        <Route
-          path="/dashboard"
-          element={<PlaceholderPage name="Dashboard — próximamente" />}
-        />
+      <BrowserRouter>
         {/*
-          Ruta comodín — captura cualquier URL que no coincida con las anteriores.
-          Equivale al 404. En Fase 6 se reemplaza por un componente NotFoundPage.
+          Routes — renderiza solo la primera ruta que coincide con la URL actual.
+          El orden de las rutas importa para patrones ambiguos, aunque React Router 7
+          usa un algoritmo de coincidencia basado en especificidad, no en orden.
         */}
-        <Route
-          path="*"
-          element={<PlaceholderPage name="404 — Página no encontrada" />}
-        />
-      </Routes>
-    </BrowserRouter>
+        <Routes>
+          {/* ---- Rutas públicas ---- */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
+
+          {/* ---- Páginas informativas y legales ---- */}
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/cookies" element={<CookiesPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+
+          {/* ---- Rutas protegidas — requieren autenticación ---- */}
+          {/*
+            ProtectedRoute verifica isAuthenticated antes de renderizar el hijo.
+            Si el usuario no está autenticado, redirige a /login guardando la
+            URL original en location.state.from para redirigir de vuelta tras el login.
+          */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/change-password"
+            element={
+              <ProtectedRoute>
+                <ChangePasswordPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* ---- 404 — captura cualquier URL no definida arriba ---- */}
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }

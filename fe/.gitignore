@@ -4,6 +4,13 @@ node_modules/
 # Build de producción
 dist/
 
+# Artefactos de compilación TypeScript (generados por tsc --build / composite)
+*.tsbuildinfo
+*.d.ts.map
+# Archivos JS/d.ts generados por tsc en modo composite (vite.config.ts)
+vite.config.d.ts
+vite.config.js
+
 # Variables de entorno — nunca versionadas
 .env
 .env.local

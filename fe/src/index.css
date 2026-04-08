@@ -15,6 +15,17 @@
 @import "tailwindcss";
 
 /*
+  Habilita el modo oscuro basado en clase CSS en lugar de solo media query.
+  @custom-variant dark — cuando cualquier ancestro tenga la clase `.dark`,
+  las utilidades `dark:*` se activarán (ej: dark:bg-gray-900).
+  La alternativa es `prefers-color-scheme: dark` (automático del SO),
+  pero la clase permite que el usuario controle el tema con un botón.
+  ¿Impacto? Sin esta directiva, `dark:` NO funciona con clase .dark en el
+            elemento <html> — solo respondería al media query del SO.
+*/
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
   @theme inline — define tokens de diseño personalizados que TailwindCSS 4
   convierte en clases de utilidad (bg-accent-600, text-accent-500, etc.).
 
@@ -61,5 +72,16 @@
     /* Renderizado de fuentes más nítido en pantallas de alta resolución */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /*
+    Colores base del body en modo claro y oscuro.
+    transition: evita el cambio brusco al alternar el tema.
+    ¿Impacto? Sin estos estilos base, cada componente tendría que declarar
+              su propio fondo y color de texto — mucho código duplicado.
+  */
+  body {
+    @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-white;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 }
