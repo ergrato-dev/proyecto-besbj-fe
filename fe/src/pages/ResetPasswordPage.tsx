@@ -9,6 +9,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useSearchParams, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import AuthLayout from "../components/layout/AuthLayout";
 import InputField from "../components/ui/InputField";
 import Button from "../components/ui/Button";
@@ -25,6 +26,7 @@ export default function ResetPasswordPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const { t } = useTranslation();
 
   // Validación local: las contraseñas coinciden antes de enviar al backend
   const passwordsMatch = newPassword === confirmPassword;
@@ -48,23 +50,22 @@ export default function ResetPasswordPage() {
   // Sin token en la URL — probablemente acceso directo sin seguir el email
   if (!token) {
     return (
-      <AuthLayout title="Enlace inválido">
+      <AuthLayout title={t("auth.resetPassword.invalidTitle")}>
         <Alert variant="error">
-          El enlace de recuperación no es válido. Solicita uno nuevo desde la
-          página de recuperación de contraseña.
+          {t("auth.resetPassword.invalidMessage")}
         </Alert>
         <div className="mt-4 flex justify-end">
           <Link to="/forgot-password">
-            <Button variant="primary">Solicitar nuevo enlace</Button>
+            <Button variant="primary">{t("auth.resetPassword.requestNewLink")}</Button>
           </Link>
         </div>
       </AuthLayout>
     );
-  }
+}
 
   if (success) {
     return (
-      <AuthLayout title="Contraseña actualizada" subtitle="Todo listo">
+      <AuthLayout title={t("auth.resetPassword.successTitle")} subtitle={t("auth.resetPassword.successSubtitle")}>
         <div className="flex flex-col items-center gap-6 text-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 text-green-600 dark:bg-green-950 dark:text-green-400">
             <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -72,11 +73,10 @@ export default function ResetPasswordPage() {
             </svg>
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            Tu contraseña ha sido actualizada correctamente. Ya puedes iniciar sesión
-            con tu nueva contraseña.
+            {t("auth.resetPassword.successMessage")}
           </p>
           <Link to="/login">
-            <Button variant="primary">Ir al login</Button>
+            <Button variant="primary">{t("auth.resetPassword.goToLogin")}</Button>
           </Link>
         </div>
       </AuthLayout>
@@ -85,35 +85,35 @@ export default function ResetPasswordPage() {
 
   return (
     <AuthLayout
-      title="Nueva contraseña"
-      subtitle="Elige una contraseña segura"
+      title={t("auth.resetPassword.title")}
+      subtitle={t("auth.resetPassword.subtitle")}
     >
       <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
         {errorMessage && <Alert variant="error">{errorMessage}</Alert>}
 
         <InputField
           id="newPassword"
-          label="Nueva contraseña"
+          label={t("auth.resetPassword.newPassword")}
           type="password"
           autoComplete="new-password"
           required
-          placeholder="••••••••"
+          placeholder={t("common.passwordPlaceholder")}
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
         />
 
         <InputField
           id="confirmPassword"
-          label="Confirmar contraseña"
+          label={t("auth.resetPassword.confirmPassword")}
           type="password"
           autoComplete="new-password"
           required
-          placeholder="••••••••"
+          placeholder={t("common.passwordPlaceholder")}
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           error={
             confirmPassword && !passwordsMatch
-              ? "Las contraseñas no coinciden"
+              ? t("common.passwordsMismatch")
               : undefined
           }
         />
@@ -126,7 +126,7 @@ export default function ResetPasswordPage() {
             disabled={!newPassword || !confirmPassword || !passwordsMatch}
             className="w-full sm:w-auto px-8"
           >
-            Actualizar contraseña
+            {t("auth.resetPassword.submit")}
           </Button>
         </div>
       </form>

@@ -8,6 +8,7 @@
 
 import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import AuthLayout from "../components/layout/AuthLayout";
 import InputField from "../components/ui/InputField";
 import Button from "../components/ui/Button";
@@ -16,6 +17,7 @@ import { useAuth } from "../hooks/useAuth";
 
 export default function RegisterPage() {
   const { register } = useAuth();
+  const { t } = useTranslation();
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -38,16 +40,14 @@ export default function RegisterPage() {
 
     try {
       const user = await register({ fullName, email, password });
-      setSuccessMessage(
-        `Cuenta creada para ${user.email}. Revisa tu bandeja de entrada para verificar tu email antes de iniciar sesión.`,
-      );
+      setSuccessMessage(t("auth.register.successMessage", { email: user.email }));
       // Limpiar el formulario
       setFullName("");
       setEmail("");
       setPassword("");
     } catch (error) {
       setErrorMessage(
-        error instanceof Error ? error.message : "Error al crear la cuenta",
+        error instanceof Error ? error.message : t("auth.register.errorDefault"),
       );
     } finally {
       setIsLoading(false);
@@ -56,8 +56,8 @@ export default function RegisterPage() {
 
   return (
     <AuthLayout
-      title="Crear cuenta"
-      subtitle="Únete al sistema NN Auth"
+      title={t("auth.register.title")}
+      subtitle={t("auth.register.subtitle")}
     >
       <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
         {errorMessage && <Alert variant="error">{errorMessage}</Alert>}
@@ -67,22 +67,22 @@ export default function RegisterPage() {
 
         <InputField
           id="fullName"
-          label="Nombre completo"
+          label={t("common.fullName")}
           type="text"
           autoComplete="name"
           required
-          placeholder="Ana García"
+          placeholder={t("auth.register.fullNamePlaceholder")}
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
         />
 
         <InputField
           id="email"
-          label="Correo electrónico"
+          label={t("common.email")}
           type="email"
           autoComplete="email"
           required
-          placeholder="usuario@ejemplo.com"
+          placeholder={t("common.emailPlaceholder")}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -90,17 +90,17 @@ export default function RegisterPage() {
         <div className="flex flex-col gap-1">
           <InputField
             id="password"
-            label="Contraseña"
+            label={t("common.password")}
             type="password"
             autoComplete="new-password"
             required
-            placeholder="••••••••"
+            placeholder={t("common.passwordPlaceholder")}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           {/* Reglas de contraseña — info preventiva antes del error */}
           <p className="text-xs text-gray-400 dark:text-gray-500">
-            Mínimo 8 caracteres, una mayúscula, una minúscula y un número
+            {t("auth.register.passwordHint")}
           </p>
         </div>
 
@@ -112,18 +112,18 @@ export default function RegisterPage() {
             disabled={!fullName || !email || !password}
             className="w-full sm:w-auto px-8"
           >
-            Crear cuenta
+            {t("auth.register.submit")}
           </Button>
         </div>
       </form>
 
       <p className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
-        ¿Ya tienes cuenta?{" "}
+        {t("auth.register.haveAccount")}{" "}
         <Link
           to="/login"
           className="font-medium text-accent-600 hover:text-accent-700 dark:text-accent-400 dark:hover:text-accent-300"
         >
-          Inicia sesión
+          {t("auth.register.loginLink")}
         </Link>
       </p>
     </AuthLayout>

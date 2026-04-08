@@ -9,8 +9,10 @@
 
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Logo from "../ui/Logo";
 import Button from "../ui/Button";
+import LanguageSwitcher from "../ui/LanguageSwitcher";
 import { useAuth } from "../../hooks/useAuth";
 
 /**
@@ -29,6 +31,10 @@ const THEME_KEY = "nn-auth-theme";
 export default function Navbar() {
   const { isAuthenticated, user, logout } = useAuth();
   const navigate = useNavigate();
+  // ¿Qué? Hook de traducción para todos los textos de la navbar.
+  // ¿Para qué? t() retorna el texto en el idioma activo.
+  // ¿Impacto? Al cambiar idioma, la navbar se actualiza automáticamente sin recarga.
+  const { t } = useTranslation();
 
   /* ------------------------------------------------------------------ */
   /* Estado del tema — sincronizado con localStorage y clase del DOM     */
@@ -82,28 +88,31 @@ export default function Navbar() {
           aria-label="NN Auth System — ir al inicio"
         >
           <Logo size={32} />
-          <span className="hidden sm:block">NN Auth System</span>
+          <span className="hidden sm:block">{t("nav.brand")}</span>
         </Link>
 
         {/* ---- Links secondarios (visibles en pantallas medianas+) ---- */}
         <div className="hidden items-center gap-6 text-sm text-gray-600 dark:text-gray-400 md:flex">
           <Link to="/terms" className="hover:text-gray-900 dark:hover:text-white">
-            Términos
+            {t("nav.links.terms")}
           </Link>
           <Link to="/privacy" className="hover:text-gray-900 dark:hover:text-white">
-            Privacidad
+            {t("nav.links.privacy")}
           </Link>
           <Link to="/contact" className="hover:text-gray-900 dark:hover:text-white">
-            Contacto
+            {t("nav.links.contact")}
           </Link>
         </div>
 
         {/* ---- Acciones del lado derecho ---- */}
         <div className="flex items-center gap-2">
+          {/* Selector de idioma */}
+          <LanguageSwitcher />
+
           {/* Botón de toggle de tema — icono sol/luna */}
           <button
             onClick={toggleTheme}
-            aria-label={isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+            aria-label={isDark ? t("nav.themeToggle.toLight") : t("nav.themeToggle.toDark")}
             className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-200"
           >
             {isDark ? (
@@ -129,11 +138,11 @@ export default function Navbar() {
               </span>
               <Link to="/dashboard">
                 <Button variant="ghost" className="text-sm">
-                  Dashboard
+                  {t("nav.dashboard")}
                 </Button>
               </Link>
               <Button variant="secondary" onClick={handleLogout} className="text-sm">
-                Cerrar sesión
+                {t("nav.logout")}
               </Button>
             </>
           ) : (
@@ -141,12 +150,12 @@ export default function Navbar() {
             <>
               <Link to="/login">
                 <Button variant="ghost" className="text-sm">
-                  Iniciar sesión
+                  {t("nav.login")}
                 </Button>
               </Link>
               <Link to="/register">
                 <Button variant="primary" className="text-sm">
-                  Registrarse
+                  {t("nav.register")}
                 </Button>
               </Link>
             </>

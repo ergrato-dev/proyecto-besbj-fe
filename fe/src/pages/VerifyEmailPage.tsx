@@ -9,6 +9,7 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import AuthLayout from "../components/layout/AuthLayout";
 import Button from "../components/ui/Button";
 import Alert from "../components/ui/Alert";
@@ -17,14 +18,13 @@ import { verifyEmail, extractErrorMessage } from "../api/auth";
 export default function VerifyEmailPage() {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token") ?? "";
+  const { t } = useTranslation();
 
   const [status, setStatus] = useState<"loading" | "success" | "error">(
     token ? "loading" : "error",
   );
   const [errorMessage, setErrorMessage] = useState<string>(
-    token
-      ? ""
-      : "El enlace de verificación no es válido. Solicita uno nuevo al iniciar sesión.",
+    token ? "" : "",
   );
 
   /**
@@ -51,7 +51,7 @@ export default function VerifyEmailPage() {
 
   if (status === "loading") {
     return (
-      <AuthLayout title="Verificando email...">
+      <AuthLayout title={t("auth.verifyEmail.loadingTitle")}>
         <div className="flex justify-center py-8">
           <svg
             aria-hidden="true"
@@ -69,7 +69,7 @@ export default function VerifyEmailPage() {
 
   if (status === "success") {
     return (
-      <AuthLayout title="Email verificado" subtitle="¡Bienvenido al sistema!">
+      <AuthLayout title={t("auth.verifyEmail.successTitle")} subtitle={t("auth.verifyEmail.successSubtitle")}>
         <div className="flex flex-col items-center gap-6 text-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 text-green-600 dark:bg-green-950 dark:text-green-400">
             <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -77,12 +77,11 @@ export default function VerifyEmailPage() {
             </svg>
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            Tu dirección de email ha sido verificada correctamente. Ya puedes
-            iniciar sesión con tus credenciales.
+            {t("auth.verifyEmail.successMessage")}
           </p>
           <Link to="/login">
             <Button variant="primary" className="px-8">
-              Iniciar sesión
+              {t("auth.verifyEmail.goToLogin")}
             </Button>
           </Link>
         </div>
@@ -91,11 +90,11 @@ export default function VerifyEmailPage() {
   }
 
   return (
-    <AuthLayout title="Verificación fallida">
-      <Alert variant="error">{errorMessage}</Alert>
+    <AuthLayout title={t("auth.verifyEmail.errorTitle")}>
+      <Alert variant="error">{errorMessage || t("auth.verifyEmail.invalidLinkError")}</Alert>
       <div className="mt-6 flex justify-end">
         <Link to="/login">
-          <Button variant="secondary">Volver al login</Button>
+          <Button variant="secondary">{t("auth.verifyEmail.backToLogin")}</Button>
         </Link>
       </div>
     </AuthLayout>

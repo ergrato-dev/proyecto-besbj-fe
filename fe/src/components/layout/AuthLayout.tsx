@@ -9,6 +9,7 @@
 
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Logo from "../ui/Logo";
 
 interface AuthLayoutProps {
@@ -32,6 +33,7 @@ export default function AuthLayout({
   subtitle,
   children,
 }: AuthLayoutProps) {
+  const { t } = useTranslation();
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 dark:bg-gray-950">
       {/* ---- Logo + nombre del sistema ---- */}
@@ -67,15 +69,15 @@ export default function AuthLayout({
       {/* ---- Links legales al pie del formulario ---- */}
       <p className="mt-8 text-xs text-gray-400 dark:text-gray-600">
         <Link to="/terms" className="hover:text-gray-600 dark:hover:text-gray-400">
-          Términos
+          {t("legal.authFooter.terms")}
         </Link>
         {" · "}
         <Link to="/privacy" className="hover:text-gray-600 dark:hover:text-gray-400">
-          Privacidad
+          {t("legal.authFooter.privacy")}
         </Link>
         {" · "}
         <Link to="/cookies" className="hover:text-gray-600 dark:hover:text-gray-400">
-          Cookies
+          {t("legal.authFooter.cookies")}
         </Link>
       </p>
     </div>

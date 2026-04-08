@@ -10,6 +10,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Navbar from "../components/layout/Navbar";
 import InputField from "../components/ui/InputField";
 import Button from "../components/ui/Button";
@@ -18,6 +19,7 @@ import { changePassword, extractErrorMessage } from "../api/auth";
 
 export default function ChangePasswordPage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -62,16 +64,16 @@ export default function ChangePasswordPage() {
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            Volver al dashboard
+            {t("auth.changePassword.backToDashboard")}
           </button>
         </div>
 
         <div className="rounded-2xl border border-gray-200 bg-white p-8 dark:border-gray-700 dark:bg-gray-900">
           <h1 className="mb-1 text-xl font-bold text-gray-900 dark:text-white">
-            Cambiar contraseña
+            {t("auth.changePassword.title")}
           </h1>
           <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
-            Necesitas saber tu contraseña actual para establecer una nueva
+            {t("auth.changePassword.subtitle")}
           </p>
 
           <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
@@ -80,38 +82,38 @@ export default function ChangePasswordPage() {
 
             <InputField
               id="currentPassword"
-              label="Contraseña actual"
+              label={t("auth.changePassword.currentPassword")}
               type="password"
               autoComplete="current-password"
               required
-              placeholder="••••••••"
+              placeholder={t("common.passwordPlaceholder")}
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
             />
 
             <InputField
               id="newPassword"
-              label="Nueva contraseña"
+              label={t("auth.changePassword.newPassword")}
               type="password"
               autoComplete="new-password"
               required
-              placeholder="••••••••"
+              placeholder={t("common.passwordPlaceholder")}
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
 
             <InputField
               id="confirmPassword"
-              label="Confirmar nueva contraseña"
+              label={t("auth.changePassword.confirmPassword")}
               type="password"
               autoComplete="new-password"
               required
-              placeholder="••••••••"
+              placeholder={t("common.passwordPlaceholder")}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               error={
                 confirmPassword && !passwordsMatch
-                  ? "Las contraseñas no coinciden"
+                  ? t("common.passwordsMismatch")
                   : undefined
               }
             />
@@ -130,7 +132,7 @@ export default function ChangePasswordPage() {
                 }
                 className="px-8"
               >
-                Actualizar contraseña
+                {t("auth.changePassword.submit")}
               </Button>
             </div>
           </form>

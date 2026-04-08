@@ -9,6 +9,15 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+
+// ¿Qué? Importar la configuración de i18next ANTES de App.
+// ¿Para qué? Garantizar que el motor de traducción esté inicializado antes de que
+//            cualquier componente intente usar useTranslation().
+//            El import tiene el efecto secundario de llamar a i18n.init() al ejecutarse.
+// ¿Impacto? Si App importara antes que i18n, los primeros renders usarían la clave
+//            literal en lugar del texto traducido (ej: "auth.login.title" en pantalla).
+import "./i18n";
+
 import App from "./App";
 
 /*

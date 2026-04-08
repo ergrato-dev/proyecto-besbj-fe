@@ -9,6 +9,7 @@
 
 import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import AuthLayout from "../components/layout/AuthLayout";
 import InputField from "../components/ui/InputField";
 import Button from "../components/ui/Button";
@@ -20,6 +21,7 @@ export default function ForgotPasswordPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const { t } = useTranslation();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
@@ -37,12 +39,12 @@ export default function ForgotPasswordPage() {
     }
   }
 
-  // Estado de éxito — el email se ha enviado (o el email no existe, pero no lo revelamos)
+// Estado de éxito — el email se ha enviado
   if (submitted) {
     return (
       <AuthLayout
-        title="Revisa tu email"
-        subtitle="Instrucciones enviadas"
+        title={t("auth.forgotPassword.sentTitle")}
+        subtitle={t("auth.forgotPassword.sentSubtitle")}
       >
         <div className="flex flex-col items-center gap-6 text-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent-50 text-accent-600 dark:bg-accent-950 dark:text-accent-400">
@@ -52,15 +54,13 @@ export default function ForgotPasswordPage() {
             </svg>
           </div>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            Si existe una cuenta con el email <strong>{email}</strong>, recibirás
-            un enlace de recuperación en los próximos minutos. Revisa también
-            tu carpeta de spam.
+            {t("auth.forgotPassword.sentMessage", { email })}
           </p>
           <Link
             to="/login"
             className="text-sm font-medium text-accent-600 hover:text-accent-700 dark:text-accent-400"
           >
-            Volver al login
+            {t("auth.forgotPassword.backToLogin")}
           </Link>
         </div>
       </AuthLayout>
@@ -69,19 +69,19 @@ export default function ForgotPasswordPage() {
 
   return (
     <AuthLayout
-      title="Recuperar contraseña"
-      subtitle="Te enviaremos un enlace por email"
+      title={t("auth.forgotPassword.title")}
+      subtitle={t("auth.forgotPassword.subtitle")}
     >
       <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
         {errorMessage && <Alert variant="error">{errorMessage}</Alert>}
 
         <InputField
           id="email"
-          label="Correo electrónico"
+          label={t("common.email")}
           type="email"
           autoComplete="email"
           required
-          placeholder="usuario@ejemplo.com"
+          placeholder={t("common.emailPlaceholder")}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -94,7 +94,7 @@ export default function ForgotPasswordPage() {
             disabled={!email}
             className="w-full sm:w-auto px-8"
           >
-            Enviar enlace
+            {t("auth.forgotPassword.submit")}
           </Button>
         </div>
       </form>
@@ -104,7 +104,7 @@ export default function ForgotPasswordPage() {
           to="/login"
           className="font-medium text-accent-600 hover:text-accent-700 dark:text-accent-400"
         >
-          Volver al login
+          {t("auth.forgotPassword.backToLogin")}
         </Link>
       </p>
     </AuthLayout>

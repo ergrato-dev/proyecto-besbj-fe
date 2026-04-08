@@ -1,0 +1,254 @@
+{
+  "nav": {
+    "brand": "NN Auth System",
+    "logout": "Sign out",
+    "dashboard": "Dashboard",
+    "login": "Sign in",
+    "register": "Sign up",
+    "themeToggle": {
+      "toDark": "Switch to dark mode",
+      "toLight": "Switch to light mode"
+    },
+    "ariaLabel": "Main navigation",
+    "ariaLabelLogo": "NN Auth System — go to home",
+    "links": {
+      "terms": "Terms",
+      "privacy": "Privacy",
+      "cookies": "Cookies",
+      "contact": "Contact"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "email": "Email address",
+    "emailPlaceholder": "user@example.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "fullName": "Full name",
+    "passwordsMismatch": "Passwords don't match"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "subtitle": "Welcome back",
+      "forgotPassword": "Forgot your password?",
+      "noAccount": "Don't have an account?",
+      "registerLink": "Sign up for free",
+      "submit": "Sign in"
+    },
+    "register": {
+      "title": "Create account",
+      "subtitle": "Join NN Auth System",
+      "fullNamePlaceholder": "John Smith",
+      "passwordHint": "Minimum 8 characters, one uppercase, one lowercase and one number",
+      "submit": "Create account",
+      "successMessage": "Account created for {{email}}. Check your inbox to verify your email before signing in.",
+      "haveAccount": "Already have an account?",
+      "loginLink": "Sign in",
+      "errorDefault": "Error creating account"
+    },
+    "changePassword": {
+      "title": "Change password",
+      "subtitle": "You need to know your current password to set a new one",
+      "backToDashboard": "Back to dashboard",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "submit": "Update password"
+    },
+    "forgotPassword": {
+      "title": "Recover password",
+      "subtitle": "We'll send you a recovery link by email",
+      "submit": "Send link",
+      "backToLogin": "Back to sign in",
+      "sentTitle": "Check your email",
+      "sentSubtitle": "Instructions sent",
+      "sentMessage": "If an account exists for {{email}}, you'll receive a recovery link in the next few minutes. Also check your spam folder."
+    },
+    "resetPassword": {
+      "title": "New password",
+      "subtitle": "Choose a secure password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "submit": "Update password",
+      "successTitle": "Password updated",
+      "successSubtitle": "All done",
+      "successMessage": "Your password has been updated successfully. You can now sign in with your new password.",
+      "goToLogin": "Go to sign in",
+      "invalidTitle": "Invalid link",
+      "invalidMessage": "The recovery link is invalid. Request a new one from the password recovery page.",
+      "requestNewLink": "Request new link"
+    },
+    "verifyEmail": {
+      "loadingTitle": "Verifying email...",
+      "successTitle": "Email verified",
+      "successSubtitle": "Welcome to the system!",
+      "successMessage": "Your email address has been verified successfully. You can now sign in with your credentials.",
+      "goToLogin": "Sign in",
+      "errorTitle": "Verification failed",
+      "backToLogin": "Back to sign in",
+      "invalidLinkError": "The verification link is invalid. Request a new one when signing in."
+    }
+  },
+  "dashboard": {
+    "welcome": "Hello, {{name}} 👋",
+    "subtitle": "Welcome to your NN Auth System dashboard",
+    "profileTitle": "Account information",
+    "labelName": "Name",
+    "labelEmail": "Email",
+    "labelEmailVerified": "Email verified",
+    "labelStatus": "Status",
+    "labelMemberSince": "Member since",
+    "statusVerified": "Verified",
+    "statusPending": "Pending",
+    "statusActive": "Active",
+    "statusInactive": "Inactive",
+    "changePasswordButton": "Change password",
+    "logoutButton": "Sign out"
+  },
+  "language": {
+    "selector": "Language",
+    "es": "Español",
+    "en": "English"
+  },
+  "landing": {
+    "badge": "Spring Boot 3 · Java 21 · React 19 · SENA",
+    "title": "NN Auth System",
+    "subtitle": "Complete authentication system with registration, login, password change and recovery. Built to learn Spring Boot and React applying security best practices.",
+    "ctaRegister": "Create account",
+    "ctaLogin": "Sign in",
+    "featuresTitle": "System features",
+    "featuresSubtitle": "Each feature implements a real security practice",
+    "stackTitle": "Tech stack",
+    "footer": {
+      "credit": "NN Auth System — SENA educational project",
+      "links": {
+        "terms": "Terms",
+        "privacy": "Privacy",
+        "cookies": "Cookies",
+        "contact": "Contact"
+      }
+    },
+    "features": {
+      "register": {
+        "title": "Secure registration",
+        "description": "BCrypt password hashing. Strength validation: minimum 8 characters, uppercase, lowercase and numbers."
+      },
+      "jwt": {
+        "title": "Stateless JWT",
+        "description": "15-minute access token + 7-day refresh token. The server stores no sessions — scales horizontally."
+      },
+      "email": {
+        "title": "Email verification",
+        "description": "User must verify email before login. Prevents registration with someone else's email."
+      },
+      "recovery": {
+        "title": "Password recovery",
+        "description": "Email-based reset with single-use token valid for 1 hour. Always identical response (anti-enumeration)."
+      }
+    },
+    "stack": {
+      "springBoot": { "name": "Spring Boot 3", "detail": "Java 21 · Backend REST API" },
+      "react": { "name": "React 19", "detail": "TypeScript 6 · Frontend SPA" },
+      "postgres": { "name": "PostgreSQL 17", "detail": "Flyway · Versioned migrations" },
+      "tailwind": { "name": "TailwindCSS 4", "detail": "Vite 8 · Fast build" }
+    }
+  },
+  "legal": {
+    "backToHome": "← Back to home",
+    "lastUpdated": "Last updated: April 2026",
+    "authFooter": {
+      "terms": "Terms",
+      "privacy": "Privacy",
+      "cookies": "Cookies"
+    },
+    "terms": {
+      "title": "Terms and conditions",
+      "s1": {
+        "heading": "1. System purpose",
+        "p1": "NN Auth System is an educational project developed within the SENA program. Its purpose is to demonstrate the implementation of a complete authentication system with Spring Boot (Java 21) and React. It is not intended for production use with real data."
+      },
+      "s2": {
+        "heading": "2. Acceptable use",
+        "p1": "Users agree to use the system exclusively for learning and testing purposes. Attempting to breach the security of the system, performing brute-force attacks, or using the service for activities that violate applicable laws is prohibited."
+      },
+      "s3": {
+        "heading": "3. Test data",
+        "p1": "As an educational project, we recommend not using real personal data. Use test emails and passwords. Stored data may be deleted at any time."
+      },
+      "s4": {
+        "heading": "4. Liability",
+        "p1": "The system is provided \"as is\" for educational purposes. No continuous availability is guaranteed and no liability is assumed for data loss."
+      }
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "s1": {
+        "heading": "Data we collect",
+        "p1": "When creating an account, we collect: full name, email address and password. The password is stored hashed with BCrypt — never in plain text."
+      },
+      "s2": {
+        "heading": "How we use the data",
+        "p1": "Data is used exclusively for authentication within the system. It is not shared with third parties. This is an educational project — the data is for technical demonstration."
+      },
+      "s3": {
+        "heading": "Browser storage",
+        "p1": "The system uses localStorage to store the refresh token (needed to maintain the session between page reloads) and the theme preference (light/dark)."
+      },
+      "s4": {
+        "heading": "Contact",
+        "p1": "For any privacy inquiries, visit our contact page."
+      }
+    },
+    "cookies": {
+      "title": "Cookie policy",
+      "s1": {
+        "heading": "Do we use cookies?",
+        "p1": "The system does not use HTTP cookies. Instead, it uses the browser's localStorage for the refresh token and theme preference.",
+        "p2Technical": "Technical note: localStorage is accessible only by JavaScript from the same origin. HTTP cookies can be marked as HttpOnly, making them inaccessible to JavaScript — more secure against XSS attacks. In a real production system, the refresh token should be stored in an HttpOnly cookie."
+      },
+      "s2": {
+        "heading": "Local storage used",
+        "col": {
+          "key": "Key",
+          "purpose": "Purpose",
+          "duration": "Duration"
+        },
+        "rows": {
+          "refreshToken": {
+            "purpose": "Keep session active",
+            "duration": "7 days"
+          },
+          "theme": {
+            "purpose": "Theme preference",
+            "duration": "Indefinite"
+          }
+        }
+      }
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "NN Auth System is a SENA educational project",
+    "backToHome": "← Back to home",
+    "about": {
+      "title": "About the project",
+      "text": "This authentication system was developed as a learning project, implementing security best practices with Spring Boot 3 (Java 21), React 19 and PostgreSQL 17. Every line of code is documented with the principle: What? Why? Impact?"
+    },
+    "stack": {
+      "title": "Tech stack",
+      "backend": "Backend: Spring Boot 3 · Java 21 · PostgreSQL 17 · Flyway · JJWT",
+      "frontend": "Frontend: React 19 · TypeScript 6 · Vite 8 · TailwindCSS 4",
+      "security": "Security: BCrypt · JWT stateless · Bucket4j rate limiting"
+    },
+    "repo": {
+      "title": "Repository",
+      "text": "The project source code is available on GitHub under the organization"
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The URL you're looking for doesn't exist or was moved.",
+    "goHome": "Go to home"
+  }
+}

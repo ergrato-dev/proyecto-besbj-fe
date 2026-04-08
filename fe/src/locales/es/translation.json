@@ -1,0 +1,254 @@
+{
+  "nav": {
+    "brand": "NN Auth System",
+    "logout": "Cerrar sesión",
+    "dashboard": "Dashboard",
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "themeToggle": {
+      "toDark": "Cambiar a modo oscuro",
+      "toLight": "Cambiar a modo claro"
+    },
+    "ariaLabel": "Navegación principal",
+    "ariaLabelLogo": "NN Auth System — ir al inicio",
+    "links": {
+      "terms": "Términos",
+      "privacy": "Privacidad",
+      "cookies": "Cookies",
+      "contact": "Contacto"
+    }
+  },
+  "common": {
+    "loading": "Cargando...",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "usuario@ejemplo.com",
+    "password": "Contraseña",
+    "passwordPlaceholder": "••••••••",
+    "fullName": "Nombre completo",
+    "passwordsMismatch": "Las contraseñas no coinciden"
+  },
+  "auth": {
+    "login": {
+      "title": "Iniciar sesión",
+      "subtitle": "Bienvenido de vuelta",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "noAccount": "¿No tienes cuenta?",
+      "registerLink": "Regístrate gratis",
+      "submit": "Iniciar sesión"
+    },
+    "register": {
+      "title": "Crear cuenta",
+      "subtitle": "Únete al sistema NN Auth",
+      "fullNamePlaceholder": "Ana García",
+      "passwordHint": "Mínimo 8 caracteres, una mayúscula, una minúscula y un número",
+      "submit": "Crear cuenta",
+      "successMessage": "Cuenta creada para {{email}}. Revisa tu bandeja de entrada para verificar tu email antes de iniciar sesión.",
+      "haveAccount": "¿Ya tienes cuenta?",
+      "loginLink": "Inicia sesión",
+      "errorDefault": "Error al crear la cuenta"
+    },
+    "changePassword": {
+      "title": "Cambiar contraseña",
+      "subtitle": "Necesitas saber tu contraseña actual para establecer una nueva",
+      "backToDashboard": "Volver al dashboard",
+      "currentPassword": "Contraseña actual",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar nueva contraseña",
+      "submit": "Actualizar contraseña"
+    },
+    "forgotPassword": {
+      "title": "Recuperar contraseña",
+      "subtitle": "Te enviaremos un enlace por email",
+      "submit": "Enviar enlace",
+      "backToLogin": "Volver al login",
+      "sentTitle": "Revisa tu email",
+      "sentSubtitle": "Instrucciones enviadas",
+      "sentMessage": "Si existe una cuenta con el email {{email}}, recibirás un enlace de recuperación en los próximos minutos. Revisa también tu carpeta de spam."
+    },
+    "resetPassword": {
+      "title": "Nueva contraseña",
+      "subtitle": "Elige una contraseña segura",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "submit": "Actualizar contraseña",
+      "successTitle": "Contraseña actualizada",
+      "successSubtitle": "Todo listo",
+      "successMessage": "Tu contraseña ha sido actualizada correctamente. Ya puedes iniciar sesión con tu nueva contraseña.",
+      "goToLogin": "Ir al login",
+      "invalidTitle": "Enlace inválido",
+      "invalidMessage": "El enlace de recuperación no es válido. Solicita uno nuevo desde la página de recuperación de contraseña.",
+      "requestNewLink": "Solicitar nuevo enlace"
+    },
+    "verifyEmail": {
+      "loadingTitle": "Verificando email...",
+      "successTitle": "Email verificado",
+      "successSubtitle": "¡Bienvenido al sistema!",
+      "successMessage": "Tu dirección de email ha sido verificada correctamente. Ya puedes iniciar sesión con tus credenciales.",
+      "goToLogin": "Iniciar sesión",
+      "errorTitle": "Verificación fallida",
+      "backToLogin": "Volver al login",
+      "invalidLinkError": "El enlace de verificación no es válido. Solicita uno nuevo al iniciar sesión."
+    }
+  },
+  "dashboard": {
+    "welcome": "Hola, {{name}} 👋",
+    "subtitle": "Bienvenido a tu dashboard de NN Auth System",
+    "profileTitle": "Información de cuenta",
+    "labelName": "Nombre",
+    "labelEmail": "Email",
+    "labelEmailVerified": "Email verificado",
+    "labelStatus": "Estado",
+    "labelMemberSince": "Miembro desde",
+    "statusVerified": "Verificado",
+    "statusPending": "Pendiente",
+    "statusActive": "Activo",
+    "statusInactive": "Inactivo",
+    "changePasswordButton": "Cambiar contraseña",
+    "logoutButton": "Cerrar sesión"
+  },
+  "language": {
+    "selector": "Idioma",
+    "es": "Español",
+    "en": "English"
+  },
+  "landing": {
+    "badge": "Spring Boot 3 · Java 21 · React 19 · SENA",
+    "title": "NN Auth System",
+    "subtitle": "Sistema de autenticación completo con registro, login, cambio y recuperación de contraseña. Construido para aprender Spring Boot y React aplicando las mejores prácticas de seguridad.",
+    "ctaRegister": "Crear cuenta",
+    "ctaLogin": "Iniciar sesión",
+    "featuresTitle": "Funcionalidades del sistema",
+    "featuresSubtitle": "Cada característica implementa una práctica real de seguridad",
+    "stackTitle": "Stack tecnológico",
+    "footer": {
+      "credit": "NN Auth System — Proyecto educativo SENA",
+      "links": {
+        "terms": "Términos",
+        "privacy": "Privacidad",
+        "cookies": "Cookies",
+        "contact": "Contacto"
+      }
+    },
+    "features": {
+      "register": {
+        "title": "Registro seguro",
+        "description": "Contraseñas hasheadas con BCrypt. Validación de fortaleza: mínimo 8 caracteres, mayúsculas, minúsculas y números."
+      },
+      "jwt": {
+        "title": "JWT stateless",
+        "description": "Access token de 15 minutos + refresh token de 7 días. El servidor no guarda sesiones — escala horizontalmente."
+      },
+      "email": {
+        "title": "Verificación de email",
+        "description": "El usuario debe verificar su email antes de hacer login. Previene registros con correos ajenos."
+      },
+      "recovery": {
+        "title": "Recuperación de contraseña",
+        "description": "Flujo de reset por email con token de un solo uso válido 1 hora. Respuesta siempre idéntica (anti-enumeration)."
+      }
+    },
+    "stack": {
+      "springBoot": { "name": "Spring Boot 3", "detail": "Java 21 · Backend REST API" },
+      "react": { "name": "React 19", "detail": "TypeScript 6 · Frontend SPA" },
+      "postgres": { "name": "PostgreSQL 17", "detail": "Flyway · Migraciones versionadas" },
+      "tailwind": { "name": "TailwindCSS 4", "detail": "Vite 8 · Build rápido" }
+    }
+  },
+  "legal": {
+    "backToHome": "← Volver al inicio",
+    "lastUpdated": "Última actualización: abril 2026",
+    "authFooter": {
+      "terms": "Términos",
+      "privacy": "Privacidad",
+      "cookies": "Cookies"
+    },
+    "terms": {
+      "title": "Términos y condiciones",
+      "s1": {
+        "heading": "1. Propósito del sistema",
+        "p1": "NN Auth System es un proyecto educativo desarrollado en el marco del programa SENA. Su propósito es demostrar la implementación de un sistema de autenticación completo con Spring Boot (Java 21) y React. No está destinado a uso en producción con datos reales."
+      },
+      "s2": {
+        "heading": "2. Uso aceptable",
+        "p1": "Los usuarios se comprometen a utilizar el sistema exclusivamente con fines de aprendizaje y prueba. Está prohibido intentar vulnerar la seguridad del sistema, realizar ataques de fuerza bruta, o usar el servicio para actividades que violen las leyes aplicables."
+      },
+      "s3": {
+        "heading": "3. Datos de prueba",
+        "p1": "Al ser un proyecto educativo, se recomienda no utilizar datos personales reales. Use emails y contraseñas de prueba. Los datos almacenados pueden ser eliminados en cualquier momento."
+      },
+      "s4": {
+        "heading": "4. Responsabilidad",
+        "p1": "El sistema se provee \"tal como está\" con fines educativos. No se garantiza disponibilidad continua ni se asume responsabilidad por pérdida de datos."
+      }
+    },
+    "privacy": {
+      "title": "Política de privacidad",
+      "s1": {
+        "heading": "Datos que recopilamos",
+        "p1": "Al crear una cuenta, recopilamos: nombre completo, dirección de email y contraseña. La contraseña se almacena hasheada con BCrypt — nunca en texto plano."
+      },
+      "s2": {
+        "heading": "Cómo usamos los datos",
+        "p1": "Los datos se usan exclusivamente para autenticación dentro del sistema. No se comparten con terceros. Este es un proyecto educativo — los datos son para demostración técnica."
+      },
+      "s3": {
+        "heading": "Almacenamiento en el navegador",
+        "p1": "El sistema usa localStorage para guardar el refresh token (necesario para mantener la sesión entre recargas de página) y la preferencia de tema (claro/oscuro)."
+      },
+      "s4": {
+        "heading": "Contacto",
+        "p1": "Para cualquier consulta sobre privacidad, visita nuestra página de contacto."
+      }
+    },
+    "cookies": {
+      "title": "Política de cookies",
+      "s1": {
+        "heading": "¿Usamos cookies?",
+        "p1": "El sistema no usa cookies HTTP. En su lugar, usa localStorage del navegador para el refresh token y la preferencia de tema.",
+        "p2Technical": "Diferencia técnica: localStorage es accesible solo por JavaScript del mismo origen. Las cookies HTTP pueden ser marcadas como HttpOnly, haciéndolas inaccesibles a JavaScript — más seguras contra XSS. En un sistema de producción real, el refresh token debería ir en una cookie HttpOnly."
+      },
+      "s2": {
+        "heading": "Almacenamiento local utilizado",
+        "col": {
+          "key": "Clave",
+          "purpose": "Propósito",
+          "duration": "Duración"
+        },
+        "rows": {
+          "refreshToken": {
+            "purpose": "Mantener sesión activa",
+            "duration": "7 días"
+          },
+          "theme": {
+            "purpose": "Preferencia de tema",
+            "duration": "Indefinido"
+          }
+        }
+      }
+    }
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "NN Auth System es un proyecto educativo del programa SENA",
+    "backToHome": "← Volver al inicio",
+    "about": {
+      "title": "Sobre el proyecto",
+      "text": "Este sistema de autenticación fue desarrollado como proyecto de aprendizaje, implementando las mejores prácticas de seguridad con Spring Boot 3 (Java 21), React 19 y PostgreSQL 17. Cada línea de código está documentada con el principio ¿Qué? ¿Para qué? ¿Impacto?."
+    },
+    "stack": {
+      "title": "Stack tecnológico",
+      "backend": "Backend: Spring Boot 3 · Java 21 · PostgreSQL 17 · Flyway · JJWT",
+      "frontend": "Frontend: React 19 · TypeScript 6 · Vite 8 · TailwindCSS 4",
+      "security": "Seguridad: BCrypt · JWT stateless · Bucket4j rate limiting"
+    },
+    "repo": {
+      "title": "Repositorio",
+      "text": "El código fuente del proyecto está disponible en GitHub bajo la organización"
+    }
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "description": "La URL que buscas no existe o fue movida.",
+    "goHome": "Ir al inicio"
+  }
+}

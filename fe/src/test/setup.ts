@@ -25,4 +25,13 @@ import "@testing-library/jest-dom/vitest";
 import { afterEach } from "vitest";
 import { cleanup } from "@testing-library/react";
 
+// Inicializar i18n antes de que los tests usen componentes con useTranslation().
+// Sin esto, t() devolvería la clave en lugar del texto traducido y los tests
+// que buscan strings de la UI (labels, botones) fallarían.
+// ¿Por qué changeLanguage("es")? En jsdom (entorno de test), navigator.language
+// es "en" por defecto, por lo que i18next detectaría inglés. Los tests buscan
+// strings en español, así que forzamos el idioma a "es" explícitamente.
+import i18n from "../i18n";
+void i18n.changeLanguage("es");
+
 afterEach(cleanup);

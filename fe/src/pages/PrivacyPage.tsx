@@ -6,9 +6,11 @@
  */
 
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Navbar from "../components/layout/Navbar";
 
 export default function PrivacyPage() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       <Navbar />
@@ -18,60 +20,50 @@ export default function PrivacyPage() {
             to="/"
             className="text-sm text-accent-600 hover:text-accent-700 dark:text-accent-400"
           >
-            ← Volver al inicio
+            {t("legal.backToHome")}
           </Link>
         </div>
 
         <article>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Política de privacidad
+            {t("legal.privacy.title")}
           </h1>
           <p className="mt-1 text-sm text-gray-400 dark:text-gray-500">
-            Última actualización: abril 2026
+            {t("legal.lastUpdated")}
           </p>
 
           <div className="mt-8 space-y-6 text-gray-600 dark:text-gray-400">
             <section>
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                Datos que recopilamos
+                {t("legal.privacy.s1.heading")}
+              </h2>
+              <p className="mt-2">{t("legal.privacy.s1.p1")}</p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                {t("legal.privacy.s2.heading")}
+              </h2>
+              <p className="mt-2">{t("legal.privacy.s2.p1")}</p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+                {t("legal.privacy.s3.heading")}
               </h2>
               <p className="mt-2">
-                Al crear una cuenta, recopilamos: nombre completo, dirección de
-                email y contraseña. La contraseña se almacena hasheada con BCrypt
-                — nunca en texto plano.
+                {t("legal.privacy.s3.p1")}
               </p>
             </section>
 
             <section>
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                Cómo usamos los datos
+                {t("legal.privacy.s4.heading")}
               </h2>
               <p className="mt-2">
-                Los datos se usan exclusivamente para autenticación dentro del
-                sistema. No se comparten con terceros. Este es un proyecto
-                educativo — los datos son para demostración técnica.
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                Almacenamiento en el navegador
-              </h2>
-              <p className="mt-2">
-                El sistema usa <code className="rounded bg-gray-100 px-1 dark:bg-gray-800">localStorage</code>{" "}
-                para guardar el refresh token (necesario para mantener la sesión
-                entre recargas de página) y la preferencia de tema (claro/oscuro).
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                Contacto
-              </h2>
-              <p className="mt-2">
-                Para cualquier consulta sobre privacidad, visita nuestra{" "}
+                {t("legal.privacy.s4.p1")}{" "}
                 <Link to="/contact" className="text-accent-600 underline hover:text-accent-700 dark:text-accent-400">
-                  página de contacto
+                  {t("nav.links.contact").toLowerCase()}
                 </Link>
                 .
               </p>

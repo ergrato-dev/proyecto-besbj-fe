@@ -7,9 +7,11 @@
  */
 
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Navbar from "../components/layout/Navbar";
 
 export default function TermsPage() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       <Navbar />
@@ -19,63 +21,45 @@ export default function TermsPage() {
             to="/"
             className="text-sm text-accent-600 hover:text-accent-700 dark:text-accent-400"
           >
-            ← Volver al inicio
+            {t("legal.backToHome")}
           </Link>
         </div>
 
         <article className="prose prose-gray max-w-none dark:prose-invert">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Términos y condiciones
+            {t("legal.terms.title")}
           </h1>
           <p className="text-sm text-gray-400 dark:text-gray-500">
-            Última actualización: abril 2026
+            {t("legal.lastUpdated")}
           </p>
 
           <div className="mt-8 space-y-6 text-gray-600 dark:text-gray-400">
             <section>
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                1. Propósito del sistema
+                {t("legal.terms.s1.heading")}
               </h2>
-              <p className="mt-2">
-                NN Auth System es un proyecto educativo desarrollado en el marco del
-                programa SENA. Su propósito es demostrar la implementación de un
-                sistema de autenticación completo con Spring Boot (Java 21) y React.
-                No está destinado a uso en producción con datos reales.
-              </p>
+              <p className="mt-2">{t("legal.terms.s1.p1")}</p>
             </section>
 
             <section>
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                2. Uso aceptable
+                {t("legal.terms.s2.heading")}
               </h2>
-              <p className="mt-2">
-                Los usuarios se comprometen a utilizar el sistema exclusivamente
-                con fines de aprendizaje y prueba. Está prohibido intentar vulnerar
-                la seguridad del sistema, realizar ataques de fuerza bruta, o usar
-                el servicio para actividades que violen las leyes aplicables.
-              </p>
+              <p className="mt-2">{t("legal.terms.s2.p1")}</p>
             </section>
 
             <section>
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                3. Datos de prueba
+                {t("legal.terms.s3.heading")}
               </h2>
-              <p className="mt-2">
-                Al ser un proyecto educativo, se recomienda no utilizar datos
-                personales reales. Use emails y contraseñas de prueba. Los datos
-                almacenados pueden ser eliminados en cualquier momento.
-              </p>
+              <p className="mt-2">{t("legal.terms.s3.p1")}</p>
             </section>
 
             <section>
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                4. Responsabilidad
+                {t("legal.terms.s4.heading")}
               </h2>
-              <p className="mt-2">
-                El sistema se provee "tal como está" con fines educativos. No se
-                garantiza disponibilidad continua ni se asume responsabilidad por
-                pérdida de datos.
-              </p>
+              <p className="mt-2">{t("legal.terms.s4.p1")}</p>
             </section>
           </div>
         </article>

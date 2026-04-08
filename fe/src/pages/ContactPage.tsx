@@ -5,9 +5,11 @@
  */
 
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Navbar from "../components/layout/Navbar";
 
 export default function ContactPage() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       <Navbar />
@@ -17,48 +19,45 @@ export default function ContactPage() {
             to="/"
             className="text-sm text-accent-600 hover:text-accent-700 dark:text-accent-400"
           >
-            ← Volver al inicio
+            {t("contact.backToHome")}
           </Link>
         </div>
 
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-          Contacto
+          {t("contact.title")}
         </h1>
         <p className="mt-2 text-gray-500 dark:text-gray-400">
-          NN Auth System es un proyecto educativo del programa SENA
+          {t("contact.subtitle")}
         </p>
 
         <div className="mt-10 space-y-6">
           <div className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-900">
             <h2 className="font-semibold text-gray-900 dark:text-white">
-              Sobre el proyecto
+              {t("contact.about.title")}
             </h2>
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-              Este sistema de autenticación fue desarrollado como proyecto de aprendizaje,
-              implementando las mejores prácticas de seguridad con Spring Boot 3 (Java 21),
-              React 19 y PostgreSQL 17. Cada línea de código está documentada con el
-              principio ¿Qué? ¿Para qué? ¿Impacto?.
+              {t("contact.about.text")}
             </p>
           </div>
 
           <div className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-900">
             <h2 className="font-semibold text-gray-900 dark:text-white">
-              Stack tecnológico
+              {t("contact.stack.title")}
             </h2>
             <ul className="mt-3 space-y-1 text-sm text-gray-600 dark:text-gray-400">
-              <li>• <strong>Backend:</strong> Spring Boot 3 · Java 21 · PostgreSQL 17 · Flyway · JJWT</li>
-              <li>• <strong>Frontend:</strong> React 19 · TypeScript 6 · Vite 8 · TailwindCSS 4</li>
-              <li>• <strong>Seguridad:</strong> BCrypt · JWT stateless · Bucket4j rate limiting</li>
+              <li>• {t("contact.stack.backend")}</li>
+              <li>• {t("contact.stack.frontend")}</li>
+              <li>• {t("contact.stack.security")}</li>
             </ul>
           </div>
 
           <div className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-900">
             <h2 className="font-semibold text-gray-900 dark:text-white">
-              Repositorio
+              {t("contact.repo.title")}
             </h2>
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-              El código fuente del proyecto está disponible en GitHub bajo la
-              organización <code className="rounded bg-gray-100 px-1 dark:bg-gray-800">ergrato-dev</code>.
+              {t("contact.repo.text")}{" "}
+              <code className="rounded bg-gray-100 px-1 dark:bg-gray-800">ergrato-dev</code>.
             </p>
           </div>
         </div>

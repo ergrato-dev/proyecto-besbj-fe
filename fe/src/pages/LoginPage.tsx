@@ -9,6 +9,7 @@
 
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate, useLocation, Navigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import AuthLayout from "../components/layout/AuthLayout";
 import InputField from "../components/ui/InputField";
 import Button from "../components/ui/Button";
@@ -19,6 +20,7 @@ export default function LoginPage() {
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
 
   // Si ya está autenticado, redirigir al dashboard directamente
   if (isAuthenticated) {
@@ -60,7 +62,7 @@ export default function LoginPage() {
       navigate(from, { replace: true });
     } catch (error) {
       setErrorMessage(
-        error instanceof Error ? error.message : "Error al iniciar sesión",
+        error instanceof Error ? error.message : t("auth.login.title"),
       );
     } finally {
       setIsLoading(false);
@@ -69,25 +71,21 @@ export default function LoginPage() {
 
   return (
     <AuthLayout
-      title="Iniciar sesión"
-      subtitle="Bienvenido de vuelta"
+      title={t("auth.login.title")}
+      subtitle={t("auth.login.subtitle")}
     >
       <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
-        {/*
-          noValidate — desactiva la validación nativa del browser.
-          Usamos la validación del backend para mensajes coherentes con el backend.
-        */}
 
         {/* Mensaje de error del backend */}
         {errorMessage && <Alert variant="error">{errorMessage}</Alert>}
 
         <InputField
           id="email"
-          label="Correo electrónico"
+          label={t("common.email")}
           type="email"
           autoComplete="email"
           required
-          placeholder="usuario@ejemplo.com"
+          placeholder={t("common.emailPlaceholder")}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -95,11 +93,11 @@ export default function LoginPage() {
         <div className="flex flex-col gap-1">
           <InputField
             id="password"
-            label="Contraseña"
+            label={t("common.password")}
             type="password"
             autoComplete="current-password"
             required
-            placeholder="••••••••"
+            placeholder={t("common.passwordPlaceholder")}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -109,7 +107,7 @@ export default function LoginPage() {
               to="/forgot-password"
               className="text-xs text-accent-600 hover:text-accent-700 dark:text-accent-400 dark:hover:text-accent-300"
             >
-              ¿Olvidaste tu contraseña?
+              {t("auth.login.forgotPassword")}
             </Link>
           </div>
         </div>
@@ -123,19 +121,19 @@ export default function LoginPage() {
             disabled={!email || !password}
             className="w-full sm:w-auto px-8"
           >
-            Iniciar sesión
+            {t("auth.login.submit")}
           </Button>
         </div>
       </form>
 
       {/* Link a registro */}
       <p className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
-        ¿No tienes cuenta?{" "}
+        {t("auth.login.noAccount")}{" "}
         <Link
           to="/register"
           className="font-medium text-accent-600 hover:text-accent-700 dark:text-accent-400 dark:hover:text-accent-300"
         >
-          Regístrate gratis
+          {t("auth.login.registerLink")}
         </Link>
       </p>
     </AuthLayout>

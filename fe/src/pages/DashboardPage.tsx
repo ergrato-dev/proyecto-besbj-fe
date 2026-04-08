@@ -7,6 +7,7 @@
  */
 
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Navbar from "../components/layout/Navbar";
 import Button from "../components/ui/Button";
 import { useAuth } from "../hooks/useAuth";
@@ -14,6 +15,7 @@ import { useAuth } from "../hooks/useAuth";
 export default function DashboardPage() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   function handleLogout(): void {
     logout();
@@ -28,10 +30,10 @@ export default function DashboardPage() {
         {/* ---- Saludo ---- */}
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-            Hola, {user?.fullName} 👋
+            {t("dashboard.welcome", { name: user?.fullName })}
           </h1>
           <p className="mt-1 text-gray-500 dark:text-gray-400">
-            Bienvenido a tu dashboard de NN Auth System
+            {t("dashboard.subtitle")}
           </p>
         </div>
 
@@ -44,13 +46,13 @@ export default function DashboardPage() {
             id="profile-heading"
             className="mb-4 text-base font-semibold text-gray-900 dark:text-white"
           >
-            Información de cuenta
+            {t("dashboard.profileTitle")}
           </h2>
 
           <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <dt className="text-xs font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
-                Nombre
+                {t("dashboard.labelName")}
               </dt>
               <dd className="mt-1 text-sm text-gray-900 dark:text-white">
                 {user?.fullName}
@@ -59,7 +61,7 @@ export default function DashboardPage() {
 
             <div>
               <dt className="text-xs font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
-                Email
+                {t("dashboard.labelEmail")}
               </dt>
               <dd className="mt-1 text-sm text-gray-900 dark:text-white">
                 {user?.email}
@@ -68,7 +70,7 @@ export default function DashboardPage() {
 
             <div>
               <dt className="text-xs font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
-                Email verificado
+                {t("dashboard.labelEmailVerified")}
               </dt>
               <dd className="mt-1 flex items-center gap-1.5 text-sm">
                 {user?.emailVerified ? (
@@ -76,11 +78,11 @@ export default function DashboardPage() {
                     <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Verificado
+                    {t("dashboard.statusVerified")}
                   </span>
                 ) : (
                   <span className="text-yellow-600 dark:text-yellow-400">
-                    Pendiente
+                    {t("dashboard.statusPending")}
                   </span>
                 )}
               </dd>
@@ -88,28 +90,27 @@ export default function DashboardPage() {
 
             <div>
               <dt className="text-xs font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
-                Estado
+                {t("dashboard.labelStatus")}
               </dt>
               <dd className="mt-1 text-sm">
                 {user?.active ? (
-                  <span className="text-green-600 dark:text-green-400">Activo</span>
+                  <span className="text-green-600 dark:text-green-400">{t("dashboard.statusActive")}</span>
                 ) : (
-                  <span className="text-red-600 dark:text-red-400">Inactivo</span>
+                  <span className="text-red-600 dark:text-red-400">{t("dashboard.statusInactive")}</span>
                 )}
               </dd>
             </div>
 
             <div className="sm:col-span-2">
               <dt className="text-xs font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
-                Miembro desde
+                {t("dashboard.labelMemberSince")}
               </dt>
               <dd className="mt-1 text-sm text-gray-900 dark:text-white">
                 {user?.createdAt
-                  ? new Date(user.createdAt).toLocaleDateString("es-CO", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })
+                  ? new Date(user.createdAt).toLocaleDateString(
+                      i18n.language?.startsWith("en") ? "en-US" : "es-CO",
+                      { year: "numeric", month: "long", day: "numeric" }
+                    )
                   : "—"}
               </dd>
             </div>
@@ -122,10 +123,10 @@ export default function DashboardPage() {
             variant="secondary"
             onClick={() => navigate("/change-password")}
           >
-            Cambiar contraseña
+            {t("dashboard.changePasswordButton")}
           </Button>
           <Button variant="danger" onClick={handleLogout}>
-            Cerrar sesión
+            {t("dashboard.logoutButton")}
           </Button>
         </div>
       </main>
