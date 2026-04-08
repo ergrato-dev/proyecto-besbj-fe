@@ -25,6 +25,8 @@
     "password": "Password",
     "passwordPlaceholder": "••••••••",
     "fullName": "Full name",
+    "firstName": "First name",
+    "lastName": "Last name",
     "passwordsMismatch": "Passwords don't match"
   },
   "auth": {
@@ -38,14 +40,32 @@
     },
     "register": {
       "title": "Create account",
-      "subtitle": "Join NN Auth System",
-      "fullNamePlaceholder": "John Smith",
-      "passwordHint": "Minimum 8 characters, one uppercase, one lowercase and one number",
+      "subtitle": "Fill in your details to register",
+      "confirmEmail": "Confirm email",
+      "confirmPassword": "Confirm password",
       "submit": "Create account",
       "successMessage": "Account created for {{email}}. Check your inbox to verify your email before signing in.",
       "haveAccount": "Already have an account?",
       "loginLink": "Sign in",
-      "errorDefault": "Error creating account"
+      "errorDefault": "Error creating account",
+      "validation": {
+        "emailRequired": "Email is required",
+        "confirmEmailRequired": "Please confirm your email address",
+        "emailsMismatch": "Email addresses do not match",
+        "firstNameMin": "First name must be at least 2 characters",
+        "lastNameMin": "Last name must be at least 2 characters",
+        "passwordMin": "Minimum 8 characters",
+        "passwordUppercase": "Must include at least one uppercase letter",
+        "passwordLowercase": "Must include at least one lowercase letter",
+        "passwordNumber": "Must include at least one number",
+        "passwordsMismatch": "Passwords do not match",
+        "termsRequired": "You must accept the terms of use",
+        "privacyRequired": "You must accept the privacy policy",
+        "cookiesRequired": "You must accept the cookies policy"
+      },
+      "acceptTerms": "I have read and accept the <link>Terms of Use</link>",
+      "acceptPrivacy": "I have read and accept the <link>Privacy Policy</link>",
+      "acceptCookies": "I have read and accept the <link>Cookies Policy</link>"
     },
     "changePassword": {
       "title": "Change password",

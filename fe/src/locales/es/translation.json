@@ -25,6 +25,8 @@
     "password": "Contraseña",
     "passwordPlaceholder": "••••••••",
     "fullName": "Nombre completo",
+    "firstName": "Nombres",
+    "lastName": "Apellidos",
     "passwordsMismatch": "Las contraseñas no coinciden"
   },
   "auth": {
@@ -38,14 +40,32 @@
     },
     "register": {
       "title": "Crear cuenta",
-      "subtitle": "Únete al sistema NN Auth",
-      "fullNamePlaceholder": "Ana García",
-      "passwordHint": "Mínimo 8 caracteres, una mayúscula, una minúscula y un número",
+      "subtitle": "Completa tus datos para registrarte",
+      "confirmEmail": "Confirmar correo electrónico",
+      "confirmPassword": "Confirmar contraseña",
       "submit": "Crear cuenta",
       "successMessage": "Cuenta creada para {{email}}. Revisa tu bandeja de entrada para verificar tu email antes de iniciar sesión.",
       "haveAccount": "¿Ya tienes cuenta?",
       "loginLink": "Inicia sesión",
-      "errorDefault": "Error al crear la cuenta"
+      "errorDefault": "Error al registrar usuario",
+      "validation": {
+        "emailRequired": "El correo es obligatorio",
+        "confirmEmailRequired": "Debes confirmar tu correo electrónico",
+        "emailsMismatch": "Los correos electrónicos no coinciden",
+        "firstNameMin": "El nombre debe tener al menos 2 caracteres",
+        "lastNameMin": "El apellido debe tener al menos 2 caracteres",
+        "passwordMin": "Mínimo 8 caracteres",
+        "passwordUppercase": "Debe incluir al menos una mayúscula",
+        "passwordLowercase": "Debe incluir al menos una minúscula",
+        "passwordNumber": "Debe incluir al menos un número",
+        "passwordsMismatch": "Las contraseñas no coinciden",
+        "termsRequired": "Debes aceptar los términos de uso",
+        "privacyRequired": "Debes aceptar la política de privacidad",
+        "cookiesRequired": "Debes aceptar la política de cookies"
+      },
+      "acceptTerms": "He leído y acepto los <link>Términos de uso</link>",
+      "acceptPrivacy": "He leído y acepto la <link>Política de privacidad</link>",
+      "acceptCookies": "He leído y acepto la <link>Política de cookies</link>"
     },
     "changePassword": {
       "title": "Cambiar contraseña",

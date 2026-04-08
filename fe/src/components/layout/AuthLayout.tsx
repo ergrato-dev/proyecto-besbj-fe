@@ -19,6 +19,13 @@ interface AuthLayoutProps {
   subtitle?: string;
   /** Formulario o contenido de la página de auth */
   children: ReactNode;
+  /**
+   * ¿Qué? Si es true, expande el ancho máximo del card de max-w-md a max-w-2xl.
+   * ¿Para qué? El formulario de registro tiene más campos (nombre, apellido, emails, contraseñas)
+   *            y se beneficia de un layout en dos columnas que requiere más espacio horizontal.
+   * ¿Impacto? Solo RegisterPage usa wide=true — las demás páginas de auth mantienen max-w-md.
+   */
+  wide?: boolean;
 }
 
 /**
@@ -32,6 +39,7 @@ export default function AuthLayout({
   title,
   subtitle,
   children,
+  wide = false,
 }: AuthLayoutProps) {
   const { t } = useTranslation();
   return (
@@ -49,7 +57,8 @@ export default function AuthLayout({
       </Link>
 
       {/* ---- Card de formulario ---- */}
-      <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-900">
+      {/* wide=true expande el card para el formulario de registro con layout en columnas */}
+      <div className={`w-full ${wide ? "max-w-2xl" : "max-w-md"} rounded-2xl border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-900`}>
         {/* Título y subtítulo de la página */}
         <div className="mb-6 text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">

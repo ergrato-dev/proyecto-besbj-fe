@@ -19,6 +19,8 @@ interface AlertProps {
   children: ReactNode;
   /** Clases adicionales */
   className?: string;
+  /** Callback para cerrar/descartar la alerta. Muestra un botón X cuando se provee */
+  onClose?: () => void;
 }
 
 const variantClasses: Record<AlertVariant, string> = {
@@ -50,6 +52,7 @@ export default function Alert({
   variant = "error",
   children,
   className = "",
+  onClose,
 }: AlertProps) {
   return (
     <div
@@ -66,7 +69,22 @@ export default function Alert({
       <span aria-hidden="true" className="mt-0.5 shrink-0 font-bold">
         {variantIcons[variant]}
       </span>
-      <span>{children}</span>
+      <span className="flex-1">{children}</span>
+      {/*
+        Botón de cierre opcional. Solo se renderiza cuando se provee onClose.
+        ¿Para qué? Permite al usuario descartar el mensaje de error manualmente.
+        ¿Impacto? Mejora UX en formularios con varios intentos (ej. registro).
+      */}
+      {onClose && (
+        <button
+          type="button"
+          aria-label="Cerrar"
+          onClick={onClose}
+          className="ml-auto shrink-0 opacity-60 hover:opacity-100 focus-visible:outline-none"
+        >
+          ✕
+        </button>
+      )}
     </div>
   );
 }

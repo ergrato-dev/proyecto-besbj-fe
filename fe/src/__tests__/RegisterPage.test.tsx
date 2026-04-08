@@ -1,9 +1,9 @@
 /**
  * Archivo: src/__tests__/RegisterPage.test.tsx
  * Descripción: Tests de integración para la página de registro.
- * ¿Para qué? Verificar que el formulario renderiza los tres campos,
- *            llama a register() con los datos correctos y muestra el
- *            mensaje de éxito con el email del usuario registrado.
+ * ¿Para qué? Verificar que el formulario renderiza los seis campos, valida
+ *            correctamente, llama a register() con los datos correctos y muestra
+ *            el mensaje de éxito con el email del usuario registrado.
  * ¿Impacto? Si RegisterPage falla, los nuevos usuarios no pueden crear
  *           cuentas — el sistema no tendría forma de incorporar usuarios.
  */
@@ -36,6 +36,51 @@ function renderRegister() {
   );
 }
 
+/**
+ * ¿Qué? Helper que llena los seis campos del formulario y marca los tres checkboxes.
+ * ¿Para qué? El botón de crear cuenta solo se habilita cuando todos los campos
+ *            tienen valor y los tres consentimientos legales están marcados.
+ * ¿Impacto? Sin este helper, cada test repetiría el mismo bloque de 9 fireEvent.
+ */
+function fillFormAndConsents({
+  firstName = "Ana",
+  lastName = "García",
+  email = "ana@ejemplo.com",
+  confirmEmail = "ana@ejemplo.com",
+  password = "Password1",
+  confirmPassword = "Password1",
+}: {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  confirmEmail?: string;
+  password?: string;
+  confirmPassword?: string;
+} = {}) {
+  fireEvent.change(screen.getByLabelText("Nombres"), {
+    target: { value: firstName },
+  });
+  fireEvent.change(screen.getByLabelText("Apellidos"), {
+    target: { value: lastName },
+  });
+  fireEvent.change(screen.getByLabelText("Correo electrónico"), {
+    target: { value: email },
+  });
+  fireEvent.change(screen.getByLabelText("Confirmar correo electrónico"), {
+    target: { value: confirmEmail },
+  });
+  fireEvent.change(screen.getByLabelText("Contraseña"), {
+    target: { value: password },
+  });
+  fireEvent.change(screen.getByLabelText("Confirmar contraseña"), {
+    target: { value: confirmPassword },
+  });
+
+  // Marcar los tres checkboxes de consentimiento legal
+  const checkboxes = screen.getAllByRole("checkbox");
+  checkboxes.forEach((cb) => fireEvent.click(cb));
+}
+
 describe("RegisterPage", () => {
   const mockRegister = vi.fn<
     (data: { fullName: string; email: string; password: string }) => Promise<UserResponse>
@@ -54,9 +99,14 @@ describe("RegisterPage", () => {
     } satisfies AuthContextType);
   });
 
-  it("renderiza el campo de nombre completo", () => {
+  it("renderiza el campo de nombres", () => {
     renderRegister();
-    expect(screen.getByLabelText("Nombre completo")).toBeInTheDocument();
+    expect(screen.getByLabelText("Nombres")).toBeInTheDocument();
+  });
+
+  it("renderiza el campo de apellidos", () => {
+    renderRegister();
+    expect(screen.getByLabelText("Apellidos")).toBeInTheDocument();
   });
 
   it("renderiza el campo de correo electrónico", () => {
@@ -64,9 +114,24 @@ describe("RegisterPage", () => {
     expect(screen.getByLabelText("Correo electrónico")).toBeInTheDocument();
   });
 
+  it("renderiza el campo de confirmar correo electrónico", () => {
+    renderRegister();
+    expect(screen.getByLabelText("Confirmar correo electrónico")).toBeInTheDocument();
+  });
+
   it("renderiza el campo de contraseña", () => {
     renderRegister();
     expect(screen.getByLabelText("Contraseña")).toBeInTheDocument();
+  });
+
+  it("renderiza el campo de confirmar contraseña", () => {
+    renderRegister();
+    expect(screen.getByLabelText("Confirmar contraseña")).toBeInTheDocument();
+  });
+
+  it("renderiza tres checkboxes de consentimiento legal", () => {
+    renderRegister();
+    expect(screen.getAllByRole("checkbox")).toHaveLength(3);
   });
 
   it("renderiza el botón de crear cuenta", () => {
@@ -76,10 +141,19 @@ describe("RegisterPage", () => {
     ).toBeInTheDocument();
   });
 
+  it("el botón permanece deshabilitado hasta completar el formulario", () => {
+    // ¿Qué? Verifica la restricción isButtonEnabled del formulario.
+    // ¿Para qué? El botón solo se activa cuando los 6 campos tienen valor Y los 3 consents están marcados.
+    // ¿Impacto? Previene envíos vacíos e incompletos antes de llegar a handleSubmit.
+    renderRegister();
+    expect(screen.getByRole("button", { name: /crear cuenta/i })).toBeDisabled();
+  });
+
   it("llama a register() con los datos del formulario", async () => {
     // ¿Qué? Simula el llenado completo del formulario y la llamada a register().
-    // ¿Para qué? Verificar que los tres campos se pasan correctamente al backend.
-    // ¿Impacto? Si falta fullName o llega vacío, el backend devuelve 400.
+    // ¿Para qué? Verificar que first_name y last_name se concatenan como fullName
+    //            para el backend Spring Boot, y que email y password llegan correctos.
+    // ¿Impacto? Si la concatenación falla o llega vacía, el backend devuelve 400.
     const mockUser: UserResponse = {
       id: "abc-123",
       email: "ana@ejemplo.com",
@@ -91,15 +165,7 @@ describe("RegisterPage", () => {
     mockRegister.mockResolvedValueOnce(mockUser);
     renderRegister();
 
-    fireEvent.change(screen.getByLabelText("Nombre completo"), {
-      target: { value: "Ana García" },
-    });
-    fireEvent.change(screen.getByLabelText("Correo electrónico"), {
-      target: { value: "ana@ejemplo.com" },
-    });
-    fireEvent.change(screen.getByLabelText("Contraseña"), {
-      target: { value: "Password1" },
-    });
+    fillFormAndConsents();
     fireEvent.click(screen.getByRole("button", { name: /crear cuenta/i }));
 
     await waitFor(() => {
@@ -127,14 +193,11 @@ describe("RegisterPage", () => {
     mockRegister.mockResolvedValueOnce(mockUser);
     renderRegister();
 
-    fireEvent.change(screen.getByLabelText("Nombre completo"), {
-      target: { value: "Nuevo Usuario" },
-    });
-    fireEvent.change(screen.getByLabelText("Correo electrónico"), {
-      target: { value: "nuevo@ejemplo.com" },
-    });
-    fireEvent.change(screen.getByLabelText("Contraseña"), {
-      target: { value: "Password1" },
+    fillFormAndConsents({
+      firstName: "Nuevo",
+      lastName: "Usuario",
+      email: "nuevo@ejemplo.com",
+      confirmEmail: "nuevo@ejemplo.com",
     });
     fireEvent.click(screen.getByRole("button", { name: /crear cuenta/i }));
 
@@ -148,15 +211,7 @@ describe("RegisterPage", () => {
     mockRegister.mockRejectedValueOnce(new Error("El email ya está registrado"));
     renderRegister();
 
-    fireEvent.change(screen.getByLabelText("Nombre completo"), {
-      target: { value: "Usuario Test" },
-    });
-    fireEvent.change(screen.getByLabelText("Correo electrónico"), {
-      target: { value: "existente@ejemplo.com" },
-    });
-    fireEvent.change(screen.getByLabelText("Contraseña"), {
-      target: { value: "Password1" },
-    });
+    fillFormAndConsents();
     fireEvent.click(screen.getByRole("button", { name: /crear cuenta/i }));
 
     await waitFor(() => {

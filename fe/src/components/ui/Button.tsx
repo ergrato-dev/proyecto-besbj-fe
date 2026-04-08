@@ -24,6 +24,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   /** Si true, muestra un spinner y deshabilita el botón */
   isLoading?: boolean;
+  /** Si true, el botón ocupa el ancho completo del contenedor */
+  fullWidth?: boolean;
   /** Contenido del botón */
   children: ReactNode;
 }
@@ -59,6 +61,7 @@ const variantClasses: Record<ButtonVariant, string> = {
 export default function Button({
   variant = "primary",
   isLoading = false,
+  fullWidth = false,
   children,
   className = "",
   disabled,
@@ -77,6 +80,8 @@ export default function Button({
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
         // Estado deshabilitado — señal visual clara
         "disabled:cursor-not-allowed disabled:opacity-50",
+        // Ancho completo cuando fullWidth=true
+        fullWidth ? "w-full" : "",
         // Variante específica
         variantClasses[variant],
         className,
