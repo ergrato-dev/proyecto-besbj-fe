@@ -17,7 +17,8 @@
  */
 export interface RegisterRequest {
   email: string;
-  fullName: string;
+  firstName: string;
+  lastName: string;
   password: string;
 }
 
@@ -84,7 +85,8 @@ export interface RefreshRequest {
 export interface UserResponse {
   id: string;
   email: string;
-  fullName: string;
+  firstName: string;
+  lastName: string;
   active: boolean;
   emailVerified: boolean;
   createdAt: string; // ISO 8601 — ej: "2026-04-07T10:00:00Z"

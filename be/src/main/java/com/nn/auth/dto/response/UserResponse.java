@@ -20,7 +20,8 @@ import java.util.UUID;
  * @param id            UUID del usuario — seguro para exponer (no es
  *                      secuencial)
  * @param email         Email del usuario
- * @param fullName      Nombre completo
+ * @param firstName     Nombre(s) del usuario
+ * @param lastName      Apellido(s) del usuario
  * @param emailVerified Si el email fue verificado
  * @param active        Si la cuenta está activa
  * @param createdAt     Timestamp de creación
@@ -28,7 +29,8 @@ import java.util.UUID;
 public record UserResponse(
     UUID id,
     String email,
-    String fullName,
+    String firstName,
+    String lastName,
     boolean emailVerified,
     boolean active,
     OffsetDateTime createdAt) {
@@ -46,7 +48,8 @@ public record UserResponse(
     return new UserResponse(
         user.getId(),
         user.getEmail(),
-        user.getFullName(),
+        user.getFirstName(),
+        user.getLastName(),
         user.isEmailVerified(),
         user.isActive(),
         user.getCreatedAt());

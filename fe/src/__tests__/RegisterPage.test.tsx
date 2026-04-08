@@ -83,7 +83,7 @@ function fillFormAndConsents({
 
 describe("RegisterPage", () => {
   const mockRegister = vi.fn<
-    (data: { fullName: string; email: string; password: string }) => Promise<UserResponse>
+    (data: { email: string; firstName: string; lastName: string; password: string }) => Promise<UserResponse>
   >();
 
   beforeEach(() => {
@@ -150,14 +150,11 @@ describe("RegisterPage", () => {
   });
 
   it("llama a register() con los datos del formulario", async () => {
-    // ¿Qué? Simula el llenado completo del formulario y la llamada a register().
-    // ¿Para qué? Verificar que first_name y last_name se concatenan como fullName
-    //            para el backend Spring Boot, y que email y password llegan correctos.
-    // ¿Impacto? Si la concatenación falla o llega vacía, el backend devuelve 400.
     const mockUser: UserResponse = {
       id: "abc-123",
       email: "ana@ejemplo.com",
-      fullName: "Ana García",
+      firstName: "Ana",
+      lastName: "García",
       active: true,
       emailVerified: false,
       createdAt: "2026-04-07T10:00:00Z",
@@ -170,7 +167,8 @@ describe("RegisterPage", () => {
 
     await waitFor(() => {
       expect(mockRegister).toHaveBeenCalledWith({
-        fullName: "Ana García",
+        firstName: "Ana",
+        lastName: "García",
         email: "ana@ejemplo.com",
         password: "Password1",
       });
@@ -185,7 +183,8 @@ describe("RegisterPage", () => {
     const mockUser: UserResponse = {
       id: "xyz-456",
       email: "nuevo@ejemplo.com",
-      fullName: "Nuevo Usuario",
+      firstName: "Nuevo",
+      lastName: "Usuario",
       active: true,
       emailVerified: false,
       createdAt: "2026-04-07T10:00:00Z",

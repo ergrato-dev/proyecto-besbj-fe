@@ -134,7 +134,7 @@ export default function Navbar() {
             /* Usuario autenticado: mostrar saludo + acciones */
             <>
               <span className="hidden text-sm text-gray-600 dark:text-gray-400 sm:block">
-                {user?.fullName}
+                {user ? `${user.firstName} ${user.lastName}` : ""}
               </span>
               <Link to="/dashboard">
                 <Button variant="ghost" className="text-sm">

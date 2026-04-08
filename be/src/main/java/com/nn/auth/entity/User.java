@@ -82,12 +82,24 @@ public class User implements UserDetails {
   private String email;
 
   /**
-   * ¿Qué? Nombre completo del usuario — solo para mostrar en la UI.
-   * ¿Para qué? Personalizar la interfaz (ej: "Hola, Juan García") sin necesitar
-   * otro endpoint de perfil complejo.
+   * ¿Qué? Nombre(s) del usuario — separado del apellido para permitir ordenar
+   * y filtrar reportes por apellido independientemente.
+   * ¿Para qué? ORDER BY last_name, first_name en reportes nominales.
+   * ¿Impacto? Si se almacenara como campo único (full_name), sería imposible
+   * ordenar por apellido sin lógica frágil de parsing en la BD.
    */
-  @Column(name = "full_name", nullable = false, length = 255)
-  private String fullName;
+  @Column(name = "first_name", nullable = false, length = 150)
+  private String firstName;
+
+  /**
+   * ¿Qué? Apellido(s) del usuario — separado del nombre para reportes y
+   * búsquedas.
+   * ¿Para qué? Permite ORDER BY last_name ASC para listas y reportes nominales.
+   * ¿Impacto? Junto con first_name reemplaza full_name — la única fuente de
+   * verdad.
+   */
+  @Column(name = "last_name", nullable = false, length = 150)
+  private String lastName;
 
   /**
    * ¿Qué? Hash BCrypt de la contraseña — NUNCA la contraseña en texto plano.

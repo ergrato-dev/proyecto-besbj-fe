@@ -132,7 +132,8 @@ describe("LoginPage", () => {
       user: {
         id: "1",
         email: "user@ejemplo.com",
-        fullName: "Usuario",
+        firstName: "Usuario",
+        lastName: "",
         active: true,
         emailVerified: true,
         createdAt: "2026-01-01T00:00:00Z",

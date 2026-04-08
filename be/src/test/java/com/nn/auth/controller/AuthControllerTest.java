@@ -102,7 +102,8 @@ class AuthControllerTest {
 
   private static final String TEST_EMAIL = "test@example.com";
   private static final String TEST_PASSWORD = "Test1234";
-  private static final String TEST_FULL_NAME = "Test User";
+  private static final String TEST_FIRST_NAME = "Test";
+  private static final String TEST_LAST_NAME = "User";
 
   /**
    * ¿Qué? Crea y persiste un usuario verificado listo para tests de login.
@@ -117,7 +118,8 @@ class AuthControllerTest {
   private User createVerifiedUser() {
     User user = User.builder()
         .email(TEST_EMAIL)
-        .fullName(TEST_FULL_NAME)
+        .firstName(TEST_FIRST_NAME)
+        .lastName(TEST_LAST_NAME)
         .hashedPassword(passwordEncoder.encode(TEST_PASSWORD))
         .build();
     user.markEmailAsVerified();
@@ -131,7 +133,8 @@ class AuthControllerTest {
   private User createUnverifiedUser() {
     User user = User.builder()
         .email(TEST_EMAIL)
-        .fullName(TEST_FULL_NAME)
+        .firstName(TEST_FIRST_NAME)
+        .lastName(TEST_LAST_NAME)
         .hashedPassword(passwordEncoder.encode(TEST_PASSWORD))
         .build();
     return userRepository.save(user);
@@ -160,14 +163,15 @@ class AuthControllerTest {
     @Test
     @DisplayName("201 — registro exitoso con datos válidos")
     void register_success() throws Exception {
-      RegisterRequest request = new RegisterRequest(TEST_EMAIL, TEST_FULL_NAME, TEST_PASSWORD);
+      RegisterRequest request = new RegisterRequest(TEST_EMAIL, TEST_FIRST_NAME, TEST_LAST_NAME, TEST_PASSWORD);
 
       mockMvc.perform(post("/api/v1/auth/register")
           .contentType(MediaType.APPLICATION_JSON)
           .content(objectMapper.writeValueAsString(request)))
           .andExpect(status().isCreated())
           .andExpect(jsonPath("$.email").value(TEST_EMAIL))
-          .andExpect(jsonPath("$.fullName").value(TEST_FULL_NAME))
+          .andExpect(jsonPath("$.firstName").value(TEST_FIRST_NAME))
+          .andExpect(jsonPath("$.lastName").value(TEST_LAST_NAME))
           .andExpect(jsonPath("$.emailVerified").value(false))
           .andExpect(jsonPath("$.id").value(notNullValue()));
     }
@@ -175,7 +179,7 @@ class AuthControllerTest {
     @Test
     @DisplayName("400 — email inválido rechazado por Bean Validation")
     void register_invalidEmail() throws Exception {
-      RegisterRequest request = new RegisterRequest("not-an-email", TEST_FULL_NAME, TEST_PASSWORD);
+      RegisterRequest request = new RegisterRequest("not-an-email", TEST_FIRST_NAME, TEST_LAST_NAME, TEST_PASSWORD);
 
       mockMvc.perform(post("/api/v1/auth/register")
           .contentType(MediaType.APPLICATION_JSON)
@@ -187,7 +191,7 @@ class AuthControllerTest {
     @Test
     @DisplayName("400 — contraseña sin mayúscula rechazada por Bean Validation")
     void register_weakPassword_noUppercase() throws Exception {
-      RegisterRequest request = new RegisterRequest(TEST_EMAIL, TEST_FULL_NAME, "test1234");
+      RegisterRequest request = new RegisterRequest(TEST_EMAIL, TEST_FIRST_NAME, TEST_LAST_NAME, "test1234");
 
       mockMvc.perform(post("/api/v1/auth/register")
           .contentType(MediaType.APPLICATION_JSON)
@@ -199,7 +203,7 @@ class AuthControllerTest {
     @Test
     @DisplayName("400 — contraseña sin número rechazada por Bean Validation")
     void register_weakPassword_noDigit() throws Exception {
-      RegisterRequest request = new RegisterRequest(TEST_EMAIL, TEST_FULL_NAME, "TestPassword");
+      RegisterRequest request = new RegisterRequest(TEST_EMAIL, TEST_FIRST_NAME, TEST_LAST_NAME, "TestPassword");
 
       mockMvc.perform(post("/api/v1/auth/register")
           .contentType(MediaType.APPLICATION_JSON)
@@ -213,7 +217,7 @@ class AuthControllerTest {
     void register_duplicateEmail() throws Exception {
       createVerifiedUser(); // ya existe en la BD
 
-      RegisterRequest request = new RegisterRequest(TEST_EMAIL, "Another User", TEST_PASSWORD);
+      RegisterRequest request = new RegisterRequest(TEST_EMAIL, "Another", "User", TEST_PASSWORD);
 
       mockMvc.perform(post("/api/v1/auth/register")
           .contentType(MediaType.APPLICATION_JSON)
@@ -589,7 +593,8 @@ class AuthControllerTest {
           .header("Authorization", "Bearer " + accessToken))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.email").value(TEST_EMAIL))
-          .andExpect(jsonPath("$.fullName").value(TEST_FULL_NAME))
+          .andExpect(jsonPath("$.firstName").value(TEST_FIRST_NAME))
+          .andExpect(jsonPath("$.lastName").value(TEST_LAST_NAME))
           .andExpect(jsonPath("$.emailVerified").value(true));
     }
 

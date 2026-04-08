@@ -23,10 +23,11 @@ import jakarta.validation.constraints.Size;
  * ¿Impacto? Al ser inmutable, nadie puede modificar los datos de la petición
  * una vez creado el objeto — seguridad por diseño.
  *
- * @param email    Dirección de email — se usa como username en el sistema
- * @param fullName Nombre completo del usuario — solo para mostrar en la UI
- * @param password Contraseña en texto plano — se hashea con BCrypt en el
- *                 servicio
+ * @param email     Dirección de email — se usa como username en el sistema
+ * @param firstName Nombre(s) del usuario — se almacena separado del apellido
+ * @param lastName  Apellido(s) del usuario — permite ORDER BY en reportes
+ * @param password  Contraseña en texto plano — se hashea con BCrypt en el
+ *                  servicio
  */
 public record RegisterRequest(
 
@@ -39,9 +40,17 @@ public record RegisterRequest(
     @NotBlank(message = "El email es requerido") @Email(message = "Formato de email inválido") @Size(max = 255, message = "El email no puede superar 255 caracteres") String email,
 
     /**
-     * ¿Qué? Nombre completo del usuario — no puede estar vacío.
+     * ¿Qué? Nombre(s) del usuario — separado del apellido.
+     * ¿Para qué? Almacenar como campo independiente permite filtrar y ordenar
+     * por nombre en reportes sin parsing frágil.
      */
-    @NotBlank(message = "El nombre completo es requerido") @Size(max = 255, message = "El nombre no puede superar 255 caracteres") String fullName,
+    @NotBlank(message = "El nombre es requerido") @Size(max = 150, message = "El nombre no puede superar 150 caracteres") String firstName,
+
+    /**
+     * ¿Qué? Apellido(s) del usuario — separado del nombre.
+     * ¿Para qué? ORDER BY last_name en reportes nominales — imposible con fullName.
+     */
+    @NotBlank(message = "El apellido es requerido") @Size(max = 150, message = "El apellido no puede superar 150 caracteres") String lastName,
 
     /**
      * ¿Qué? Contraseña con requisitos mínimos de seguridad (OWASP A07).

@@ -155,7 +155,7 @@ export default function RegisterPage() {
    * ¿Para qué? Crear la cuenta y disparar el envío del email de verificación.
    * ¿Impacto? En caso de éxito, se muestra un mensaje pidiendo verificar el email
    *           en lugar de redirigir — el usuario no puede hacer login todavía.
-   *           Los nombres se concatenan como fullName para el backend (campo unificado).
+   *           firstName y lastName se envían como campos separados al backend.
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -166,12 +166,10 @@ export default function RegisterPage() {
 
     setIsLoading(true);
     try {
-      // ¿Qué? El backend Spring Boot usa fullName como campo unificado.
-      // ¿Para qué? La API recibe un solo campo — combinamos first_name y last_name.
-      // ¿Impacto? El usuario llena dos campos separados pero el backend recibe uno solo.
       const user = await register({
         email: formData.email,
-        fullName: `${formData.first_name.trim()} ${formData.last_name.trim()}`,
+        firstName: formData.first_name.trim(),
+        lastName: formData.last_name.trim(),
         password: formData.password,
       });
       setSuccessMessage(t("auth.register.successMessage", { email: user.email }));

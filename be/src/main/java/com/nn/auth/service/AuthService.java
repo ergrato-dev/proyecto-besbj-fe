@@ -80,7 +80,8 @@ public class AuthService {
    * ¿Impacto? @Transactional garantiza atomicidad: si la inserción del token
    * falla, el usuario tampoco se crea — no quedan usuarios sin token.
    *
-   * @param request DTO validado con email, fullName y password (texto plano)
+   * @param request DTO validado con email, firstName, lastName y password (texto
+   *                plano)
    * @return UserResponse con los datos públicos del nuevo usuario
    * @throws IllegalArgumentException Si el email ya está registrado
    */
@@ -100,7 +101,8 @@ public class AuthService {
     // Paso 2: Crear y persistir el usuario con contraseña hasheada
     User user = User.builder()
         .email(request.email().toLowerCase().trim())
-        .fullName(request.fullName().trim())
+        .firstName(request.firstName().trim())
+        .lastName(request.lastName().trim())
         .hashedPassword(passwordEncoder.encode(request.password()))
         .build();
 
@@ -118,7 +120,7 @@ public class AuthService {
     emailVerificationTokenRepository.save(verificationToken);
 
     // Paso 4: Enviar email de verificación de forma asíncrona (@Async)
-    emailService.sendVerificationEmail(user.getEmail(), user.getFullName(), tokenValue);
+    emailService.sendVerificationEmail(user.getEmail(), user.getFirstName(), tokenValue);
 
     return UserResponse.from(user);
   }
@@ -291,7 +293,7 @@ public class AuthService {
       passwordResetTokenRepository.save(resetToken);
 
       // Enviar email de recuperación de forma asíncrona (@Async)
-      emailService.sendPasswordResetEmail(user.getEmail(), user.getFullName(), tokenValue);
+      emailService.sendPasswordResetEmail(user.getEmail(), user.getFirstName(), tokenValue);
 
       log.info("Token de recuperación generado para: {}", user.getEmail());
     });
