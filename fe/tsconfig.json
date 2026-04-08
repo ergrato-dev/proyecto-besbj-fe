@@ -1,0 +1,78 @@
+{
+  "compilerOptions": {
+    /* ------------------------------------------------------------------ */
+    /* Target y módulos                                                      */
+    /* ------------------------------------------------------------------ */
+
+    // El código compilado debe ser compatible con los navegadores modernos.
+    // ES2020 incluye async/await, optional chaining, nullish coalescing, etc.
+    "target": "ES2020",
+
+    // Habilita las librerías de tipos del DOM y ES moderno.
+    // Sin "DOM", TypeScript no conoce `document`, `window`, `fetch`, etc.
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+
+    // El sistema de módulos que usará el código compilado.
+    // "Bundler" es la opción moderna para proyectos con Vite/esbuild/webpack.
+    "module": "ESNext",
+
+    // Cómo TypeScript resuelve los módulos importados (import '...')
+    // "Bundler" es la estrategia correcta cuando hay un bundler como Vite.
+    "moduleResolution": "Bundler",
+
+    /* ------------------------------------------------------------------ */
+    /* JSX                                                                   */
+    /* ------------------------------------------------------------------ */
+
+    // Cómo TypeScript transforma el JSX. "react-jsx" usa el nuevo transform
+    // automático de React 17+ — no necesita `import React from 'react'` en cada archivo.
+    "jsx": "react-jsx",
+
+    /* ------------------------------------------------------------------ */
+    /* Strict mode — OBLIGATORIO en este proyecto                           */
+    /* ------------------------------------------------------------------ */
+
+    // Activa todas las verificaciones estrictas de TypeScript de una vez:
+    // noImplicitAny, strictNullChecks, strictFunctionTypes, etc.
+    // Sin esto, TypeScript es mucho más permisivo y permite bugs sutiles.
+    "strict": true,
+
+    // Detecta variables declaradas con `let` o `const` que nunca se usan.
+    // Ayuda a mantener el código limpio sin imports o variables huérfanas.
+    "noUnusedLocals": true,
+
+    // Lo mismo para parámetros de función que nunca se usan.
+    "noUnusedParameters": true,
+
+    // Fuerza que todos los switch/case que "caen" al siguiente case sean
+    // intencionales (anotados con comentario). Previene bugs silenciosos.
+    "noFallthroughCasesInSwitch": true,
+
+    /* ------------------------------------------------------------------ */
+    /* Interoperabilidad                                                     */
+    /* ------------------------------------------------------------------ */
+
+    // Permite importar módulos CommonJS con `import x from 'module'` en lugar
+    // de `import * as x from 'module'`. Necesario para muchos paquetes de npm.
+    "esModuleInterop": true,
+
+    // Permite importar archivos JSON directamente: import data from './data.json'
+    "resolveJsonModule": true,
+
+    // Hace que TypeScript trate cada archivo como un módulo independiente
+    // (igual que lo hace esbuild/Vite). Requerido para builds optimizados.
+    "isolatedModules": true,
+
+    // TypeScript solo verifica tipos, no compila — Vite se encarga de compilar.
+    // Esto hace que el proceso de build sea más rápido.
+    "noEmit": true,
+
+    // Permite importar archivos .tsx directamente (import App from "./App.tsx").
+    // Necesario con Vite que usa los imports directos sin omitir la extensión.
+    "allowImportingTsExtensions": true
+
+    /* Path aliases — se agregarán en Fase 6 si se necesitan */
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

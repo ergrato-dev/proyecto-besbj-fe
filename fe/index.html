@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <!--
+      viewport: asegura que la app se vea bien en móviles.
+      width=device-width → el ancho del viewport = ancho real del dispositivo.
+      initial-scale=1.0  → sin zoom inicial.
+      Sin esta línea, la app se vería muy pequeña en móviles (el navegador
+      simula un viewport de 980px y lo escala hacia abajo).
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <title>NN Auth System</title>
+  </head>
+  <body>
+    <!--
+      Punto de montaje de React. El componente raíz <App /> se insertará
+      aquí por ReactDOM.createRoot() en main.tsx.
+      Sin este div, React no tiene dónde renderizar la aplicación.
+    -->
+    <div id="root"></div>
+
+    <!--
+      type="module" permite usar import/export de ES Modules en el navegador.
+      Vite transforma e inyecta los módulos durante el dev server.
+      En producción, Vite genera el bundle y reemplaza esta referencia.
+    -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

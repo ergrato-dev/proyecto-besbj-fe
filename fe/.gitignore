@@ -1,0 +1,31 @@
+# Dependencias instaladas
+node_modules/
+
+# Build de producción
+dist/
+
+# Variables de entorno — nunca versionadas
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Cobertura de tests
+coverage/

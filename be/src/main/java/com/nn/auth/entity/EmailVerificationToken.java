@@ -34,9 +34,11 @@ import java.util.UUID;
 @Getter
 // Lombok: habilita el patrón Builder para crear instancias con sintaxis fluida.
 @Builder
-// Lombok: constructor sin parámetros requerido por JPA para reconstruir objetos desde la BD.
+// Lombok: constructor sin parámetros requerido por JPA para reconstruir objetos
+// desde la BD.
 @NoArgsConstructor
-// Lombok: constructor con todos los campos, requerido internamente por @Builder.
+// Lombok: constructor con todos los campos, requerido internamente por
+// @Builder.
 @AllArgsConstructor
 public class EmailVerificationToken {
 
@@ -89,7 +91,8 @@ public class EmailVerificationToken {
   @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMPTZ")
   private OffsetDateTime createdAt;
 
-  // JPA llama a este método automáticamente antes del INSERT — inicializa createdAt.
+  // JPA llama a este método automáticamente antes del INSERT — inicializa
+  // createdAt.
   @PrePersist
   protected void onCreate() {
     this.createdAt = OffsetDateTime.now();

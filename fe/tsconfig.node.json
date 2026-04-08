@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    // Configuración para los archivos de configuración de Node (vite.config.ts, etc.)
+    // Usa un target más moderno ya que estos archivos corren en Node, no en el navegador.
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    // composite + declaration son requeridos por TypeScript cuando se usan "references".
+    "composite": true,
+    "declaration": true,
+    "strict": true
+  },
+  "include": ["vite.config.ts"]
+}

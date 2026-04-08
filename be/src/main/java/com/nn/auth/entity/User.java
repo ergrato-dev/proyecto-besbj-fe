@@ -35,18 +35,23 @@ import java.util.UUID;
 @Entity
 
 // Especifica el nombre exacto de la tabla en PostgreSQL.
-// Sin @Table, JPA usaría el nombre de la clase ("user") — que además es palabra reservada en SQL.
+// Sin @Table, JPA usaría el nombre de la clase ("user") — que además es palabra
+// reservada en SQL.
 @Table(name = "users")
 
-// Lombok: genera getters públicos para todos los campos (getName(), getEmail(), etc.).
-// Se usa @Getter en lugar de @Data para no generar setters — la entidad es inmutable por diseño.
+// Lombok: genera getters públicos para todos los campos (getName(), getEmail(),
+// etc.).
+// Se usa @Getter en lugar de @Data para no generar setters — la entidad es
+// inmutable por diseño.
 @Getter
 
-// Lombok: genera el patrón Builder — permite crear objetos User con sintaxis fluida:
+// Lombok: genera el patrón Builder — permite crear objetos User con sintaxis
+// fluida:
 // User.builder().email(...).fullName(...).build()
 @Builder
 
-// Lombok: genera el constructor sin parámetros. JPA lo requiere obligatoriamente
+// Lombok: genera el constructor sin parámetros. JPA lo requiere
+// obligatoriamente
 // para reconstruir objetos al leer filas de la BD (via reflexión).
 @NoArgsConstructor
 
@@ -103,7 +108,8 @@ public class User implements UserDetails {
    * seguir autenticándose.
    */
   // Lottery: sin @Builder.Default, el @Builder de Lombok ignoraría el `= true`
-  // y generaría active=false en cada usuario creado con el builder — bug silencioso.
+  // y generaría active=false en cada usuario creado con el builder — bug
+  // silencioso.
   @Builder.Default
   @Column(name = "is_active", nullable = false)
   private boolean active = true;
@@ -115,9 +121,12 @@ public class User implements UserDetails {
    * ¿Impacto? Sin verificación, alguien puede registrarse con el email de otra
    * persona y hacerse pasar por ella.
    */
-  // @Builder.Default preserva el valor por defecto `= false` cuando se usa el builder.
-  // Sin esto, @Builder ignoraría el inicializador — emailVerified sería false de todas
-  // formas aquí, pero la documentación de intención es más clara con @Builder.Default.
+  // @Builder.Default preserva el valor por defecto `= false` cuando se usa el
+  // builder.
+  // Sin esto, @Builder ignoraría el inicializador — emailVerified sería false de
+  // todas
+  // formas aquí, pero la documentación de intención es más clara con
+  // @Builder.Default.
   @Builder.Default
   @Column(name = "is_email_verified", nullable = false)
   private boolean emailVerified = false;
@@ -141,7 +150,8 @@ public class User implements UserDetails {
    * ¿Impacto? Si no se inicializan aquí, las columnas NOT NULL fallarían
    * al insertar — causando un DataIntegrityViolationException.
    */
-  // JPA llama a este método automáticamente justo antes de ejecutar el INSERT en la BD.
+  // JPA llama a este método automáticamente justo antes de ejecutar el INSERT en
+  // la BD.
   // No hace falta llamarlo desde ningún servicio — JPA lo gestiona solo.
   @PrePersist
   protected void onCreate() {
@@ -157,7 +167,8 @@ public class User implements UserDetails {
    * ¿Impacto? Sin esto, `updated_at` quedaría congelado en la fecha de creación,
    * imposibilitando auditar cuándo se cambió la contraseña.
    */
-  // JPA llama a este método automáticamente justo antes de ejecutar el UPDATE en la BD.
+  // JPA llama a este método automáticamente justo antes de ejecutar el UPDATE en
+  // la BD.
   @PreUpdate
   protected void onUpdate() {
     this.updatedAt = OffsetDateTime.now();

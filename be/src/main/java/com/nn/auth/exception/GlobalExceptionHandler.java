@@ -39,7 +39,8 @@ public class GlobalExceptionHandler {
    * @param ex Excepción con los errores de validación por campo
    * @return ProblemDetail 400 con mapa de campo → mensaje de error
    */
-  // Le dice a Spring: «cuando cualquier controller lance MethodArgumentNotValidException,
+  // Le dice a Spring: «cuando cualquier controller lance
+  // MethodArgumentNotValidException,
   // ejecuta ESTE método en lugar de la respuesta de error genérica por defecto».
   @ExceptionHandler(MethodArgumentNotValidException.class)
   // Establece el código HTTP de respuesta como 400 Bad Request.
@@ -67,9 +68,11 @@ public class GlobalExceptionHandler {
    * @param ex Excepción de autenticación de Spring Security
    * @return ProblemDetail 401 con mensaje genérico
    */
-  // Intercepta cualquier AuthenticationException lanzada en los controllers o filtros.
+  // Intercepta cualquier AuthenticationException lanzada en los controllers o
+  // filtros.
   @ExceptionHandler(AuthenticationException.class)
-  // 401 Unauthorized = el cliente no ha demostrado su identidad (falta o mal token).
+  // 401 Unauthorized = el cliente no ha demostrado su identidad (falta o mal
+  // token).
   @ResponseStatus(HttpStatus.UNAUTHORIZED)
   public ProblemDetail handleAuthenticationException(AuthenticationException ex) {
     ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED);
@@ -113,7 +116,8 @@ public class GlobalExceptionHandler {
    */
   // Intercepta AccessDeniedException: usuario autenticado pero sin permisos.
   @ExceptionHandler(AccessDeniedException.class)
-  // 403 Forbidden = la identidad es conocida pero no tiene permiso para este recurso.
+  // 403 Forbidden = la identidad es conocida pero no tiene permiso para este
+  // recurso.
   @ResponseStatus(HttpStatus.FORBIDDEN)
   public ProblemDetail handleAccessDeniedException(AccessDeniedException ex) {
     ProblemDetail detail = ProblemDetail.forStatus(HttpStatus.FORBIDDEN);
@@ -131,8 +135,10 @@ public class GlobalExceptionHandler {
    * @param ex Excepción inesperada
    * @return ProblemDetail 500 genérico
    */
-  // Captura de último recurso: cualquier excepción no manejada por los handlers anteriores.
-  // Spring busca el handler más específico primero — este es el menos específico (Exception).
+  // Captura de último recurso: cualquier excepción no manejada por los handlers
+  // anteriores.
+  // Spring busca el handler más específico primero — este es el menos específico
+  // (Exception).
   @ExceptionHandler(Exception.class)
   // 500 Internal Server Error = algo falló en el servidor (no en el cliente).
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
