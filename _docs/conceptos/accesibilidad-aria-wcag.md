@@ -1,6 +1,6 @@
 # Accesibilidad Web — ARIA y WCAG 2.1 en React
 
-> Stack Frontend: React 18+ | TypeScript | TailwindCSS 4+ | Vite
+> Stack Frontend: React 19.2.4 | TypeScript 6 | TailwindCSS 4.2.2 | Vite 8
 > Aplicable a: proyecto-besb-fe (Spring Boot backend) y proyecto-be-fe (FastAPI backend) — Frontend idéntico
 
 ---

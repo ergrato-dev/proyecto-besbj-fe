@@ -1,8 +1,8 @@
 # Arquitectura del Sistema — NN Auth System
 
 > Proyecto: NN Auth System
-> Stack: Spring Boot 3 (Java 21) + React (TypeScript) + PostgreSQL 17 + Docker
-> Tests: en progreso (ver fases en copilot-instructions.md)
+> Stack: Spring Boot 3 (Java 21) + React 19 (TypeScript) + PostgreSQL 17 + Docker
+> Tests: ✅ completados — BE: 29 tests (JUnit 5 + MockMvc + Testcontainers) | FE: 37 tests (Vitest + Testing Library)
 >
 > **Referencia:** Arquitectura equivalente a [proyecto-be-fe](https://github.com/ergrato-dev/proyecto-be-fe)
 > (FastAPI + React). Misma funcionalidad, diferente implementación de backend.
@@ -18,7 +18,7 @@ responsabilidad única y se comunica solo con la capa adyacente:
 ┌──────────────────────────────────────────────────────────────────┐
 │  CAPA 3 — CLIENTE (Navegador Web)                                │
 │                                                                  │
-│  React 18 + TypeScript + TailwindCSS + React Router              │
+│  React 19.2.4 + TypeScript 6 + TailwindCSS 4 + React Router 7   │
 │  http://localhost:5173                                           │
 │                                                                  │
 │  ┌─────────────┐  ┌─────────────────┐  ┌──────────────────────┐ │
@@ -194,9 +194,8 @@ be/src/main/java/com/nn/auth/
 
 ## Arquitectura del Frontend (`fe/`)
 
-El frontend es **idéntico** al del proyecto de referencia. Usa React 18, Vite, TypeScript y
-TailwindCSS 4. La única diferencia es que apunta al backend en puerto **8080** (Spring Boot)
-en lugar de 8000 (FastAPI/Uvicorn).
+El frontend apunta al backend en puerto **8080** (Spring Boot) en lugar de 8000 (FastAPI/Uvicorn).
+Usa React 19.2.4, Vite 8, TypeScript 6 (strict) y TailwindCSS 4 con tokens `accent-*` amber.
 
 ### Estructura de capas
 

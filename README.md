@@ -38,16 +38,19 @@ Incluye landing page pública, registro de usuarios, login, cambio de contraseñ
 
 | Capa            | Tecnología                                                                  |
 |-----------------|-----------------------------------------------------------------------------|
-| **Backend**     | Java 21 (JDK 21), Spring Boot 3.2+, Spring Data JPA, Spring Security (BCrypt), Flyway |
-| **Frontend**    | React 18+, Vite, TypeScript, TailwindCSS 4+                                |
-| **Base de datos** | PostgreSQL 17+ (Docker Compose o instalación local)                       |
-| **Auth**        | JWT — JJWT library (access 15 min + refresh 7 días)                        |
+| **Backend**     | Java 21 (JDK 21), Spring Boot 3.5.0, Spring Data JPA, Spring Security (BCrypt), Flyway 10 |
+| **Frontend**    | React 19.2.4, Vite 8.0.7, TypeScript 6.0.2, TailwindCSS 4.2.2              |
+| **Router FE**   | React Router DOM 7.14.0                                                     |
+| **HTTP client** | Axios 1.14.0 (interceptor Bearer JWT)                                       |
+| **Base de datos** | PostgreSQL 17 (Docker Compose o instalación local)                        |
+| **Auth**        | JWT — JJWT 0.12.6 (access 15 min + refresh 7 días, HS256)                  |
 | **Email (dev)** | Mailpit — captura SMTP local, UI en puerto 8025                             |
-| **Rate Limiting** | Bucket4j — límite por IP en endpoints de auth                             |
-| **Documentación API** | SpringDoc OpenAPI (Swagger UI en `/swagger-ui.html`)                |
-| **Testing**     | JUnit 5 + MockMvc (BE), Vitest + Testing Library (FE)                       |
-| **Linting**     | Checkstyle (Java), ESLint + Prettier (TypeScript)                           |
-| **Build**       | Maven Wrapper (`./mvnw`) para BE, pnpm para FE                              |
+| **Rate Limiting** | Bucket4j 8.x — límite por IP en endpoints de auth                        |
+| **Documentación API** | SpringDoc OpenAPI 2.8.9 (Swagger UI en `/swagger-ui.html`)         |
+| **Testing BE**  | JUnit 5 + MockMvc + Testcontainers → 29 tests                              |
+| **Testing FE**  | Vitest 4.1.3 + Testing Library React 16.3.2 → 37 tests (6 suites)         |
+| **Linting**     | Checkstyle (Java), ESLint 10 + Prettier 3.8.1 (TypeScript)                 |
+| **Build**       | Maven Wrapper (`./mvnw`) para BE, pnpm 10 para FE                          |
 
 ---
 
@@ -292,10 +295,16 @@ proyecto-besb-fe/
 │   ├── referencia-tecnica/
 │   │   ├── architecture.md            # Arquitectura general, flujos y decisiones técnicas
 │   │   ├── api-endpoints.md           # Todos los endpoints con parámetros y respuestas
-│   │   └── database-schema.md         # Esquema ER, tablas, columnas y migraciones
-│   └── conceptos/
-│       ├── owasp-top-10.md            # Implementación del OWASP Top 10 2021
-│       └── accesibilidad-aria-wcag.md # Estándares ARIA/WCAG 2.1 AA aplicados
+│   │   ├── database-schema.md         # Esquema ER, tablas, columnas y migraciones
+│   │   └── design-system.md           # Sistema de tokens accent-* (amber) y temas dark/light
+│   ├── conceptos/
+│   │   ├── owasp-top-10.md            # Implementación del OWASP Top 10 2021
+│   │   ├── accesibilidad-aria-wcag.md # Estándares ARIA/WCAG 2.1 AA aplicados
+│   │   └── patrones-arquitectonicos.md # Patrones usados: Repository, DTO, Context, etc.
+│   └── requisitos/
+│       ├── restricciones.md           # Restricciones técnicas y de negocio
+│       ├── RFs/                       # Requisitos funcionales (RF-001 a RF-008)
+│       └── HUs/                       # Historias de usuario (HU-001 a HU-008)
 │
 ├── be/                                # Backend — Java 21 + Spring Boot 3
 │   ├── src/
@@ -348,10 +357,13 @@ proyecto-besb-fe/
     │   ├── pages/                     # Páginas/vistas (una por ruta)
     │   ├── hooks/                     # Custom hooks
     │   ├── context/                   # Context providers (AuthContext)
-    │   └── types/                     # Tipos TypeScript
+    │   ├── types/                     # Tipos TypeScript (auth.ts)
+    │   └── __tests__/                 # Tests Vitest (Button, InputField, Alert, Login, Register, useAuth)
+    ├── src/test/setup.ts              # Setup global: jest-dom matchers + afterEach cleanup
     ├── .env                           # Variables de entorno (NO versionado)
     ├── .env.example                   # Plantilla de variables
-    ├── package.json                   # Dependencias (pnpm)
+    ├── package.json                   # Dependencias (pnpm, versiones exactas)
+    ├── vitest.config.ts               # Configuración de Vitest (jsdom, setupFiles)
     └── vite.config.ts                 # Configuración de Vite
 ```
 
@@ -377,12 +389,15 @@ Para las reglas completas, ver [.github/copilot-instructions.md](.github/copilot
 
 | Documento                                       | Descripción                                                  |
 |-------------------------------------------------|--------------------------------------------------------------|
-| [_docs/referencia-tecnica/architecture.md](_docs/referencia-tecnica/architecture.md)     | Arquitectura general, flujos y decisiones técnicas |
-| [_docs/referencia-tecnica/api-endpoints.md](_docs/referencia-tecnica/api-endpoints.md)   | Todos los endpoints con parámetros, respuestas y errores |
+| [_docs/referencia-tecnica/architecture.md](_docs/referencia-tecnica/architecture.md)     | Arquitectura de 3 capas, flujos auth, decisiones técnicas |
+| [_docs/referencia-tecnica/api-endpoints.md](_docs/referencia-tecnica/api-endpoints.md)   | 8 endpoints con parámetros, respuestas, rate limiting y JWT |
 | [_docs/referencia-tecnica/database-schema.md](_docs/referencia-tecnica/database-schema.md) | Esquema ER, tablas, columnas y migraciones Flyway |
+| [_docs/referencia-tecnica/design-system.md](_docs/referencia-tecnica/design-system.md)   | Tokens `accent-*` amber, dark mode, logo SVG |
 | [_docs/conceptos/owasp-top-10.md](_docs/conceptos/owasp-top-10.md)                       | Implementación del OWASP Top 10 2021 con Spring Boot |
-| [_docs/conceptos/accesibilidad-aria-wcag.md](_docs/conceptos/accesibilidad-aria-wcag.md) | Estándares ARIA/WCAG 2.1 AA aplicados al frontend React |
-| [.github/copilot-instructions.md](.github/copilot-instructions.md)                       | Reglas y convenciones del proyecto                   |
+| [_docs/conceptos/accesibilidad-aria-wcag.md](_docs/conceptos/accesibilidad-aria-wcag.md) | ARIA/WCAG 2.1 AA implementados en el frontend React |
+| [_docs/conceptos/patrones-arquitectonicos.md](_docs/conceptos/patrones-arquitectonicos.md) | Patrones Repository, DTO, Context, Interceptor, etc. |
+| [_docs/requisitos/restricciones.md](_docs/requisitos/restricciones.md)                   | Restricciones técnicas y de negocio del proyecto |
+| [.github/copilot-instructions.md](.github/copilot-instructions.md)                       | Reglas y convenciones del proyecto (stack, commits, etc.) |
 
 ---
 
