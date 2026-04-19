@@ -256,7 +256,7 @@ proyecto-besb-fe/                  # Raíz del monorepo
 ├── docker-compose.yml             # Servicios: PostgreSQL 17 + Mailpit
 ├── README.md                      # Documentación principal del proyecto
 │
-├── _docs/                         # 📚 Documentación del proyecto
+├── docs/                         # 📚 Documentación del proyecto
 │   ├── referencia-tecnica/
 │   │   ├── architecture.md        # Arquitectura general y diagramas
 │   │   ├── api-endpoints.md       # Documentación de todos los endpoints
@@ -945,7 +945,7 @@ tiene un color de acento único que identifica su stack. Los componentes React
 | Borde del badge    | `stroke="#d97706"` | amber-600 |
 | Trazos de la letra | `stroke="#fbbf24"` | amber-400 |
 
-> Ver `_docs/referencia-tecnica/design-system.md` para el sistema completo de tokens,
+> Ver `docs/referencia-tecnica/design-system.md` para el sistema completo de tokens,
 > instrucciones de clonación y verificación visual.
 
 ---
@@ -1046,11 +1046,11 @@ tiene un color de acento único que identifica su stack. Los componentes React
 
 ### Fase 8 — Documentación Final
 
-- [ ] Crear `_docs/referencia-tecnica/architecture.md`
-- [ ] Crear `_docs/referencia-tecnica/api-endpoints.md`
-- [ ] Crear `_docs/referencia-tecnica/database-schema.md`
-- [ ] Crear `_docs/conceptos/owasp-top-10.md`
-- [ ] Crear `_docs/conceptos/accesibilidad-aria-wcag.md`
+- [ ] Crear `docs/referencia-tecnica/architecture.md`
+- [ ] Crear `docs/referencia-tecnica/api-endpoints.md`
+- [ ] Crear `docs/referencia-tecnica/database-schema.md`
+- [ ] Crear `docs/conceptos/owasp-top-10.md`
+- [ ] Crear `docs/conceptos/accesibilidad-aria-wcag.md`
 - [ ] Actualizar `README.md` con instrucciones finales
 - [ ] ✅ Verificar: documentación completa y coherente
 

@@ -103,7 +103,7 @@ Usar las clases semánticas ya establecidas en el proyecto:
 - **Éxito**: `text-green-600 dark:text-green-400`
 
 > El acento es **amber** en este proyecto (Spring Boot Java).
-> Ver `_docs/referencia-tecnica/design-system.md` para la referencia completa.
+> Ver `docs/referencia-tecnica/design-system.md` para la referencia completa.
 
 ## Descripción del componente a crear
 

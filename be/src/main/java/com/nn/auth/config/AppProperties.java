@@ -14,7 +14,13 @@ import jakarta.validation.constraints.Size;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.validation.annotation.Validated;
 
+// Activa la validación de las propiedades al arranque de la app con Jakarta Validation.
+// Sin @Validated, las anotaciones @NotBlank y @Size se ignoran — un JWT_SECRET de
+// 3 caracteres pasaría sin error, comprometiendo la seguridad desde el inicio.
 @Validated
+// Mapea el bloque 'app:' del application.yml a este record.
+// Permite usar 'app.jwt.secret', 'app.frontendUrl', etc. en lugar de @Value("${...}") dispersos.
+// Sin @ConfigurationProperties, Spring no inyecta los valores del YAML — todos los campos quedarían null.
 @ConfigurationProperties(prefix = "app")
 public record AppProperties(
     Jwt jwt,

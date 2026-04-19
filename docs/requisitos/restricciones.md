@@ -81,7 +81,7 @@ Los comentarios en español facilitan el aprendizaje del estudiante SENA.
 | RT-003.9 | Los mensajes de error de auth deben ser genéricos (no revelar si el email existe)    |
 
 **Motivación**: Implementar las mitigaciones del OWASP Top 10 2021.
-Ver `_docs/conceptos/owasp-top-10.md` para detalles de cada control.
+Ver `docs/conceptos/owasp-top-10.md` para detalles de cada control.
 
 ---
 
@@ -209,7 +209,7 @@ intención pedagógica del proyecto.
 |------------------------------------------------------------------------------------------------|
 | Los comentarios deben responder ¿Qué? ¿Para qué? ¿Impacto?                                   |
 | No se implementan features que no estén en el plan de trabajo (YAGNI)                         |
-| Las decisiones técnicas deben estar documentadas en `_docs/referencia-tecnica/architecture.md` |
+| Las decisiones técnicas deben estar documentadas en `docs/referencia-tecnica/architecture.md` |
 | El código debe ser legible para un estudiante junior — no "clever code"                        |
 | Cada nueva feature debe incluir su test correspondiente                                        |
 

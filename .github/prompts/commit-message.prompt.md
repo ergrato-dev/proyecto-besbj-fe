@@ -49,7 +49,7 @@ El cuerpo (`For:` / `Impact:`) puede estar en inglés o español.
 | `config`   | application.yml, Docker, configuración Spring            |
 | `test`     | Tests unitarios e integración (JUnit 5, Testcontainers)  |
 | `deps`     | Dependencias (pom.xml, package.json — versiones exactas) |
-| `docs`     | Documentación (README, `_docs/`)                         |
+| `docs`     | Documentación (README, `docs/`)                         |
 
 ## Ejemplos del proyecto
 

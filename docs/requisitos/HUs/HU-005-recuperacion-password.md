@@ -59,5 +59,5 @@ marcado como `used = true` y no puede reutilizarse.
 - Marcar token como `used = true`
 - Respuesta: `MessageResponse { message: "Contraseña restablecida correctamente" }`
 
-- Ver `_docs/referencia-tecnica/api-endpoints.md` → `POST /api/v1/auth/forgot-password`
+- Ver `docs/referencia-tecnica/api-endpoints.md` → `POST /api/v1/auth/forgot-password`
   y `POST /api/v1/auth/reset-password`

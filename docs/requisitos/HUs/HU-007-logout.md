@@ -49,4 +49,4 @@ const logout = () => {
   en la BD, lo que complica el esquema y va contra la naturaleza stateless del JWT.
 - Como mejora futura puede implementarse un endpoint de revocación de refresh tokens.
 - La expiración corta del `access_token` (15 min) limita el riesgo de esta decisión.
-- Ver `_docs/referencia-tecnica/api-endpoints.md` para la tabla completa de endpoints.
+- Ver `docs/referencia-tecnica/api-endpoints.md` para la tabla completa de endpoints.

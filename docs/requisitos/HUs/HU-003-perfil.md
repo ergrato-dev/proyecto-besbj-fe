@@ -37,4 +37,4 @@ directamente por URL, es redirigido a `/login` (Route Guard).
 - El filtro extrae el email del JWT y lo carga en el `SecurityContext`
 - El controller usa `@AuthenticationPrincipal` o extrae del contexto de seguridad
 - Respuesta: `UserResponse` (sin `hashedPassword`)
-- Ver `_docs/referencia-tecnica/api-endpoints.md` → `GET /api/v1/users/me`
+- Ver `docs/referencia-tecnica/api-endpoints.md` → `GET /api/v1/users/me`

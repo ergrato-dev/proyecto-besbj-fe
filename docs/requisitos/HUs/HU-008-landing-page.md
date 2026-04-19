@@ -72,7 +72,7 @@ para los botones, links y elementos de acento — nunca `amber-*` directamente.
 
 ## Notas técnicas
 
-- Ver `_docs/referencia-tecnica/design-system.md` para los colores del logo SVG
+- Ver `docs/referencia-tecnica/design-system.md` para los colores del logo SVG
   y las reglas del token `accent-*`
 - El toggle de dark/light mode está en `Navbar` o `LandingPage` según el layout
 - React Router 7+ maneja la navegación entre páginas públicas y protegidas

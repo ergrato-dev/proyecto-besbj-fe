@@ -576,5 +576,5 @@ El componente `Logo.tsx` usa colores SVG hardcodeados que deben coincidir con el
 | Borde del badge    | `stroke="#d97706"`     | amber-600       |
 | Trazos de la letra | `stroke="#fbbf24"`     | amber-400       |
 
-> Ver `_docs/referencia-tecnica/design-system.md` para instrucciones completas de clonación,
+> Ver `docs/referencia-tecnica/design-system.md` para instrucciones completas de clonación,
 > verificación visual y convenciones de uso del sistema de tokens.

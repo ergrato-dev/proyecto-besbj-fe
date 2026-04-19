@@ -205,7 +205,11 @@ public class AuthController {
 
   /**
    * ¿Qué? Restablece la contraseña usando el token recibido por email.
-   * ¿Para qué? Completar el flujo de recuperación.
+   * ¿Para qué? Completar el flujo de recuperación de contraseña que inició
+   * en /forgot-password.
+   * ¿Impacto? El token se valida como no expirado (1 hora) y no usado (single-use).
+   * Si se aceptaran tokens ya usados, un atacante que intercepte el email
+   * podría resetear la contraseña después de que el usuario lo hizo — OWASP A04.
    *
    * @param request DTO con el token de recuperación y la nueva contraseña
    * @return MessageResponse confirmando el restablecimiento
@@ -229,6 +233,9 @@ public class AuthController {
   /**
    * ¿Qué? Verifica el email con el token recibido al registrarse.
    * ¿Para qué? Activar la cuenta del usuario y permitirle hacer login.
+   * ¿Impacto? Sin verificar el email, la cuenta queda con isEnabled()=false
+   * y el login devuelve 401. Verificar confirma que el usuario controla
+   * realmente ese email — barrera contra registros con emails ajenos.
    *
    * @param request DTO con el token de verificación de email
    * @return MessageResponse confirmando la activación

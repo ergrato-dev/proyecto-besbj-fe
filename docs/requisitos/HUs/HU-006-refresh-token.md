@@ -44,4 +44,4 @@ primer refresh).
 - El `refresh_token` en sí **no** se rota en esta versión inicial
   (puede mejorarse en una iteración futura)
 - Respuesta: `TokenResponse { accessToken, refreshToken, tokenType: "Bearer" }`
-- Ver `_docs/referencia-tecnica/api-endpoints.md` → `POST /api/v1/auth/refresh`
+- Ver `docs/referencia-tecnica/api-endpoints.md` → `POST /api/v1/auth/refresh`

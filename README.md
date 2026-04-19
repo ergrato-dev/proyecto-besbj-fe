@@ -291,7 +291,7 @@ proyecto-besb-fe/
 ├── .gitignore                         # Archivos ignorados por git
 ├── docker-compose.yml                 # PostgreSQL 17 + Mailpit para desarrollo
 ├── README.md                          # ← Este archivo
-├── _docs/                             # Documentación técnica
+├── docs/                             # Documentación técnica
 │   ├── referencia-tecnica/
 │   │   ├── architecture.md            # Arquitectura general, flujos y decisiones técnicas
 │   │   ├── api-endpoints.md           # Todos los endpoints con parámetros y respuestas
@@ -389,14 +389,14 @@ Para las reglas completas, ver [.github/copilot-instructions.md](.github/copilot
 
 | Documento                                       | Descripción                                                  |
 |-------------------------------------------------|--------------------------------------------------------------|
-| [_docs/referencia-tecnica/architecture.md](_docs/referencia-tecnica/architecture.md)     | Arquitectura de 3 capas, flujos auth, decisiones técnicas |
-| [_docs/referencia-tecnica/api-endpoints.md](_docs/referencia-tecnica/api-endpoints.md)   | 8 endpoints con parámetros, respuestas, rate limiting y JWT |
-| [_docs/referencia-tecnica/database-schema.md](_docs/referencia-tecnica/database-schema.md) | Esquema ER, tablas, columnas y migraciones Flyway |
-| [_docs/referencia-tecnica/design-system.md](_docs/referencia-tecnica/design-system.md)   | Tokens `accent-*` amber, dark mode, logo SVG |
-| [_docs/conceptos/owasp-top-10.md](_docs/conceptos/owasp-top-10.md)                       | Implementación del OWASP Top 10 2021 con Spring Boot |
-| [_docs/conceptos/accesibilidad-aria-wcag.md](_docs/conceptos/accesibilidad-aria-wcag.md) | ARIA/WCAG 2.1 AA implementados en el frontend React |
-| [_docs/conceptos/patrones-arquitectonicos.md](_docs/conceptos/patrones-arquitectonicos.md) | Patrones Repository, DTO, Context, Interceptor, etc. |
-| [_docs/requisitos/restricciones.md](_docs/requisitos/restricciones.md)                   | Restricciones técnicas y de negocio del proyecto |
+| [docs/referencia-tecnica/architecture.md](docs/referencia-tecnica/architecture.md)     | Arquitectura de 3 capas, flujos auth, decisiones técnicas |
+| [docs/referencia-tecnica/api-endpoints.md](docs/referencia-tecnica/api-endpoints.md)   | 8 endpoints con parámetros, respuestas, rate limiting y JWT |
+| [docs/referencia-tecnica/database-schema.md](docs/referencia-tecnica/database-schema.md) | Esquema ER, tablas, columnas y migraciones Flyway |
+| [docs/referencia-tecnica/design-system.md](docs/referencia-tecnica/design-system.md)   | Tokens `accent-*` amber, dark mode, logo SVG |
+| [docs/conceptos/owasp-top-10.md](docs/conceptos/owasp-top-10.md)                       | Implementación del OWASP Top 10 2021 con Spring Boot |
+| [docs/conceptos/accesibilidad-aria-wcag.md](docs/conceptos/accesibilidad-aria-wcag.md) | ARIA/WCAG 2.1 AA implementados en el frontend React |
+| [docs/conceptos/patrones-arquitectonicos.md](docs/conceptos/patrones-arquitectonicos.md) | Patrones Repository, DTO, Context, Interceptor, etc. |
+| [docs/requisitos/restricciones.md](docs/requisitos/restricciones.md)                   | Restricciones técnicas y de negocio del proyecto |
 | [.github/copilot-instructions.md](.github/copilot-instructions.md)                       | Reglas y convenciones del proyecto (stack, commits, etc.) |
 
 ---

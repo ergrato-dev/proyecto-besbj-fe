@@ -45,4 +45,4 @@ muestra en el frontend antes de enviar la petición (validación client-side).
 - Hash de `newPassword` con `BCryptPasswordEncoder.encode()`
 - Registrar evento en `AuditLogger`
 - Respuesta: `MessageResponse { message: "Contraseña actualizada correctamente" }`
-- Ver `_docs/referencia-tecnica/api-endpoints.md` → `POST /api/v1/auth/change-password`
+- Ver `docs/referencia-tecnica/api-endpoints.md` → `POST /api/v1/auth/change-password`

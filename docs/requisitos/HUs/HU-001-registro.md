@@ -44,4 +44,4 @@ indica "Revisa tu email para verificar tu cuenta".
 - Token de verificación: UUID aleatorio, expira en 24 horas
 - Email enviado vía `JavaMailSender` (perfil docker) o `MockMailSender` (perfil noDocker)
 - Respuesta: `UserResponse` (sin `hashedPassword`)
-- Ver `_docs/referencia-tecnica/api-endpoints.md` → `POST /api/v1/auth/register`
+- Ver `docs/referencia-tecnica/api-endpoints.md` → `POST /api/v1/auth/register`

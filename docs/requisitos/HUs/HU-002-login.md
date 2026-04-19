@@ -45,4 +45,4 @@ rechazado con un mensaje genérico.
 - Tokens generados con `JwtUtil.generateAccessToken()` y `JwtUtil.generateRefreshToken()`
 - Rate limiting configurado con Bucket4j en `AuthController` via AOP
 - Respuesta: `TokenResponse { accessToken, refreshToken, tokenType: "Bearer" }`
-- Ver `_docs/referencia-tecnica/api-endpoints.md` → `POST /api/v1/auth/login`
+- Ver `docs/referencia-tecnica/api-endpoints.md` → `POST /api/v1/auth/login`
