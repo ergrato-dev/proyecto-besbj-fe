@@ -30,6 +30,14 @@ export default function ChangePasswordPage() {
 
   const passwordsMatch = newPassword === confirmPassword;
 
+  /**
+   * ¿Qué? Envía la contraseña actual y la nueva al backend para actualizarla.
+   * ¿Para qué? El backend verifica que currentPassword coincide con el hash
+   *            almacenado antes de actualizar — el usuario prueba identidad sin JWT extra.
+   * ¿Impacto? Si las contraseñas nuevas no coinciden, el return temprano evita
+   *           la llamada al backend — validación del lado del cliente como primera línea.
+   *           El backend hace su propia validación — nunca confiar solo en el frontend.
+   */
   async function handleSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
     if (!passwordsMatch) return;

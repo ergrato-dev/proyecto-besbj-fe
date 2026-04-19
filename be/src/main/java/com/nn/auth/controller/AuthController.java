@@ -207,7 +207,8 @@ public class AuthController {
    * ¿Qué? Restablece la contraseña usando el token recibido por email.
    * ¿Para qué? Completar el flujo de recuperación de contraseña que inició
    * en /forgot-password.
-   * ¿Impacto? El token se valida como no expirado (1 hora) y no usado (single-use).
+   * ¿Impacto? El token se valida como no expirado (1 hora) y no usado
+   * (single-use).
    * Si se aceptaran tokens ya usados, un atacante que intercepte el email
    * podría resetear la contraseña después de que el usuario lo hizo — OWASP A04.
    *

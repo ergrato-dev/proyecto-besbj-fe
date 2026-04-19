@@ -1,8 +1,12 @@
 /**
  * Archivo: pages/CookiesPage.tsx
  * Descripción: Política de cookies del sistema NN Auth.
- * ¿Para qué? Informar al usuario qué datos se guardan en el navegador.
- *            La diferencia entre cookies y localStorage también es educativa.
+ * ¿Para qué? Informar al usuario qué datos se guardan en el navegador
+ *            y con qué propósito — cookies de sesión vs. localStorage de preferencias.
+ *            La distinción cookies/localStorage tiene valor pedagógico en este proyecto.
+ * ¿Impacto? Este sistema NO usa cookies HTTP para tokens (los tokens van en memoria
+ *           y localStorage, no en cookies). La política explica esto para evitar
+ *           confusión con sistemas que sí usan cookies httpOnly para auth.
  */
 
 import { Link } from "react-router-dom";

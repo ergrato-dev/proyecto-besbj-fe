@@ -17,6 +17,14 @@ export default function DashboardPage() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
 
+  /**
+   * ¿Qué? Cierra la sesión del usuario y redirige al login.
+   * ¿Para qué? logout() limpia el estado de AuthContext (user=null, accessToken=null)
+   *            y elimina el refreshToken de localStorage — la sesión queda destruida.
+   * ¿Impacto? Sin navigate("/login") el usuario quedaría en la URL /dashboard
+   *           viendo una pantalla vacía. ProtectedRoute lo detectaría en el próximo
+   *           render y redirigiriría, pero es mejor hacerlo explícitamente.
+   */
   function handleLogout(): void {
     logout();
     navigate("/login");

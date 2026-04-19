@@ -19,8 +19,10 @@ import org.springframework.validation.annotation.Validated;
 // 3 caracteres pasaría sin error, comprometiendo la seguridad desde el inicio.
 @Validated
 // Mapea el bloque 'app:' del application.yml a este record.
-// Permite usar 'app.jwt.secret', 'app.frontendUrl', etc. en lugar de @Value("${...}") dispersos.
-// Sin @ConfigurationProperties, Spring no inyecta los valores del YAML — todos los campos quedarían null.
+// Permite usar 'app.jwt.secret', 'app.frontendUrl', etc. en lugar de
+// @Value("${...}") dispersos.
+// Sin @ConfigurationProperties, Spring no inyecta los valores del YAML — todos
+// los campos quedarían null.
 @ConfigurationProperties(prefix = "app")
 public record AppProperties(
     Jwt jwt,

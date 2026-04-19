@@ -16,8 +16,10 @@ package com.nn.auth.dto.response;
 public record MessageResponse(String message) {
 
   /**
-   * ¿Qué? Factory method estático para crear un MessageResponse en una sola línea.
-   * ¿Para qué? Evitar repetir `new MessageResponse(msg)` en cada método del servicio.
+   * ¿Qué? Factory method estático para crear un MessageResponse en una sola
+   * línea.
+   * ¿Para qué? Evitar repetir `new MessageResponse(msg)` en cada método del
+   * servicio.
    * ¿Impacto? Centraliza la creación — si se agrega un campo nuevo al record
    * (ej: timestamp), solo se modifica aquí, no en cada llamada del servicio.
    *
