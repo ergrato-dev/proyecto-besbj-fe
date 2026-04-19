@@ -240,7 +240,7 @@ function ContactFormFields({
             autoComplete="name"
             required
             aria-required="true"
-            aria-invalid={!!errors.name}
+            aria-invalid={errors.name ? "true" : undefined}
             aria-describedby={errors.name ? "contact-name-error" : undefined}
             value={formData.name}
             onChange={onChange}
@@ -271,7 +271,7 @@ function ContactFormFields({
             autoComplete="email"
             required
             aria-required="true"
-            aria-invalid={!!errors.email}
+            aria-invalid={errors.email ? "true" : undefined}
             aria-describedby={
               errors.email
                 ? "contact-email-error"
@@ -308,7 +308,7 @@ function ContactFormFields({
             name="subject"
             required
             aria-required="true"
-            aria-invalid={!!errors.subject}
+            aria-invalid={errors.subject ? "true" : undefined}
             aria-describedby={errors.subject ? "contact-subject-error" : undefined}
             value={formData.subject}
             onChange={onChange}
@@ -343,7 +343,7 @@ function ContactFormFields({
             rows={5}
             required
             aria-required="true"
-            aria-invalid={!!errors.message}
+            aria-invalid={errors.message ? "true" : undefined}
             aria-describedby={errors.message ? "contact-message-error" : "contact-message-hint"}
             value={formData.message}
             onChange={onChange}
@@ -378,7 +378,7 @@ function ContactFormFields({
               name="acceptsPrivacy"
               required
               aria-required="true"
-              aria-invalid={!!errors.acceptsPrivacy}
+              aria-invalid={errors.acceptsPrivacy ? "true" : undefined}
               aria-describedby={errors.acceptsPrivacy ? "contact-privacy-error" : undefined}
               checked={formData.acceptsPrivacy}
               onChange={onCheckboxChange}
@@ -409,7 +409,7 @@ function ContactFormFields({
         <button
           type="submit"
           disabled={isSubmitting}
-          aria-busy={isSubmitting}
+          aria-busy={isSubmitting ? "true" : undefined}
           aria-label={isSubmitting ? t("contact.form.submitting") : t("contact.form.submit")}
           className="flex items-center gap-2 rounded-lg bg-accent-600 px-6 py-2.5 text-sm font-medium text-white transition-colors duration-200 hover:bg-accent-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 disabled:cursor-not-allowed disabled:opacity-60"
         >

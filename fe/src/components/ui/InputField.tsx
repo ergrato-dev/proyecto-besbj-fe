@@ -83,7 +83,7 @@ export default function InputField({
         */}
         <input
           id={id}
-          aria-invalid={error !== undefined ? "true" : "false"}
+          aria-invalid={error ? "true" : "false"}
           aria-describedby={error ? errorId : undefined}
           onPaste={disablePaste ? (e) => e.preventDefault() : undefined}
           className={[

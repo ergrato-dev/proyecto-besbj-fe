@@ -89,15 +89,13 @@ export default function LanguageSwitcher() {
           <button
             key={locale.code}
             onClick={() => void handleLanguageChange(locale.code)}
-            // ¿Qué? lang attribute en el botón.
-            // ¿Para qué? WCAG 3.1.2 — el lector de pantalla pronuncia la etiqueta
-            //            en el idioma del botón (ej: "Español" con pronunciación española).
-            lang={locale.langAttr}
             // ¿Qué? aria-pressed indica si el idioma está activo (patrón toggle button).
             // ¿Para qué? WCAG 4.1.2 — el estado del botón es comunicado a tecnologías asistivas.
             // ¿Impacto? Un usuario con lector de pantalla escucha "Español, seleccionado" o
             //            "English, no seleccionado" — sin esto, no sabría cuál está activo.
-            aria-pressed={isActive}
+            // Nota: lang no se aplica aquí — las etiquetas "Español"/"English" son cortas
+            // y reconocidas por los lectores de pantalla sin necesidad del atributo lang.
+            aria-pressed={isActive ? "true" : "false"}
             className={`rounded-md px-2 py-1 text-xs font-medium transition-colors ${
               isActive
                 ? "bg-accent-600 text-white dark:bg-accent-500"

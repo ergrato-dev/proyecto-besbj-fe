@@ -72,7 +72,7 @@ export default function Button({
   return (
     <button
       disabled={isDisabled}
-      aria-busy={isLoading}
+      aria-busy={isLoading ? "true" : undefined}
       className={[
         // Base: padding, bordes, transición, focus ring accesible
         "inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2",

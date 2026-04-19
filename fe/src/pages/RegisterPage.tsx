@@ -310,8 +310,9 @@ export default function RegisterPage() {
             const { text, to } = i18nKeyMap[key];
             return (
               <div key={key}>
-                <label className="flex cursor-pointer select-none items-start gap-2.5">
+                <label htmlFor={`consent-${key}`} className="flex cursor-pointer select-none items-start gap-2.5">
                   <input
+                    id={`consent-${key}`}
                     type="checkbox"
                     name={key}
                     checked={consents[key]}
