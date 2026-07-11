@@ -1,7 +1,7 @@
 # Referencia de Endpoints — NN Auth System (Spring Boot)
 
 > Stack: Spring Boot 3.2+ (Java 21) | Puerto: **8080** | Swagger UI: `/swagger-ui.html`
-> Referencia funcional: [proyecto-be-fe](https://github.com/ergrato-dev/proyecto-be-fe) (FastAPI, puerto 8000)
+> Referencia funcional: [proyecto-be_fastapi-fe_react](https://github.com/ergrato-dev/proyecto-be_fastapi-fe_react) (FastAPI, puerto 8000)
 
 ---
 
@@ -754,9 +754,9 @@ app:
 
 ## 10. Diferencias vs Referencia FastAPI
 
-Esta tabla documenta las diferencias de comportamiento o implementación respecto al proyecto de referencia `proyecto-be-fe`.
+Esta tabla documenta las diferencias de comportamiento o implementación respecto al proyecto de referencia `proyecto-be_fastapi-fe_react`.
 
-| Aspecto                       | FastAPI (proyecto-be-fe)              | Spring Boot (este proyecto)                  |
+| Aspecto                       | FastAPI (proyecto-be_fastapi-fe_react)              | Spring Boot (este proyecto)                  |
 |-------------------------------|---------------------------------------|----------------------------------------------|
 | Puerto del backend            | 8000 (Uvicorn)                        | 8080 (Tomcat embebido)                       |
 | Swagger UI                    | `/docs` (automático)                  | `/swagger-ui.html` (SpringDoc OpenAPI)      |

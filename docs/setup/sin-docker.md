@@ -35,8 +35,8 @@
 ## Paso 1 — Clonar el repositorio
 
 ```bash
-git clone https://github.com/ergrato-dev/proyecto-besbj-fe.git
-cd proyecto-besbj-fe
+git clone https://github.com/ergrato-dev/proyecto-be_springboot_java-fe_react.git
+cd proyecto-be_springboot_java-fe_react
 ```
 
 ---

@@ -1,7 +1,7 @@
 # Esquema de Base de Datos — NN Auth System (Spring Boot)
 
 > Stack: PostgreSQL 17+ | ORM: Spring Data JPA (Hibernate 6) | Migraciones: Flyway 9+
-> Referencia funcional: [proyecto-be-fe](https://github.com/ergrato-dev/proyecto-be-fe) (mismo esquema, SQLAlchemy + Alembic)
+> Referencia funcional: [proyecto-be_fastapi-fe_react](https://github.com/ergrato-dev/proyecto-be_fastapi-fe_react) (mismo esquema, SQLAlchemy + Alembic)
 
 ---
 
@@ -44,7 +44,7 @@
 | Timestamps      | `created_at`, `updated_at` | — |
 | Flags booleanos | `is_<estado>` | `is_active`, `is_email_verified` |
 
-> **Compatibilidad total con la referencia:** El esquema de base de datos es **idéntico** al del proyecto `proyecto-be-fe` (FastAPI). Esto permite que ambos backends compartan la misma base de datos PostgreSQL sin conflicto.
+> **Compatibilidad total con la referencia:** El esquema de base de datos es **idéntico** al del proyecto `proyecto-be_fastapi-fe_react` (FastAPI). Esto permite que ambos backends compartan la misma base de datos PostgreSQL sin conflicto.
 
 ---
 

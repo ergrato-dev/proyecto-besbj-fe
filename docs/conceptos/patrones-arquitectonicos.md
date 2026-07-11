@@ -463,7 +463,7 @@ Múltiples proyectos (frontend, backend, infraestructura) conviven en
 ### Estructura
 
 ```
-proyecto-besb-fe/              ← Un solo repositorio git
+proyecto-be_springboot_java-fe_react/              ← Un solo repositorio git
 ├── be/                        ← Backend (Spring Boot / Java 21)
 │   ├── src/
 │   ├── pom.xml

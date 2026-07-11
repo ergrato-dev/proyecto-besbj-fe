@@ -5,9 +5,18 @@
 Sistema de autenticación completo para una empresa genérica "NN", diseñado como ejercicio formativo.
 Incluye landing page pública, registro de usuarios, login, cambio de contraseña y recuperación por email.
 
-> **Referencia:** Este proyecto es una reimplementación del sistema [proyecto-be-fe](https://github.com/ergrato-dev/proyecto-be-fe)
+> **Referencia:** Este proyecto es una reimplementación del sistema [proyecto-be_fastapi-fe_react](https://github.com/ergrato-dev/proyecto-be_fastapi-fe_react)
 > con **idéntica funcionalidad**, usando un stack tecnológico diferente:
 > **Java 21 + Spring Boot 3** en el backend (en lugar de Python + FastAPI).
+
+---
+
+## 📝 Antes de empezar
+
+Este repo **no es solo para clonar y cambiar el look**. Antes de presentarlo como evidencia de
+aprendizaje, completa la [**Bitácora obligatoria**](BITACORA.md) — es un checklist secuencial
+que verifica, con commits de tu propio repo, que entendiste el flujo real (arquitectura, auth,
+base de datos) y no solo la apariencia.
 
 ---
 
@@ -93,7 +102,7 @@ curl -fsSL https://get.pnpm.io/install.sh | sh -
 
 ```bash
 git clone <url-del-repositorio>
-cd proyecto-besb-fe
+cd proyecto-be_springboot_java-fe_react
 ```
 
 ### 2. Levantar la base de datos (Docker)
@@ -286,7 +295,7 @@ cd fe && pnpm lint && pnpm format
 ## 📁 Estructura del Proyecto
 
 ```
-proyecto-besb-fe/
+proyecto-be_springboot_java-fe_react/
 ├── .github/copilot-instructions.md    # Reglas y convenciones del proyecto
 ├── .gitignore                         # Archivos ignorados por git
 ├── docker-compose.yml                 # PostgreSQL 17 + Mailpit para desarrollo
@@ -389,6 +398,8 @@ Para las reglas completas, ver [.github/copilot-instructions.md](.github/copilot
 
 | Documento                                       | Descripción                                                  |
 |-------------------------------------------------|--------------------------------------------------------------|
+| [BITACORA.md](BITACORA.md)                       | Checklist obligatorio de aprendizaje, fase por fase          |
+| [AUDITORIA.md](AUDITORIA.md)                     | Auditoría de pertinencia/relevancia/completitud/actualidad/seguridad |
 | [docs/referencia-tecnica/architecture.md](docs/referencia-tecnica/architecture.md)     | Arquitectura de 3 capas, flujos auth, decisiones técnicas |
 | [docs/referencia-tecnica/api-endpoints.md](docs/referencia-tecnica/api-endpoints.md)   | 8 endpoints con parámetros, respuestas, rate limiting y JWT |
 | [docs/referencia-tecnica/database-schema.md](docs/referencia-tecnica/database-schema.md) | Esquema ER, tablas, columnas y migraciones Flyway |
@@ -437,4 +448,8 @@ Este proyecto es de naturaleza exclusivamente educativa, desarrollado como ejerc
 
 ## 📄 Licencia
 
-Proyecto educativo — SENA. Uso exclusivamente académico.
+[![CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+Este proyecto está licenciado bajo **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)**. Proyecto educativo — SENA. Uso exclusivamente académico.
+
+Consulta el archivo [LICENSE](./LICENSE) o visita [creativecommons.org/licenses/by-nc-sa/4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) para más información.

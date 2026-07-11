@@ -4,7 +4,7 @@
 > Stack: Spring Boot 3 (Java 21) + React 19 (TypeScript) + PostgreSQL 17 + Docker
 > Tests: ✅ completados — BE: 29 tests (JUnit 5 + MockMvc + Testcontainers) | FE: 37 tests (Vitest + Testing Library)
 >
-> **Referencia:** Arquitectura equivalente a [proyecto-be-fe](https://github.com/ergrato-dev/proyecto-be-fe)
+> **Referencia:** Arquitectura equivalente a [proyecto-be_fastapi-fe_react](https://github.com/ergrato-dev/proyecto-be_fastapi-fe_react)
 > (FastAPI + React). Misma funcionalidad, diferente implementación de backend.
 
 ---
@@ -69,7 +69,7 @@ responsabilidad única y se comunica solo con la capa adyacente:
 
 ### Comparación con el proyecto de referencia (FastAPI)
 
-| Concepto         | proyecto-be-fe (FastAPI)        | proyecto-besb-fe (Spring Boot)          |
+| Concepto         | proyecto-be_fastapi-fe_react (FastAPI)        | proyecto-be_springboot_java-fe_react (Spring Boot)          |
 |------------------|----------------------------------|------------------------------------------|
 | Servidor         | Uvicorn (ASGI, async)           | Tomcat embebido (Servlet, sync/async)    |
 | ORM              | SQLAlchemy 2.0                  | Spring Data JPA + Hibernate 6            |
@@ -528,10 +528,10 @@ qué stack está corriendo al mayor de un vistazo.
 
 | Stack                  | Proyecto               | Acento Tailwind | Hex referencia |
 |------------------------|------------------------|-----------------|----------------|
-| FastAPI (Python)       | `proyecto-be-fe`       | `emerald`       | `#059669`      |
+| FastAPI (Python)       | `proyecto-be_fastapi-fe_react`       | `emerald`       | `#059669`      |
 | Express.js (Node)      | `proyecto-beex-fe`     | `blue`          | `#2563eb`      |
 | Next.js (fullstack)    | `proyecto-be-fe-next`  | `violet`        | `#7c3aed`      |
-| **Spring Boot (Java)** | **`proyecto-besb-fe`** | **`amber`**     | **`#d97706`**  |
+| **Spring Boot (Java)** | **`proyecto-be_springboot_java-fe_react`** | **`amber`**     | **`#d97706`**  |
 | Spring Boot (Kotlin)   | `proyecto-besbk-fe`    | `fuchsia`       | `#c026d3`      |
 | Go REST API            | `proyecto-bego-fe`     | `cyan`          | `#0891b2`      |
 

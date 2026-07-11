@@ -2,7 +2,7 @@
 
 > Proyecto: NN Auth System
 > Stack: Spring Boot 3 (Java 21) + React (TypeScript) + PostgreSQL 17 + Docker
-> Referencia funcional: [proyecto-be-fe](https://github.com/ergrato-dev/proyecto-be-fe) (FastAPI + React)
+> Referencia funcional: [proyecto-be_fastapi-fe_react](https://github.com/ergrato-dev/proyecto-be_fastapi-fe_react) (FastAPI + React)
 
 ---
 
@@ -249,7 +249,7 @@ ENVIRONMENT=development
 ## 5. Estructura del Proyecto
 
 ```
-proyecto-besb-fe/                  # Raíz del monorepo
+proyecto-be_springboot_java-fe_react/                  # Raíz del monorepo
 ├── .github/
 │   └── copilot-instructions.md    # ← ESTE ARCHIVO — reglas del proyecto
 ├── .gitignore                     # Archivos ignorados por git
@@ -898,10 +898,10 @@ tiene un color de acento único que identifica su stack. Los componentes React
 
 | Stack                  | Proyecto               | Acento Tailwind | Hex           |
 | ---------------------- | ---------------------- | --------------- | ------------- |
-| FastAPI (Python)       | `proyecto-be-fe`       | `emerald`       | `#059669`     |
+| FastAPI (Python)       | `proyecto-be_fastapi-fe_react`       | `emerald`       | `#059669`     |
 | Express.js (Node)      | `proyecto-beex-fe`     | `blue`          | `#2563eb`     |
 | Next.js (fullstack)    | `proyecto-be-fe-next`  | `violet`        | `#7c3aed`     |
-| **Spring Boot (Java)** | **`proyecto-besb-fe`** | **`amber`**     | **`#d97706`** |
+| **Spring Boot (Java)** | **`proyecto-be_springboot_java-fe_react`** | **`amber`**     | **`#d97706`** |
 | Spring Boot (Kotlin)   | `proyecto-besbk-fe`    | `fuchsia`       | `#c026d3`     |
 | Go REST API            | `proyecto-bego-fe`     | `cyan`          | `#0891b2`     |
 

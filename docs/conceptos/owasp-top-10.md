@@ -1,7 +1,7 @@
 # OWASP Top 10 — Implementación en Spring Boot
 
 > Stack: Spring Boot 3.2+ (Java 21) | Spring Security | JJWT | Bucket4j | Bean Validation
-> Referencia funcional: [proyecto-be-fe](https://github.com/ergrato-dev/proyecto-be-fe) (misma guía, FastAPI)
+> Referencia funcional: [proyecto-be_fastapi-fe_react](https://github.com/ergrato-dev/proyecto-be_fastapi-fe_react) (misma guía, FastAPI)
 
 ---
 

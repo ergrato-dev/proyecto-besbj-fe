@@ -16,10 +16,10 @@ Esto facilita el aprendizaje comparativo sin tener que leer el código.
 
 | Stack                  | Proyecto               | Acento Tailwind | Hex referencia |
 |------------------------|------------------------|-----------------|----------------|
-| FastAPI (Python)       | `proyecto-be-fe`       | `emerald`       | `#059669`      |
+| FastAPI (Python)       | `proyecto-be_fastapi-fe_react`       | `emerald`       | `#059669`      |
 | Express.js (Node)      | `proyecto-beex-fe`     | `blue`          | `#2563eb`      |
 | Next.js (fullstack)    | `proyecto-be-fe-next`  | `violet`        | `#7c3aed`      |
-| **Spring Boot (Java)** | **`proyecto-besb-fe`** | **`amber`**     | **`#d97706`**  |
+| **Spring Boot (Java)** | **`proyecto-be_springboot_java-fe_react`** | **`amber`**     | **`#d97706`**  |
 | Spring Boot (Kotlin)   | `proyecto-besbk-fe`    | `fuchsia`       | `#c026d3`      |
 | Go REST API            | `proyecto-bego-fe`     | `cyan`          | `#0891b2`      |
 

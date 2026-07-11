@@ -36,10 +36,10 @@
   ┌──────────────────────┬──────────────────────┬─────────────────┐
   │ Stack                │ Proyecto             │ Color de acento │
   ├──────────────────────┼──────────────────────┼─────────────────┤
-  │ FastAPI (Python)     │ proyecto-be-fe       │ emerald         │
+  │ FastAPI (Python)     │ proyecto-be_fastapi-fe_react       │ emerald         │
   │ Express.js (Node)    │ proyecto-beex-fe     │ blue            │
   │ Next.js (fullstack)  │ proyecto-be-fe-next  │ violet          │
-  │ Spring Boot (Java) ← │ proyecto-besb-fe  ←  │ amber        ←  │
+  │ Spring Boot (Java) ← │ proyecto-be_springboot_java-fe_react  ←  │ amber        ←  │
   │ Spring Boot (Kotlin) │ proyecto-besbk-fe    │ fuchsia         │
   │ Go REST API          │ proyecto-bego-fe     │ cyan            │
   └──────────────────────┴──────────────────────┴─────────────────┘

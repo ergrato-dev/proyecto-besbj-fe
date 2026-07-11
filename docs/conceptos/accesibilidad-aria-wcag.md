@@ -1,7 +1,7 @@
 # Accesibilidad Web — ARIA y WCAG 2.1 en React
 
 > Stack Frontend: React 19.2.4 | TypeScript 6 | TailwindCSS 4.2.2 | Vite 8
-> Aplicable a: proyecto-besb-fe (Spring Boot backend) y proyecto-be-fe (FastAPI backend) — Frontend idéntico
+> Aplicable a: proyecto-be_springboot_java-fe_react (Spring Boot backend) y proyecto-be_fastapi-fe_react (FastAPI backend) — Frontend idéntico
 
 ---
 
@@ -815,5 +815,5 @@ Usar antes de cada deploy:
 ---
 
 *Documentación de accesibilidad para el proyecto NN Auth System.*
-*Aplica al frontend React — idéntico en proyecto-besb-fe (Spring Boot) y proyecto-be-fe (FastAPI).*
+*Aplica al frontend React — idéntico en proyecto-be_springboot_java-fe_react (Spring Boot) y proyecto-be_fastapi-fe_react (FastAPI).*
 *Ver [owasp-top-10.md](owasp-top-10.md) para la guía de seguridad.*
