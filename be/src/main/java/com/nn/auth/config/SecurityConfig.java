@@ -10,6 +10,7 @@ package com.nn.auth.config;
 
 import com.nn.auth.repository.UserRepository;
 import com.nn.auth.security.JwtAuthenticationFilter;
+import com.nn.auth.security.RateLimitFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -77,7 +78,7 @@ public class SecurityConfig {
   // Spring Security la aplica a cada petición HTTP entrante, en orden.
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http,
-      JwtAuthenticationFilter jwtFilter) throws Exception {
+      JwtAuthenticationFilter jwtFilter, RateLimitFilter rateLimitFilter) throws Exception {
     http
         // CSRF no es necesario en APIs REST stateless con JWT
         .csrf(AbstractHttpConfigurer::disable)
@@ -121,8 +122,14 @@ public class SecurityConfig {
                 (request, response, ex) -> response.sendError(HttpServletResponse.SC_FORBIDDEN, "Acceso denegado")))
 
         // Insertar el filtro JWT ANTES del filtro de autenticación estándar de Spring
-        // para que el SecurityContext esté poblado cuando los controllers se ejecuten
-        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        // para que el SecurityContext esté poblado cuando los controllers se ejecuten.
+        // Debe registrarse ANTES que la línea de abajo: Spring Security solo permite
+        // anclar un addFilterBefore a una clase que ya tiene un orden registrado.
+        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+
+        // Insertar el filtro de rate limiting ANTES que el filtro JWT — una IP que
+        // agotó su cupo se rechaza con 429 sin siquiera intentar parsear un token.
+        .addFilterBefore(rateLimitFilter, JwtAuthenticationFilter.class);
 
     return http.build();
   }

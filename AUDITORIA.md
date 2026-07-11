@@ -33,11 +33,13 @@ ligeros). ✅
 
 Gaps identificados — **quedan documentados, no se corrigen en esta ronda**:
 
-- **`bucket4j-core` está declarado en `pom.xml` pero no está implementado** — `grep -rn
-  "Bucket" be/src` no arroja ningún resultado. No hay filtro/interceptor de rate limiting
-  wireado en ningún endpoint de auth. Esto es una brecha de implementación real, no solo de
-  documentación — el README/`docs/` no deberían seguir listando "Rate Limiting: Bucket4j" como
-  si estuviera activo sin esta corrección.
+- ~~`bucket4j-core` estaba declarado en `pom.xml` pero no implementado~~ — **corregido en esta
+  ronda**: `be/src/main/java/com/nn/auth/security/RateLimitFilter.java` aplica un bucket de
+  tokens por IP a `/api/v1/auth/**` (10 peticiones / 15 min por defecto, configurable vía
+  `app.rate-limit.*` / `RATE_LIMIT_*`), registrado en `SecurityConfig` antes del
+  `JwtAuthenticationFilter`. Deshabilitado en el perfil `test` para no romper
+  `AuthControllerTest` (28 tests, verificados en verde). Verificado manualmente con `curl`: la
+  4ª petición en la ventana devuelve 429 con `Retry-After` y `ProblemDetail` en JSON.
 - `docker-compose.yml` solo levanta `db` + `mailpit` (infra-only), igual que el repo Express —
   no conteneriza `be`/`fe`, a diferencia del repo FastAPI de referencia (4 servicios). Está
   documentado como decisión intencional en `docs/setup/con-docker.md`, pero rompe la paridad de
@@ -83,22 +85,28 @@ explícito):
 
 - `docker-compose.yml` trae hardcodeada `POSTGRES_PASSWORD: nn_password` — correcto para
   desarrollo, agregar comentario explícito "no copiar a prod".
-- **Rate limiting ausente pese a estar declarado como feature** (ver Completitud) — es también
-  un hallazgo de seguridad: sin él, los endpoints de login/registro no tienen protección contra
-  fuerza bruta más allá de lo que Spring Security ofrece por defecto (nada, a nivel de intentos).
+- ~~Rate limiting ausente pese a estar declarado como feature~~ — **corregido** (ver
+  Completitud).
 - No hay audit logging de intentos de login/cambios de password (a diferencia de FastAPI y
   Express, que sí registran estos eventos).
 
+## Bug encontrado y corregido durante la implementación del rate limiting
+
+`.mvn/jvm.config` traía hardcodeado `-Djava.home=/usr/lib/jvm/java-21-openjdk` (sin sufijo de
+arquitectura/distro) — rompía `./mvnw` en cualquier máquina donde el JDK no estuviera instalado
+exactamente en esa ruta (no existía en la máquina donde se hizo esta auditoría). Se eliminó el
+archivo — Maven ya resuelve el JDK correcto vía `JAVA_HOME`/`PATH` sin necesidad de esa
+variable, y es portable entre distros/aprendices.
+
 ## Próximos pasos sugeridos (fuera de alcance de esta ronda)
 
-1. Implementar el rate limiting con Bucket4j que ya está declarado como dependencia, o retirar
-   la dependencia y dejar de listarla como feature activa en README/docs.
-2. Agregar audit logging de eventos de seguridad (login success/failed, password changed/reset),
+1. Agregar audit logging de eventos de seguridad (login success/failed, password changed/reset),
    replicando el patrón de `be/app/utils/audit_log.py` (FastAPI) / `be/src/utils/audit-log.ts`
    (Express).
-3. Agregar workflow de CI que corra tests/lint en cada PR (mismo gap que los otros dos repos).
-4. Tests de páginas frontend faltantes (Dashboard, ForgotPassword, ResetPassword,
-   ChangePassword, VerifyEmail).
-5. Decidir si se homologa la contenerización completa (Dockerfiles be/fe) en los 3 repos o se
+2. Agregar workflow de CI que corra tests/lint en cada PR (mismo gap que los otros dos repos).
+3. Tests de páginas frontend faltantes (Dashboard, ForgotPassword, ResetPassword,
+   ChangePassword, VerifyEmail) y de `RateLimitFilter` (unit test con un `AppProperties.RateLimit`
+   de capacidad baja).
+4. Decidir si se homologa la contenerización completa (Dockerfiles be/fe) en los 3 repos o se
    mantiene infra-only como decisión de diseño consistente.
-6. Una vez resueltos 1-4, replicar el mismo patrón en el resto de `proyecto-*`.
+5. Una vez resueltos 1-3, replicar el mismo patrón en el resto de `proyecto-*`.

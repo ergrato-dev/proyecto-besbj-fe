@@ -45,6 +45,13 @@ app:
     secret: test-secret-key-minimum-32-chars-for-hmac-sha256
     access-token-expiration-minutes: 15
     refresh-token-expiration-days: 7
+  # Deshabilitado en tests — AuthControllerTest dispara muchas más peticiones
+  # por IP que el límite real en una sola clase de test (mismo patrón que el
+  # skip por NODE_ENV=test en el repo Express).
+  rate-limit:
+    enabled: false
+    capacity: 10
+    refill-minutes: 15
   frontend-url: http://localhost:5173
   environment: test
 

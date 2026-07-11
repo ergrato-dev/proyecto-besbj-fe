@@ -62,6 +62,12 @@ app:
     secret: ${JWT_SECRET:dev-secret-key-min-32-chars-change-in-production}
     access-token-expiration-minutes: ${JWT_ACCESS_TOKEN_EXPIRATION_MINUTES:15}
     refresh-token-expiration-days: ${JWT_REFRESH_TOKEN_EXPIRATION_DAYS:7}
+  # Rate limiting (Bucket4j) en /api/v1/auth/** — mismo criterio que los repos
+  # FastAPI (slowapi) y Express (express-rate-limit): 10 peticiones / 15 min por IP.
+  rate-limit:
+    enabled: ${RATE_LIMIT_ENABLED:true}
+    capacity: ${RATE_LIMIT_CAPACITY:10}
+    refill-minutes: ${RATE_LIMIT_REFILL_MINUTES:15}
   frontend-url: ${FRONTEND_URL:http://localhost:5173}
   environment: ${ENVIRONMENT:development}
 

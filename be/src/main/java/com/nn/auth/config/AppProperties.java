@@ -26,6 +26,7 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties(prefix = "app")
 public record AppProperties(
     Jwt jwt,
+    RateLimit rateLimit,
     @NotBlank String frontendUrl,
     @NotBlank String environment) {
   /**
@@ -41,5 +42,21 @@ public record AppProperties(
       @Positive int accessTokenExpirationMinutes,
 
       @Positive int refreshTokenExpirationDays) {
+  }
+
+  /**
+   * ¿Qué? Propiedades anidadas de rate limiting (Bucket4j) para /api/v1/auth/**.
+   * ¿Para qué? Configurar cuántas peticiones por IP se permiten en la ventana,
+   * sin tocar código — igual que capacity/refill en los repos FastAPI (slowapi)
+   * y Express (express-rate-limit).
+   * ¿Impacto? enabled=false en el perfil de test evita 429 durante las
+   * suites de MockMvc, que disparan muchas más peticiones que el límite real.
+   */
+  public record RateLimit(
+      boolean enabled,
+
+      @Positive int capacity,
+
+      @Positive int refillMinutes) {
   }
 }
