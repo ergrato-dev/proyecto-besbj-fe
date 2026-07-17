@@ -39,6 +39,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -59,6 +60,14 @@ import java.util.UUID;
 public class AuthService {
 
   private static final Logger log = LoggerFactory.getLogger(AuthService.class);
+
+  // ¿Qué? Hash BCrypt fijo (sin usuario real detrás), usado por login() cuando el
+  // email no existe, para comparar contra algo y no saltarse el costo de BCrypt.
+  // ¿Para qué? Igualar el tiempo de respuesta del login exista o no el usuario —
+  // el mensaje de error ya es genérico, pero sin esto el timing sigue delatando
+  // qué emails están registrados (OWASP A01/A07).
+  private static final String DUMMY_PASSWORD_HASH =
+      "$2b$12$PP42s5XkiNf/2WWHS19shOf.vg.RJnNq7zCJDTCAmQNCrYZdKV85S";
 
   private final UserRepository userRepository;
   private final PasswordResetTokenRepository passwordResetTokenRepository;
@@ -143,16 +152,21 @@ public class AuthService {
    */
   public TokenResponse login(LoginRequest request) {
 
-    // Paso 1: Buscar usuario por email (case-insensitive)
-    User user = userRepository
-        .findByEmailIgnoreCase(request.email())
-        .orElseThrow(() -> new BadCredentialsException("Credenciales inválidas"));
+    // Paso 1: Buscar usuario por email (case-insensitive). Optional en vez de
+    // orElseThrow inmediato: si el usuario no existe, igual se llama a
+    // passwordEncoder.matches() contra DUMMY_PASSWORD_HASH más abajo, para que
+    // BCrypt tarde lo mismo en ambos casos (mitiga timing attack, OWASP A07).
+    Optional<User> maybeUser = userRepository.findByEmailIgnoreCase(request.email());
 
-    // Paso 2: Verificar contraseña con BCrypt.matches()
-    if (!passwordEncoder.matches(request.password(), user.getHashedPassword())) {
+    // Paso 2: Verificar contraseña con BCrypt.matches() — siempre se ejecuta.
+    String hashToCompare = maybeUser.map(User::getHashedPassword).orElse(DUMMY_PASSWORD_HASH);
+    boolean passwordMatches = passwordEncoder.matches(request.password(), hashToCompare);
+
+    if (maybeUser.isEmpty() || !passwordMatches) {
       log.warn("Intento de login fallido para: {}", request.email());
       throw new BadCredentialsException("Credenciales inválidas");
     }
+    User user = maybeUser.get();
 
     // Paso 3: Verificar que el email fue verificado
     if (!user.isEmailVerified()) {

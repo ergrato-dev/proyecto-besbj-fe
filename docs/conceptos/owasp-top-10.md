@@ -599,6 +599,31 @@ new BCryptPasswordEncoder(12)       // factor 12 → más lento aún (400ms apro
 → Para adivinar 1M contraseñas se necesitarían ~70 días.
 ```
 
+**5. Comparación de tiempo constante en login — el mensaje genérico no es suficiente**
+
+Si el código busca el usuario con `orElseThrow` y solo llama a
+`passwordEncoder.matches()` cuando existe, el branch "usuario no existe" lanza
+la excepción en microsegundos mientras que "contraseña incorrecta" tarda lo
+que tarda BCrypt (~100ms). Un atacante puede medir esa diferencia con Burp
+Repeater y enumerar usuarios válidos aunque el mensaje de error sea idéntico
+en ambos casos — el mensaje no es la única señal que existe.
+
+```java
+// AuthService.java
+private static final String DUMMY_PASSWORD_HASH = "$2b$12$..."; // sin usuario real detrás
+
+Optional<User> maybeUser = userRepository.findByEmailIgnoreCase(request.email());
+
+// ✅ Si el usuario no existe, igual se llama a matches() contra DUMMY_PASSWORD_HASH —
+//    ambos branches tardan lo mismo, no hay señal de timing que enumerar.
+String hashToCompare = maybeUser.map(User::getHashedPassword).orElse(DUMMY_PASSWORD_HASH);
+boolean passwordMatches = passwordEncoder.matches(request.password(), hashToCompare);
+
+if (maybeUser.isEmpty() || !passwordMatches) {
+  throw new BadCredentialsException("Credenciales inválidas");
+}
+```
+
 ---
 
 ## A08 — Software and Data Integrity Failures
